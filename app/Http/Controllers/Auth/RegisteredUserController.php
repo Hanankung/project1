@@ -42,9 +42,10 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        //การล็อกอินอัตโนมัติ
+        // Auth::login($user);
 
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        // Redirect to login page with success message
+        return redirect()->route('login')->with('success', 'สมัครสมาชิกสำเร็จ! กรุณาล็อกอิน');
     }
 }
