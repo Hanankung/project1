@@ -33,26 +33,9 @@
             <a href="#">คอร์สเรียน</a>
         </div>
     </div>
-
-    <div class="ecoimg">
-        <img src="{{ asset('image/AdminDashboard1.jpg') }}" alt="Eco Print Banner" class="eco-banner">
+    <div class="container mt-5">
+        @yield('content')
     </div>
-    <div class="hero">
-        <p>WELCOME TO ADMIN</p>
-    </div>
-
-    <div class="image-card">
-        <img src="{{ asset('image/snim.jpg') }}" alt="Eco Print Banner" class="eco-banner">
-    </div>
-    </div>
-
-
 </body>
 
 </html>
-
-<form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button onclick="event.preventDefault(); this.closest('form').submit();">logout</button>
-
-</form>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,5 +35,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+
+// Product Admin
+Route::get('/admin/product', function () {
+    return view('admin.product');
+})->name('admin.product');
+
+//create Product
+Route::get('/admin/create', [PostController::class, 'create'])->name('create');
+//Post Product
+Route::post('/admin/store', [PostController::class, 'store'])->name('store');
 
 require __DIR__.'/auth.php';
