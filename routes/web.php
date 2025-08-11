@@ -45,5 +45,16 @@ Route::get('/admin/product', function () {
 Route::get('/admin/create', [PostController::class, 'create'])->name('create');
 //Post Product
 Route::post('/admin/store', [PostController::class, 'store'])->name('store');
+Route::get('/admin/product', [PostController::class, 'productList'])->name('admin.product');
+Route::get('/admin/show/{post}', [PostController::class, 'show'])->name('admin.show');
+
+// Edit Product
+Route::get('/admin/edit/{post}', [PostController::class, 'edit'])->name('admin.edit');
+Route::put('/admin/update/{post}', [PostController::class, 'update'])->name('admin.update');
+
+// Delete Product
+Route::delete('/admin/delete/{post}', [PostController::class, 'destroy'])->name('admin.delete');
+
+
 
 require __DIR__.'/auth.php';

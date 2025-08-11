@@ -13,9 +13,15 @@ class PostController extends Controller
      */
     public function index()
     {
-        //แสดงรายการโพสต์ทั้งหมด
+        //แสดงหน้าแรกของผู้ดูแลระบบ
         return view('admin.dashboard');
     }
+
+    public function productList()
+{
+    $posts = Post::all();
+    return view('admin.product', compact('posts'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -78,7 +84,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        //เมื่อกดปุ่ม view จะไปยังหน้าแสดงรายละเอียดสินค้า
+        return view('admin.show', compact('post'));
     }
 
     /**
@@ -86,7 +93,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        //ไปยังหน้าแก้ไขสินค้า
+        return view('admin.edit', compact('post'));
     }
 
     /**
@@ -94,14 +102,52 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
-    }
+        //การเพิ่มข้อมูลไปยังฐานข้อมูล
+        // ตรวจสอบข้อมูลที่รับมา
+        $validatedData = $request->validate([
+            'product_name' => 'required|string|max:50',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+            'material' => 'required|string|max:20',
+            'size' => 'required|string|max:20',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
+        // เตรียม path รูปภาพ
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            // ตั้งชื่อไฟล์แบบสุ่ม + นามสกุลเดิม
+            $file = $request->file('image');
+            $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+            // เก็บไฟล์ไว้ที่ public/images
+            $file->move(public_path('images'), $filename);
+
+            $imagePath = '/images/' . $filename;
+        }
+
+        // อัปเดตข้อมูลสินค้า
+        $post->update([
+            'product_name' => $validatedData['product_name'],
+            'description' => $validatedData['description'],
+            'price' => $validatedData['price'],
+            'quantity' => $validatedData['quantity'],
+            'material' => $validatedData['material'],
+            'size' => $validatedData['size'],
+            'product_image' => $imagePath,
+        ]);
+
+         // redirect ไปที่หน้า index พร้อม flash message
+        return redirect()->route('admin.product')->with('success', 'แก้ไชสินค้าสำเร็จแล้ว');
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        // redirect ไปที่หน้า index พร้อม flash message
+        return redirect()->route('admin.product')->with('success', 'ลบสินค้าสำเร็จแล้ว');
     }
 }
