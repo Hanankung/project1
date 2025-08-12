@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 });
+
 // Register Page (Public)
 Route::get('/register', function () {
     return view('auth.register');
@@ -43,6 +45,7 @@ Route::get('/admin/product', function () {
 
 //create Product
 Route::get('/admin/create', [PostController::class, 'create'])->name('create');
+
 //Post Product
 Route::post('/admin/store', [PostController::class, 'store'])->name('store');
 Route::get('/admin/product', [PostController::class, 'productList'])->name('admin.product');
@@ -55,6 +58,21 @@ Route::put('/admin/update/{post}', [PostController::class, 'update'])->name('adm
 // Delete Product
 Route::delete('/admin/delete/{post}', [PostController::class, 'destroy'])->name('admin.delete');
 
+// Course Admin
+Route::get('/admin/course', function () {
+    return view('admin.course');
+})->name('admin.course');
 
+//create Course
+Route::get('/admin/create_course', [CourseController::class, 'create'])->name('create_course');
+//Post Course
+Route::post('/admin/store_course', [CourseController::class, 'store'])->name('store_course');
+Route::get('/admin/course', [CourseController::class, 'courseList'])->name('admin.course');
+Route::get('/admin/showcourse/{course}', [CourseController::class, 'show'])->name('admin.showcourse');
+// Edit Course
+Route::get('/admin/edit_course/{course}', [CourseController::class, 'edit'])->name('admin.edit_course');
+Route::put('/admin/update_course/{course}', [CourseController::class, 'update'])->name('admin.update_course');
 
+// Delete Course
+Route::delete('/admin/delete_course/{course}', [CourseController::class, 'destroy'])->name('admin.delete_course');
 require __DIR__.'/auth.php';

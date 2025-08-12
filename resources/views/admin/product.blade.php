@@ -27,9 +27,7 @@
     @else
     <p>No image</p>
     @endif
-
-
-
+        {{-- ปุ่มดูรายละเอียด แก้ไข และลบโพส --}}
         <a href="{{ route('admin.show', $post)}}" class="btn btn-secondary">View</a>
         <a href="{{ route('admin.edit', $post)}}" class="btn btn-warning">Edit</a>
         <form action="{{ route('admin.delete', $post)}}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this post?');">

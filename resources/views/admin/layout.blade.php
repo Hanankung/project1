@@ -30,7 +30,7 @@
     <div class="nav-bar">
         <div class="nav-center">
             <a href="/admin/product">สินค้า</a>
-            <a href="#">คอร์สเรียน</a>
+            <a href="/admin/course">คอร์สเรียน</a>
         </div>
     </div>
     <div class="container mt-5">
