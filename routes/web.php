@@ -8,6 +8,14 @@ use App\Http\Controllers\PostController;
 Route::get('/', function () {
     return view('welcome');
 });
+// หน้าเกี่ยวกับเรา
+Route::get('/aboutme', function () {
+    return view('aboutme'); // ไม่ต้องใส่นามสกุล .blade.php
+});
+// ติดต่อเรา
+Route::get('/contect', function () {
+    return view('contect'); // ไม่ต้องใส่นามสกุล .blade.php
+});
 
 // Dashboard หลัก
 Route::get('/dashboard', function () {
@@ -75,4 +83,6 @@ Route::put('/admin/update_course/{course}', [CourseController::class, 'update'])
 
 // Delete Course
 Route::delete('/admin/delete_course/{course}', [CourseController::class, 'destroy'])->name('admin.delete_course');
+
+
 require __DIR__.'/auth.php';
