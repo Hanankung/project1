@@ -10,30 +10,42 @@
 </div>
 @endif
 
-{{-- เช็คว่าโพสมีรึป่าว --}}
 @if($posts->count())
     @foreach($posts as $post)
     <div class="card mb-3">
         <div class="card-body">
-            <h5>{{ $post->course_name }}</h5>
-            {{-- รายละเอียดข้อความเยอะเกินไป กำหนดลิมิตที่แสดง --}}
-            <p>{{ Str::limit($post->course_detail, 100) }}</p>
-            <p>Price: {{ $post->price }}</p>
+            <div class="row align-items-center">
+                {{-- รูปภาพทางซ้าย --}}
+                <div class="col-md-4 text-center">
+                    @if($post->course_image)
+                        <img src="{{ asset($post->course_image) }}" 
+                             alt="{{ $post->course_name }}" 
+                             class="img-fluid rounded" 
+                             style="max-width: 150px;">
+                    @else
+                        <p class="text-muted">No image</p>
+                    @endif
+                </div>
 
-            @if($post->course_image)
-                <img src="{{ asset($post->course_image) }}" alt="{{ $post->course_name }}" width="200">
-            @else
-                <p>No image</p>
-            @endif
+                {{-- ข้อความทางขวา --}}
+                <div class="col-md-8">
+                    <h5>{{ $post->course_name }}</h5>
+                    <p>{{ Str::limit($post->course_detail, 100) }}</p>
+                    <p><strong>Price:</strong> {{ $post->price }}</p>
 
-            {{-- ปุ่มดูรายละเอียด แก้ไข และลบโพส --}}
-            <a href="{{ route('admin.showcourse', $post)}}" class="btn btn-secondary">View</a>
-            <a href="{{ route('admin.edit_course', $post)}}" class="btn btn-warning">Edit</a>
-            <form action="{{ route('admin.delete_course', $post)}}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this post?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+                    {{-- ปุ่ม --}}
+                    <a href="{{ route('admin.showcourse', $post)}}" class="btn btn-secondary btn-sm">View</a>
+                    <a href="{{ route('admin.edit_course', $post)}}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ route('admin.delete_course', $post)}}" 
+                          method="POST" 
+                          style="display:inline;" 
+                          onsubmit="return confirm('Are you sure you want to delete this post?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     @endforeach
