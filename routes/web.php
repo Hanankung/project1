@@ -12,10 +12,19 @@ Route::get('/', function () {
 Route::get('/aboutme', function () {
     return view('aboutme'); // ไม่ต้องใส่นามสกุล .blade.php
 });
+// หน้าเกี่ยวกับเราของสมาชิก
+Route::get('/member/aboutme', function () {
+    return view('member.aboutme'); // ไม่ต้องใส่นามสกุล .blade.php
+})->name('member.aboutme');
+
 // ติดต่อเรา
 Route::get('/contect', function () {
     return view('contect'); // ไม่ต้องใส่นามสกุล .blade.php
 });
+// ติดต่อเราของสมาชิก
+Route::get('/member/contect', function () {
+    return view('member.contect'); // ไม่ต้องใส่นามสกุล .blade.php
+})->name('member.contect');
 
 // Dashboard หลัก
 Route::get('/dashboard', function () {
