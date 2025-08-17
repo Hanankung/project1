@@ -34,8 +34,8 @@
     <!-- Navigation Bar -->
     <div class="nav-bar">
         <div class="nav-center">
-            <a href="#">สินค้า</a>
-            <a href="#">คอร์สเรียน</a>
+            <a href="/member/product">สินค้า</a>
+            <a href="/member/courses">คอร์สเรียน</a>
             <a href="/member/aboutme">เกี่ยวกับเรา</a>
         </div>
         <div class="nav-right">

@@ -22,6 +22,14 @@ class CourseController extends Controller
     $posts = course::all();
     return view('admin.course', compact('posts'));
 }
+public function showForMember()
+{
+    // ดึงข้อมูลคอร์สทั้งหมดจาก DB
+    $courses = \App\Models\Course::all();
+
+    // ส่งไปยัง view ของ member
+    return view('member.courses', compact('courses'));
+}
 
     /**
      * Show the form for creating a new resource.
