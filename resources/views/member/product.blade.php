@@ -22,8 +22,10 @@
                 <p class="mb-1"><strong>ราคา:</strong> {{ $product->price }} บาท</p>
                 {{-- <p class="mb-1"><strong>จำนวน:</strong> {{ $product->quantity }}</p>
                 <p class="mb-1"><strong>ขนาด:</strong> {{ $product->size }}</p> --}}
+                {{-- <a href="{{ route('admin.show', $post)}}" class="btn btn-secondary">View</a> --}}
                 <a href="#" class="btn btn-primary btn-sm mt-2 w-100">รายละเอียด</a>
                 <a href="#" class="btn btn-primary btn-sm mt-2 w-100">สั่งซื้อ</a>
+                {{-- <a href="{{ route('create')}}" class="btn btn-primary mb-3">+ Create New Post</a> --}}
             </div>
         </div>
     </div>

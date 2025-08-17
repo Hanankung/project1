@@ -24,8 +24,9 @@
                             {{ Str::limit($course->course_detail, 100) }}
                         </p>
                         <p class="fw-bold text-primary">ราคา: {{ number_format($course->price) }} บาท</p>
-                        <a href="#" class="btn btn-outline-primary mt-auto">ดูรายละเอียด</a>
+                        <a href="{{ route('member.course.detail', $course->id) }}" class="btn btn-outline-primary mt-auto">ดูรายละเอียด</a>
                         <a href="#" class="btn btn-primary btn-sm mt-2 w-100">จองคอร์สเรียน</a>
+                        {{-- <a href="{{ route('create')}}" class="btn btn-primary mb-3">+ Create New Post</a> --}}
                     </div>
                 </div>
             </div>

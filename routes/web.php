@@ -49,6 +49,8 @@ Route::get('/member/product', [MemberController::class, 'products'])->name('memb
 
 // แสดงคอร์สสำหรับ member
 Route::get('/member/courses', [CourseController::class, 'showForMember'])->name('member.courses');
+// แสดงรายละเอียดคอร์ส (สำหรับ member)
+Route::get('/member/course/{id}', [CourseController::class, 'showDetail'])->name('member.course.detail');
 
 // Admin Dashboard
 Route::middleware(['auth', 'admin'])->group(function () {

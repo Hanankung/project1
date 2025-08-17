@@ -30,6 +30,15 @@ public function showForMember()
     // ส่งไปยัง view ของ member
     return view('member.courses', compact('courses'));
 }
+public function showDetail($id)
+{
+    // หา course ตาม id
+    $course = \App\Models\Course::findOrFail($id);
+
+    // ส่งไปยัง view
+    return view('member.course_detail', compact('course'));
+}
+
 
     /**
      * Show the form for creating a new resource.
