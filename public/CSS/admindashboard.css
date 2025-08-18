@@ -181,4 +181,34 @@
     background-size: cover;
     background: no-repeat center;
 }
+.dropdown {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                .dropdown-content {
+                    display: none;
+                    position: absolute;
+                    right: 0;
+                    background-color: #fff;
+                    min-width: 100px;
+                    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+                    z-index: 1;
+                }
+
+                .dropdown-content a {
+                    color: #333;
+                    padding: 8px 12px;
+                    text-decoration: none;
+                    display: block;
+                }
+
+                .dropdown-content a:hover {
+                    background-color: #f2f2f2;
+                }
+
+                /* แสดง dropdown เมื่อคลิก */
+                .show {
+                    display: block;
+                }
 

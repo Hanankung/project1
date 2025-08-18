@@ -58,6 +58,10 @@ Route::post('/member/course/booking/store', [CourseBookingController::class, 'st
 
 // แสดงรายการจองคอร์สเรียน
 Route::get('/member/courseBookingList', [CourseBookingController::class, 'courseBookingList'])->name('member.course.booking.list');
+// ยกเลิกการจองคอร์สเรียน
+Route::delete('/member/courseBooking/cancel/{id}', [CourseBookingController::class, 'cancel'])
+    ->name('member.course.booking.cancel')
+    ->middleware('auth');
 
 // Admin Dashboard
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -108,6 +112,12 @@ Route::put('/admin/update_course/{course}', [CourseController::class, 'update'])
 
 // Delete Course
 Route::delete('/admin/delete_course/{course}', [CourseController::class, 'destroy'])->name('admin.delete_course');
+
+// Admin จัดการการจองคอร์ส
+Route::get('/admin/courseBookings', [CourseBookingController::class, 'adminIndex'])->name('admin.course.booking.index');
+Route::patch('/admin/courseBookings/{id}/approve', [CourseBookingController::class, 'approve'])->name('admin.course.booking.approve');
+Route::patch('/admin/courseBookings/{id}/reject', [CourseBookingController::class, 'reject'])->name('admin.course.booking.reject');
+
 
 
 require __DIR__.'/auth.php';

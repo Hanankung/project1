@@ -72,6 +72,49 @@ class CourseBookingController extends Controller
         return redirect()->route('member.courses')->with('success', 'บันทึกการจองเรียบร้อยแล้ว!');
     }
 
+    public function cancel($id)
+{
+    $booking = CourseBooking::where('id', $id)
+                ->where('user_id', Auth::id()) // ให้ยกเลิกได้เฉพาะของตัวเอง
+                ->firstOrFail();
+
+    if ($booking->status === 'รอดำเนินการ') {
+        $booking->delete(); // หรือจะ update เป็น "ยกเลิก" ก็ได้
+        return redirect()->route('member.course.booking.list')->with('success', 'ยกเลิกการจองเรียบร้อยแล้ว');
+    }
+
+    return redirect()->route('member.course.booking.list')->with('error', 'ไม่สามารถยกเลิกได้ เนื่องจากแอดมินได้อนุมัติแล้ว');
+}
+// แสดงรายการการจองทั้งหมด (ฝั่ง Admin)
+    public function adminIndex()
+{
+    $bookings = CourseBooking::with('user')->latest()->get();
+    return view('admin.courseBookings', compact('bookings'));
+}
+
+// อนุมัติการจอง
+    public function approve($id)
+{
+    $booking = CourseBooking::findOrFail($id);
+    if ($booking->status === 'รอดำเนินการ') {
+        $booking->status = 'อนุมัติ';
+        $booking->save();
+    }
+    return redirect()->route('admin.course.booking.index')->with('success', 'อนุมัติการจองเรียบร้อยแล้ว');
+}
+
+// ไม่อนุมัติการจอง
+    public function reject($id)
+{
+    $booking = CourseBooking::findOrFail($id);
+    if ($booking->status === 'รอดำเนินการ') {
+        $booking->status = 'ไม่อนุมัติ';
+        $booking->save();
+    }
+    return redirect()->route('admin.course.booking.index')->with('success', 'ไม่อนุมัติการจองเรียบร้อยแล้ว');
+}
+
+
     /**
      * Display the specified resource.
      */

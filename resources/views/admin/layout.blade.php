@@ -6,7 +6,7 @@
     <title>Siro-Secret | ผ้าพิมพ์ลายธรรมชาติ Eco Print</title>
     <link rel="stylesheet" href="{{ asset('css/admindashboard.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     {{-- ✅ ใส่ Bootstrap ตรงนี้ --}}
+    {{-- ✅ ใส่ Bootstrap ตรงนี้ --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -23,9 +23,43 @@
 
             </div>
             <div class="icon-right">
-                <i class="fas fa-calendar icon"></i>
-                <a href="#" class="fas fa-user icon"></a>
+                <a href="{{ route('admin.course.booking.index') }}" class="fas fa-calendar icon"></a>
+
+                <!-- Dropdown ผู้ใช้ -->
+                <div class="dropdown">
+                    <a href="#" class="fas fa-user icon" id="userIcon"></a>
+                    <div class="dropdown-content" id="dropdownMenu">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                    </div>
+                </div>
             </div>
+
+            <!-- ฟอร์ม logout สำหรับ Laravel -->
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+
+            <!-- JS -->
+            <script>
+                const userIcon = document.getElementById('userIcon');
+                const dropdownMenu = document.getElementById('dropdownMenu');
+
+                userIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    dropdownMenu.classList.toggle('show');
+                });
+
+                // ปิด dropdown ถ้าคลิกนอก
+                window.addEventListener('click', function(e) {
+                    if (!userIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        dropdownMenu.classList.remove('show');
+                    }
+                });
+            </script>
+
         </div>
     </div>
 

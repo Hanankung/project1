@@ -42,7 +42,7 @@ return new class extends Migration
             $table->string('fabric_length')->nullable(); // ความยาวของผ้า
 
             // สถานะการอนุมัติ
-            $table->enum('status', ['รอดำเนินการ', 'อนุมัติ', 'ไม่อนุมัติ'])->default('รอดำเนินการ');
+            $table->enum('status', ['รอดำเนินการ', 'อนุมัติ', 'ไม่อนุมัติ', 'ยกเลิก'])->default('รอดำเนินการ');
 
             $table->timestamps();
         });
