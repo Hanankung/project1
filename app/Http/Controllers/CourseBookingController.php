@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CourseBooking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CourseBookingController extends Controller
 {
@@ -14,13 +15,16 @@ class CourseBookingController extends Controller
     public function index()
     {
         //หน้าคอร์สเรียน
-        return view('member.course');
+        $bookings = CourseBooking::where('user_id', Auth::id())->get();
+        return view('member.course', compact('bookings'));
     }
     public function courseBookingList()
 {
-    $posts = CourseBooking::all();
+    // ดึงเฉพาะการจองของ user ที่ล็อกอินอยู่
+    $posts = CourseBooking::where('user_id', Auth::id())->get();
     return view('member.history', compact('posts'));
 }
+
 
     /**
      * Show the form for creating a new resource.
@@ -51,6 +55,7 @@ class CourseBookingController extends Controller
         ]);
 
         CourseBooking::create([
+            'user_id'       => Auth::id(), // ✅ ผูกกับ user ที่ล็อกอิน
             'name'          => $validated['name'],
             'lastname'      => $validated['lastname'],
             'phone'         => $validated['phone'],

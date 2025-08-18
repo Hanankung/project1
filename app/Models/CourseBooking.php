@@ -10,6 +10,7 @@ class CourseBooking extends Model
      use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'lastname',
         'phone',
@@ -23,4 +24,8 @@ class CourseBooking extends Model
         'fabric_length',
         'status',
     ];
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

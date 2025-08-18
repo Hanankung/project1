@@ -55,6 +55,7 @@ Route::get('/member/course/{id}', [CourseController::class, 'showDetail'])->name
 // จองคอร์สเรียน
 Route::get('/member/courseBooking', [CourseBookingController::class, 'create'])->name('member.course.booking');
 Route::post('/member/course/booking/store', [CourseBookingController::class, 'store'])->name('member.course.booking.store');
+
 // แสดงรายการจองคอร์สเรียน
 Route::get('/member/courseBookingList', [CourseBookingController::class, 'courseBookingList'])->name('member.course.booking.list');
 

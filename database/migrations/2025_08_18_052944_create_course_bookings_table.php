@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
 
             // สร้างคอลัมน์สำหรับการจองคอร์สเรียน
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // เชื่อมโยงกับตาราง users
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // ข้อมูลผู้จอง
             $table->string('name', 20);
