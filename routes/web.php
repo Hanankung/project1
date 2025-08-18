@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\CourseBookingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,6 +52,11 @@ Route::get('/member/product', [MemberController::class, 'products'])->name('memb
 Route::get('/member/courses', [CourseController::class, 'showForMember'])->name('member.courses');
 // แสดงรายละเอียดคอร์ส (สำหรับ member)
 Route::get('/member/course/{id}', [CourseController::class, 'showDetail'])->name('member.course.detail');
+// จองคอร์สเรียน
+Route::get('/member/courseBooking', [CourseBookingController::class, 'create'])->name('member.course.booking');
+Route::post('/member/course/booking/store', [CourseBookingController::class, 'store'])->name('member.course.booking.store');
+// แสดงรายการจองคอร์สเรียน
+Route::get('/member/courseBookingList', [CourseBookingController::class, 'courseBookingList'])->name('member.course.booking.list');
 
 // Admin Dashboard
 Route::middleware(['auth', 'admin'])->group(function () {

@@ -25,7 +25,7 @@
             </div>
             <div class="icon-right">
                 <i class="fas fa-shopping-cart icon"></i>
-                <i class="fas fa-calendar icon"></i>
+                <a href="/member/courseBookingList" class="fas fa-calendar icon"></a>
                 <a href="/profile" class="fas fa-user icon"></a>
             </div>
         </div>
