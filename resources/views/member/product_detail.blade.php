@@ -80,6 +80,12 @@
         }
     </style>
 </head>
+@if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
 <div class="container mt-5">
     <div class="product-container">
@@ -109,9 +115,13 @@
 
                 <!-- ปุ่มตะกร้า + สั่งซื้อ -->
                 <div class="btn-group-custom">
-                    <a href="#" class="btn btn-cart">
-                        <i class="bi bi-cart-plus"></i> เพิ่มลงตะกร้า
-                    </a>
+                    <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="btn btn-cart">
+                                    <i class="bi bi-cart-plus">เพิ่มลงตะกร้า</i>
+                                </button>
+                            </form>
                     <a href="#" class="btn btn-buy">
                         <i class="bi bi-bag-check"></i> สั่งซื้อสินค้า
                     </a>

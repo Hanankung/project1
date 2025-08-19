@@ -24,10 +24,18 @@
                 <i class="fas fa-language icon"></i>
             </div>
             <div class="icon-right">
-                <i class="fas fa-shopping-cart icon"></i>
+                <a href="{{ route('member.cart') }}" class="cart-icon position-relative">
+                    <i class="bi bi-cart3" style="font-size: 1.3rem; color: #333;"></i>
+                    @if ($cartCount > 0)
+                        <span class="cart-badge">
+                            {{ $cartCount }}
+                        </span>
+                    @endif
+                </a>
                 <a href="/member/courseBookingList" class="fas fa-calendar icon"></a>
                 <a href="/profile" class="fas fa-user icon"></a>
             </div>
+
         </div>
     </div>
 
@@ -45,4 +53,4 @@
     <div class="container mt-5">
         @yield('content')
     </div>
-</body>    
+</body>

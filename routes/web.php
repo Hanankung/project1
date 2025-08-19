@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\CourseBookingController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,6 +51,19 @@ Route::get('/member/product', [MemberController::class, 'products'])->name('memb
 // แสดงรายละเอียดสินค้า (สำหรับสมาชิก)
 Route::get('/member/products/{id}', [MemberController::class, 'show'])->name('member.product.show');
 
+Route::middleware(['auth'])->group(function () {
+    Route::resource('cart', CartController::class);
+});
+// แสดงตะกร้าสินค้า
+Route::get('/member/cart', [CartController::class, 'index'])->name('member.cart');
+// เพิ่มสินค้าลงตะกร้า
+Route::post('/member/cart/store', [CartController::class, 'store'])->name('member.cart.store');
+// อัพเดตจำนวนสินค้าในตะกร้า
+Route::put('/member/cart/update/{id}', [CartController::class, 'update'])->name('member.cart.update');
+// ลบสินค้าออกจากตะกร้า
+Route::delete('/member/cart/delete/{id}', [CartController::class, 'destroy'])
+    ->name('member.cart.delete')
+    ->middleware('auth');
 
 // แสดงคอร์สสำหรับ member
 Route::get('/member/courses', [CourseController::class, 'showForMember'])->name('member.courses');

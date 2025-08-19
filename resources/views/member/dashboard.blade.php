@@ -24,7 +24,15 @@
                 <i class="fas fa-language icon"></i>
             </div>
             <div class="icon-right">
-                <i class="fas fa-shopping-cart icon"></i>
+                <a href="{{ route('member.cart') }}" class="cart-icon position-relative">
+                    <i class="bi bi-cart3" style="font-size: 1.3rem; color: #333;"></i>
+                    @if ($cartCount > 0)
+                        <span class="cart-badge">
+                            {{ $cartCount }}
+                        </span>
+                    @endif
+                </a>
+
                 <a href="/member/courseBookingList" class="fas fa-calendar icon"></a>
                 <a href="/profile" class="fas fa-user icon"></a>
             </div>
@@ -52,21 +60,20 @@
     </div>
 
     <div class="three-images">
-    <div class="image-card">
-        <img src="{{ asset('image/ex_product1.jpg') }}" alt="ภาพที่ 1">
-        <p>ผ้าพิมพ์ลายธรรมชาติ Eco Print แบบห่มสีกับน้ำสนิม</p>
+        <div class="image-card">
+            <img src="{{ asset('image/ex_product1.jpg') }}" alt="ภาพที่ 1">
+            <p>ผ้าพิมพ์ลายธรรมชาติ Eco Print แบบห่มสีกับน้ำสนิม</p>
+        </div>
+        <div class="image-card">
+            <img src="{{ asset('image/ex_product2.jpg') }}" alt="ภาพที่ 2">
+            <p>ผ้าพิมพ์ลายธรรมชาติ Eco Print แบบห่มสี</p>
+        </div>
+        <div class="image-card">
+            <img src="{{ asset('image/ex_product3.jpg') }}" alt="ภาพที่ 3">
+            <p>กล่องดินสอ จากผ้าพิมพ์ลาย Eco Print</p>
+        </div>
     </div>
-    <div class="image-card">
-        <img src="{{ asset('image/ex_product2.jpg') }}" alt="ภาพที่ 2">
-        <p>ผ้าพิมพ์ลายธรรมชาติ Eco Print แบบห่มสี</p>
-    </div>
-    <div class="image-card">
-        <img src="{{ asset('image/ex_product3.jpg') }}" alt="ภาพที่ 3">
-        <p>กล่องดินสอ จากผ้าพิมพ์ลาย Eco Print</p>
-    </div>
-</div>
 
 </body>
 
 </html>
-
