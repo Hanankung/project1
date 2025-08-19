@@ -12,4 +12,9 @@ class MemberController extends Controller
         $products = Post::all(); // ดึงสินค้าทั้งหมดจากตาราง products
         return view('member.product', compact('products'));
     }
+    public function show($id)
+    {
+        $product = Post::findOrFail($id); // ดึงข้อมูลสินค้าตาม id
+        return view('member.product_detail', compact('product'));
+    }
 }

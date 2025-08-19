@@ -47,6 +47,9 @@ Route::middleware('auth')->group(function () {
 
 // Member Product
 Route::get('/member/product', [MemberController::class, 'products'])->name('member.product');
+// แสดงรายละเอียดสินค้า (สำหรับสมาชิก)
+Route::get('/member/products/{id}', [MemberController::class, 'show'])->name('member.product.show');
+
 
 // แสดงคอร์สสำหรับ member
 Route::get('/member/courses', [CourseController::class, 'showForMember'])->name('member.courses');

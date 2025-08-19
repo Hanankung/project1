@@ -1,0 +1,123 @@
+@extends('member.layout')
+
+@section('content')
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .product-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* ปุ่มย้อนกลับ */
+        .back-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            color: #0d6efd;
+        }
+
+        .product-image {
+            max-width: 300px;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .product-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .product-details p {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .btn-group-custom {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-cart {
+            background-color: #ffc107;
+            color: #fff;
+            flex: 1;
+        }
+
+        .btn-cart:hover {
+            background-color: #e0a800;
+            color: #fff;
+        }
+
+        .btn-buy {
+            background-color: #28a745;
+            color: #fff;
+            flex: 1;
+        }
+
+        .btn-buy:hover {
+            background-color: #218838;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<div class="container mt-5">
+    <div class="product-container">
+        <!-- ปุ่มย้อนกลับ -->
+        <a href="{{ url()->previous() }}" class="back-btn">
+            <i class="bi bi-arrow-left-circle"></i>
+        </a>
+
+        <div class="row align-items-center">
+            <!-- รูปสินค้า (ซ้าย) -->
+            <div class="col-md-5 text-center">
+                @if ($product->product_image)
+                    <img src="{{ asset($product->product_image) }}" class="product-image"
+                        alt="{{ $product->product_name }}">
+                @else
+                    <img src="{{ asset('images/default.png') }}" class="product-image" alt="ไม่มีรูปภาพ">
+                @endif
+            </div>
+
+            <!-- ข้อมูลสินค้า (ขวา) -->
+            <div class="col-md-7 product-details">
+                <h1 class="product-title">{{ $product->product_name }}</h1>
+                <p><strong>ราคา:</strong> {{ $product->price }} บาท</p>
+                <p><strong>รายละเอียด:</strong> {{ $product->description ?? 'ไม่มีรายละเอียด' }}</p>
+                <p><strong>จำนวน:</strong> {{ $product->quantity ?? '-' }}</p>
+                <p><strong>ขนาด:</strong> {{ $product->size ?? '-' }}</p>
+
+                <!-- ปุ่มตะกร้า + สั่งซื้อ -->
+                <div class="btn-group-custom">
+                    <a href="#" class="btn btn-cart">
+                        <i class="bi bi-cart-plus"></i> เพิ่มลงตะกร้า
+                    </a>
+                    <a href="#" class="btn btn-buy">
+                        <i class="bi bi-bag-check"></i> สั่งซื้อสินค้า
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
