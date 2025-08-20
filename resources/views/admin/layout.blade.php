@@ -68,7 +68,9 @@
         <div class="nav-center">
             <a href="/admin/product">สินค้า</a>
             <a href="/admin/course">คอร์สเรียน</a>
+            <a href="{{ route('admin.orders.index') }}"> คำสั่งซื้อ</a>
         </div>
+
     </div>
     <div class="container mt-5">
         @yield('content')

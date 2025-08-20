@@ -7,6 +7,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\CourseBookingController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\OrderAdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,6 +68,20 @@ Route::delete('/member/cart/delete/{id}', [CartController::class, 'destroy'])
     ->name('member.cart.delete')
     ->middleware('auth');
 
+// cheakout
+Route::middleware(['auth'])->group(function () {
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/member/checkout', [CheckoutController::class, 'index'])->name('member.checkout');
+
+});
+Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+// แสดงรายการออเดอร์ของสมาชิก
+Route::get('/member/orders', [OrderController::class, 'index'])->name('member.orders');
+
+// แสดงรายละเอียดออเดอร์ของสมาชิก
+Route::get('/member/orders/{id}', [OrderController::class, 'show'])->name('member.orders.show');
+
 // แสดงคอร์สสำหรับ member
 Route::get('/member/courses', [CourseController::class, 'showForMember'])->name('member.courses');
 // แสดงรายละเอียดคอร์ส (สำหรับ member)
@@ -79,6 +96,7 @@ Route::get('/member/courseBookingList', [CourseBookingController::class, 'course
 Route::delete('/member/courseBooking/cancel/{id}', [CourseBookingController::class, 'cancel'])
     ->name('member.course.booking.cancel')
     ->middleware('auth');
+
 
 // Admin Dashboard
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -135,6 +153,11 @@ Route::get('/admin/courseBookings', [CourseBookingController::class, 'adminIndex
 Route::patch('/admin/courseBookings/{id}/approve', [CourseBookingController::class, 'approve'])->name('admin.course.booking.approve');
 Route::patch('/admin/courseBookings/{id}/reject', [CourseBookingController::class, 'reject'])->name('admin.course.booking.reject');
 
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/orders', [OrderAdminController::class, 'index'])->name('admin.orders.index');
+    Route::get('/orders/{id}', [OrderAdminController::class, 'show'])->name('admin.orders.show');
+    Route::post('/orders/{id}/update-status', [OrderAdminController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+});
 
 
 require __DIR__.'/auth.php';
