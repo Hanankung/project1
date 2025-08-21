@@ -81,6 +81,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    <!-- ปุ่ม ดูคำสั่งซื้อ -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ route('member.orders') }}" class="btn btn-primary">
+            <i class="bi bi-list-check"></i> ดูคำสั่งซื้อของฉัน
+        </a>
+    </div>
 
     <div class="row row-cols-1 row-cols-md-6 g-4">
         @forelse($products as $product)
