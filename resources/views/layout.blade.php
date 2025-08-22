@@ -34,8 +34,8 @@
     <!-- Navigation Bar -->
     <div class="nav-bar">
         <div class="nav-center">
-            <a href="#">สินค้า</a>
-            <a href="#">คอร์สเรียน</a>
+            <a href="{{ route('guest.products') }}">สินค้า</a>
+            <a href="{{ route('guest.courses') }}">คอร์สเรียน</a>
             <a href="/aboutme">เกี่ยวกับเรา</a>
         </div>
         <div class="nav-right">

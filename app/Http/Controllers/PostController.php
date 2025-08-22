@@ -22,6 +22,19 @@ class PostController extends Controller
     $posts = Post::all();
     return view('admin.product', compact('posts'));
 }
+// สำหรับผู้ใช้ทั่วไป
+public function guestIndex()
+{
+    $products = \App\Models\Post::all(); // ดึงสินค้าทั้งหมด
+    return view('products', compact('products'));
+}
+
+public function guestShow($id)
+{
+    $product = \App\Models\Post::findOrFail($id);
+    return view('product_detail', compact('product'));
+}
+
 
     /**
      * Show the form for creating a new resource.

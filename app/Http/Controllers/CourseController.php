@@ -22,6 +22,8 @@ class CourseController extends Controller
     $posts = course::all();
     return view('admin.course', compact('posts'));
 }
+
+// สำหรับผู้ใช้ทัสมัครสมาชิก
 public function showForMember()
 {
     // ดึงข้อมูลคอร์สทั้งหมดจาก DB
@@ -37,6 +39,19 @@ public function showDetail($id)
 
     // ส่งไปยัง view
     return view('member.course_detail', compact('course'));
+}
+
+// สำหรับผู้ใช้ทั่วไป
+public function guestIndex()
+{
+    $courses = Course::all(); // หรือ Model ที่เก็บคอร์ส
+    return view('courses', compact('courses'));
+}
+
+public function guestShow($id)
+{
+    $course = Course::findOrFail($id);
+    return view('course_detail', compact('course'));
 }
 
 

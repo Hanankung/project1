@@ -14,6 +14,13 @@ use App\Http\Controllers\Admin\OrderAdminController;
 Route::get('/', function () {
     return view('welcome');
 });
+// สำหรับผู้ใช้ทั่วไป (สินค้า)
+Route::get('/shop', [PostController::class, 'guestIndex'])->name('guest.products');
+Route::get('/shop/{id}', [PostController::class, 'guestShow'])->name('guest.products.show');
+
+// สำหรับผู้ใช้ทั่วไป (คอร์ส)
+Route::get('/courses', [CourseController::class, 'guestIndex'])->name('guest.courses');
+Route::get('/courses/{id}', [CourseController::class, 'guestShow'])->name('guest.courses.show');
 // หน้าเกี่ยวกับเรา
 Route::get('/aboutme', function () {
     return view('aboutme'); // ไม่ต้องใส่นามสกุล .blade.php
