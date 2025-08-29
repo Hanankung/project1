@@ -54,10 +54,16 @@ public function guestShow($id)
         // ตรวจสอบข้อมูลที่รับมา
         $validatedData = $request->validate([
             'product_name' => 'required|string|max:50',
+            'product_name_ENG' => 'nullable|string|max:50',
+            'product_name_MS' => 'nullable|string|max:50',
             'description' => 'nullable|string',
+            'description_ENG' => 'nullable|string',
+            'description_MS' => 'nullable|string',
             'price' => 'required|numeric',
             'quantity' => 'required|integer',
             'material' => 'required|string|max:20',
+            'material_ENG' => 'nullable|string|max:50',
+            'material_MS' => 'nullable|string|max:50',
             'size' => 'required|string|max:20',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -78,10 +84,16 @@ public function guestShow($id)
         // สร้างสินค้าใหม่
         Post::create([
             'product_name' => $validatedData['product_name'],
+            'product_name_ENG' => $validatedData['product_name_ENG'] ?? null,
+            'product_name_MS' => $validatedData['product_name_MS'] ?? null,
             'description' => $validatedData['description'],
+            'description_ENG' => $validatedData['description_ENG'] ?? null,
+            'description_MS' => $validatedData['description_MS'] ?? null,
             'price' => $validatedData['price'],
             'quantity' => $validatedData['quantity'],
             'material' => $validatedData['material'],
+            'material_ENG' => $validatedData['material_ENG'] ?? null,
+            'material_MS' => $validatedData['material_MS'] ?? null,
             'size' => $validatedData['size'],
             'product_image' => $imagePath,
         ]);
@@ -119,10 +131,16 @@ public function guestShow($id)
         // ตรวจสอบข้อมูลที่รับมา
         $validatedData = $request->validate([
             'product_name' => 'required|string|max:50',
+            'product_name_ENG' => 'nullable|string|max:50',
+            'product_name_MS' => 'nullable|string|max:50',
             'description' => 'nullable|string',
+            'description_ENG' => 'nullable|string',
+            'description_MS' => 'nullable|string',
             'price' => 'required|numeric',
             'quantity' => 'required|integer',
             'material' => 'required|string|max:20',
+            'material_ENG' => 'nullable|string|max:50',
+            'material_MS' => 'nullable|string|max:50',
             'size' => 'required|string|max:20',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -143,10 +161,16 @@ public function guestShow($id)
         // อัปเดตข้อมูลสินค้า
         $post->update([
             'product_name' => $validatedData['product_name'],
+            'product_name_ENG' => $validatedData['product_name_ENG'] ?? null,
+            'product_name_MS' => $validatedData['product_name_MS'] ?? null,
             'description' => $validatedData['description'],
+            'description_ENG' => $validatedData['description_ENG'] ?? null,
+            'description_MS' => $validatedData['description_MS'] ?? null,
             'price' => $validatedData['price'],
             'quantity' => $validatedData['quantity'],
             'material' => $validatedData['material'],
+            'material_ENG' => $validatedData['material_ENG'] ?? null,
+            'material_MS' => $validatedData['material_MS'] ?? null,
             'size' => $validatedData['size'],
             'product_image' => $imagePath,
         ]);

@@ -3,7 +3,7 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('CSS/product.css') }}">
 <h1 class="mb-4">Product Post</h1>
-<a href="{{ route('create')}}" class="btn btn-primary mb-3">+ Create New Post</a>
+<a href="{{ route('create')}}" class="btn btn-primary mb-3">+ Create New Products</a>
 
 @if(session('success'))
 <div class="alert alert-success">
