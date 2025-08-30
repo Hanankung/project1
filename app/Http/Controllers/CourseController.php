@@ -73,6 +73,10 @@ public function guestShow($id)
         $validatedData = $request->validate([
             'course_name' => 'required|string|max:50',
             'course_detail' => 'nullable|string',
+            'course_name_ENG' => 'nullable|string|max:50',
+            'course_name_MS' => 'nullable|string|max:50',
+            'course_detail_ENG' => 'nullable|string',
+            'course_detail_MS' => 'nullable|string',
             'price' => 'required|numeric',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -94,6 +98,10 @@ public function guestShow($id)
         course::create([
             'course_name' => $validatedData['course_name'],
             'course_detail' => $validatedData['course_detail'],
+            'course_name_ENG' => $validatedData['course_name_ENG'],
+            'course_name_MS' => $validatedData['course_name_MS'],
+            'course_detail_ENG' => $validatedData['course_detail_ENG'],
+            'course_detail_MS' => $validatedData['course_detail_MS'],
             'price' => $validatedData['price'],
             'course_image' => $imagePath,
         ]);
@@ -129,6 +137,10 @@ public function guestShow($id)
         $validatedData = $request->validate([
             'course_name' => 'required|string|max:50',
             'course_detail' => 'nullable|string',
+            'course_name_ENG' => 'nullable|string|max:50',
+            'course_name_MS' => 'nullable|string|max:50',
+            'course_detail_ENG' => 'nullable|string',
+            'course_detail_MS' => 'nullable|string',
             'price' => 'required|numeric',
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -150,6 +162,10 @@ public function guestShow($id)
         $course->update([
             'course_name' => $validatedData['course_name'],
             'course_detail' => $validatedData['course_detail'],
+            'course_name_ENG' => $validatedData['course_name_ENG'],
+            'course_name_MS' => $validatedData['course_name_MS'],
+            'course_detail_ENG' => $validatedData['course_detail_ENG'],
+            'course_detail_MS' => $validatedData['course_detail_MS'],
             'price' => $validatedData['price'],
             'course_image' => $imagePath,
         ]);

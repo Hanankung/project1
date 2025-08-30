@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>Course Post</h1>
-<a href="{{ route('create_course') }}" class="btn btn-primary mb-3">+ Create New Post</a>
+<a href="{{ route('create_course') }}" class="btn btn-primary mb-3">+ Create New Course</a>
 
 @if(session('success'))
 <div class="alert alert-success">
