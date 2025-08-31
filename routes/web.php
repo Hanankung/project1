@@ -10,6 +10,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\OrderAdminController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('welcome');
@@ -165,6 +167,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/orders/{id}', [OrderAdminController::class, 'show'])->name('admin.orders.show');
     Route::post('/orders/{id}/update-status', [OrderAdminController::class, 'updateStatus'])->name('admin.orders.updateStatus');
 });
+// เปลี่ยนภาษา
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['th', 'en', 'ms'])) {
+        Session::put('locale', $locale);
+        App::setLocale($locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 
 require __DIR__.'/auth.php';

@@ -23,9 +23,9 @@
                 </button>
                 <i class="fas fa-language icon"></i>
                 <div class="language-switcher" style="display:inline-block; margin-left:10px;">
-                    <a href="{{ url('lang/th') }}">ไทย</a> |
-                    <a href="{{ url('lang/en') }}">EN</a> |
-                    <a href="{{ url('lang/ms') }}">MS</a>
+                    <a href="{{ route('lang.switch', 'th') }}">ไทย</a> |
+                    <a href="{{ route('lang.switch', 'en') }}">EN</a> |
+                    <a href="{{ route('lang.switch', 'ms') }}">MS</a>
                 </div>
             </div>
             <div class="icon-right">
