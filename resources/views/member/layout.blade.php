@@ -17,11 +17,16 @@
         </div>
         <div class="top-right">
             <div class="search-center">
-                <input type="text" class="search-input" placeholder="ค้นหา...">
+                <input type="text" class="search-input" placeholder="{{ __('messages.search') }}">
                 <button class="search-button">
                     <i class="fas fa-search"></i>
                 </button>
                 <i class="fas fa-language icon"></i>
+                <div class="language-switcher" style="display:inline-block; margin-left:10px;">
+                    <a href="{{ url('lang/th') }}">ไทย</a> |
+                    <a href="{{ url('lang/en') }}">EN</a> |
+                    <a href="{{ url('lang/ms') }}">MS</a>
+                </div>
             </div>
             <div class="icon-right">
                 <a href="{{ route('member.cart') }}" class="cart-icon position-relative">
@@ -42,12 +47,12 @@
     <!-- Navigation Bar -->
     <div class="nav-bar">
         <div class="nav-center">
-            <a href="/member/product">สินค้า</a>
-            <a href="/member/courses">คอร์สเรียน</a>
-            <a href="/member/aboutme">เกี่ยวกับเรา</a>
+            <a href="/member/product">{{ __('messages.product') }}</a>
+            <a href="/member/courses">{{ __('messages.course') }}</a>
+            <a href="/member/aboutme">{{ __('messages.about_me') }}</a>
         </div>
         <div class="nav-right">
-            <a href="/member/contect">ติดต่อเรา</a>
+            <a href="/member/contect">{{ __('messages.contact') }}</a>
         </div>
     </div>
     <div class="container mt-5">
