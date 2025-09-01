@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -75,6 +76,11 @@
             }
         </style>
     </head>
+    @php
+    $locale = app()->getLocale();
+    $nameField = $locale === 'en' ? 'product_name_ENG' : ($locale === 'ms' ? 'product_name_MS' : 'product_name');
+    @endphp
+
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
             {{ session('success') }}
@@ -84,7 +90,7 @@
     <!-- ปุ่ม ดูคำสั่งซื้อ -->
     <div class="d-flex justify-content-end mb-3">
         <a href="{{ route('member.orders') }}" class="btn btn-primary">
-            <i class="bi bi-list-check"></i> ดูคำสั่งซื้อของฉัน
+            <i class="bi bi-list-check"></i> {{ __('messages.View orders') }}
         </a>
     </div>
 
@@ -94,13 +100,13 @@
                 <div class="card h-100 shadow-sm">
                     @if ($product->product_image)
                         <img src="{{ asset($product->product_image) }}" class="card-img-top"
-                            alt="{{ $product->product_name }}">
+                            alt="{{ $product->$nameField ?? $product->product_name }}">
                     @else
                         <img src="{{ asset('images/default.png') }}" class="card-img-top" alt="ไม่มีรูปภาพ">
                     @endif
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $product->product_name }}</h5>
-                        <p class="mb-1"><strong>ราคา:</strong> {{ $product->price }} บาท</p>
+                        <h5 class="card-title">{{ $product->$nameField ?? $product->product_name }}</h5>
+                        <p class="mb-1"><strong>{{ __('messages.price') }}:</strong> {{ $product->price }} {{ __('messages.baht') }}</p>
                         <!-- ปุ่มตะกร้า + สั่งซื้อ -->
                         <div class="btn-group-custom mb-2">
                             <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
@@ -111,20 +117,20 @@
                                 </button>
                             </form>
                             <a href="#" class="btn btn-buy">
-                                <i class="bi bi-bag-check"></i> สั่งซื้อ
+                                <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
                             </a>
                         </div>
 
 
                         <!-- ปุ่มรายละเอียด -->
                         <a href="{{ route('member.product.show', $product->id) }}" class="btn btn-detail mt-auto">
-                            รายละเอียด
+                            {{ __('messages.description') }}
                         </a>
                     </div>
                 </div>
             </div>
         @empty
-            <div class="alert alert-info">ยังไม่มีสินค้าในระบบ</div>
+            <div class="alert alert-info">{{ __('messages.warn') }}</div>
         @endforelse
         
     </div>

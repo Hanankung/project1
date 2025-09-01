@@ -16,12 +16,12 @@
     <body>
 
         <div class="container">
-            <h3>ติดต่อเรา 🌿</h3>
+            <h3>{{ __('messages.contact') }}🌿</h3>
             <div class="contact-info">
-                <p>แหล่งเรียนรู้ส่งเสริมอาชีพ กลุ่มอาชีพสืบสาน กลุ่มวิสาหกิจชุมชน</p>
+                <p>{{ __('messages.details 1') }}</p>
                 <p>by Siro-Secret</p>
                 <p>📞 097-3502899</p>
-                <p>📍 13 หมู่ที่ 2 ตำบลป่าบอน อำเภอป่าบอน จังหวัดพัทลุง</p>
+                <p>📍{{ __('messages.details 2') }}</p>
             </div>
             <br>
 
@@ -32,7 +32,7 @@
                 <a href="#" class="line"><i class="fab fa-line"></i> @sirosecret</a>
             </div>
             <div class="support-section">
-                <strong>สนับสนุนโดย :</strong>
+                <strong>{{ __('messages.Supported by') }} :</strong>
                 <div class="support-logos">
                     <img src="{{ asset('image/logo1.png') }}" alt="Logo1">
                     <img src="{{ asset('image/logo2.png') }}" alt="Logo2">

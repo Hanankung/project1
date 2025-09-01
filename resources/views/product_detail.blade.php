@@ -80,7 +80,12 @@
         }
     </style>
 </head>
-
+@php
+        $locale = App::getLocale();
+        $nameField = $locale === 'en' ? 'product_name_ENG' : ($locale === 'ms' ? 'product_name_MS' : 'product_name');
+        $descField = $locale === 'en' ? 'description_ENG' : ($locale === 'ms' ? 'description_MS' : 'description');
+        $materialField = $locale === 'en' ? 'material_ENG' : ($locale === 'ms' ? 'material_MS' : 'material');
+    @endphp
 <div class="container mt-5">
     <div class="product-container">
         <!-- ปุ่มย้อนกลับ -->
@@ -101,11 +106,13 @@
 
             <!-- ข้อมูลสินค้า (ขวา) -->
             <div class="col-md-7 product-details">
-                <h1 class="product-title">{{ $product->product_name }}</h1>
-                <p><strong>ราคา:</strong> {{ $product->price }} บาท</p>
-                <p><strong>รายละเอียด:</strong> {{ $product->description ?? 'ไม่มีรายละเอียด' }}</p>
-                <p><strong>จำนวน:</strong> {{ $product->quantity ?? '-' }}</p>
-                <p><strong>ขนาด:</strong> {{ $product->size ?? '-' }}</p>
+                <h1 class="product-title">{{ $product->$nameField ?? '-' }}</h1>
+                    <p><strong>{{ __('messages.price') }}:</strong> {{ number_format($product->price, 2) }}
+                        {{ __('messages.baht') }}</p>
+                    <p><strong>{{ __('messages.description') }}:</strong> {{ $product->$descField ?? '-' }}</p>
+                    <p><strong>{{ __('messages.quantity') }}:</strong> {{ $product->quantity ?? '-' }}</p>
+                    <p><strong>{{ __('messages.material') }}:</strong> {{ $product->$materialField ?? '-' }}</p>
+                    <p><strong>{{ __('messages.size') }}:</strong> {{ $product->size ?? '-' }}</p>
 
                 <!-- ปุ่มตะกร้า + สั่งซื้อ -->
                 <div class="btn-group-custom">
@@ -113,11 +120,11 @@
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <button type="submit" class="btn btn-cart">
-                                    <i class="bi bi-cart-plus">เพิ่มลงตะกร้า</i>
+                                    <i class="bi bi-cart-plus"> {{ __('messages.add_to_cart') }}</i>
                                 </button>
                             </form>
-                    <a href="#" class="btn btn-buy">
-                        <i class="bi bi-bag-check"></i> สั่งซื้อสินค้า
+                    <a href="/login" class="btn btn-buy">
+                        <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
                     </a>
                 </div>
             </div>

@@ -13,34 +13,33 @@
 
     <body>
         <div class="header">
-            <h1>เกี่ยวกับเรา</h1>
-        <div class="container">
-            <div class="about-box"> <img src="{{ asset('image/aboutMe1.jpg') }}" alt="ร้าน Siro-Secret">
-                <div class="about-info">
-                    <p><b>ชื่อร้านค้า:</b> Siro-Secret - เสริมโชค เสริมทรัพย์ สักทอง ของขวัญจากธรรมชาติ
-                        ผ้าพิมพ์ลายธรรมชาติด้วยเทคนิค Eco Print</p>
+            <h1>{{ __('messages.about_me') }}</h1>
+            <div class="container">
+                <div class="about-box"> <img src="{{ asset('image/aboutMe1.jpg') }}" alt="ร้าน Siro-Secret">
+                    <div class="about-info">
+                        <p><b>{{ __('messages.Shop Name') }} :</b>
+                            {{ __('messages.Shop Name 1') }}</p>
                         <br>
-                    <p><b>รายละเอียดร้านค้า:</b> จำหน่ายผ้าพิมพ์ลายธรรมชาติ (Eco Print) จากจังหวัดพัทลุง
-                        สินค้าทำมือจากใบไม้จริง ผ้าพันคอ เสื้อผ้า และของตกแต่ง เสริมพลังชีวิตด้วยผลงานจากธรรมชาติแท้ 100%
-                        โดยช่างฝีมือท้องถิ่น</p>
+                        <p><b>{{ __('messages.Store details') }} :</b>{{ __('messages.details') }} </p>
+                    </div>
                 </div>
-            </div>
-            <div class="award-title">ความภูมิใจของเรา: หนังสือรับรองและรางวัลแห่งคุณค่า</div>
-            <div class="award-gallery"> 
-                <img src="{{ asset('image/reward1.jpg') }}" alt="รางวัล 1"> 
-                <img src="{{ asset('image/reward2.jpg') }}" alt="รางวัล 2"> 
-                <img src="{{ asset('image/reward3.jpg') }}" alt="รางวัล 3"> 
-                <img src="{{ asset('image/reward4.jpg') }}" alt="รางวัล 4"> 
-                <img src="{{ asset('image/reward5.jpg') }}" alt="รางวัล 5"> 
-                <img src="{{ asset('image/reward6.jpg') }}" alt="รางวัล 6"> 
-            </div>
-            <div class="award-gallery"> 
-                <img src="{{ asset('image/reward7.jpg') }}" alt="รางวัล 1"> 
-                <img src="{{ asset('image/reward8.jpg') }}" alt="รางวัล 2"> 
-                <img src="{{ asset('image/reward9.jpg') }}" alt="รางวัล 3"> 
-                <img src="{{ asset('image/reward10.jpg') }}" alt="รางวัล 4"> 
-                <img src="{{ asset('image/reward11.jpg') }}" alt="รางวัล 5"> 
-                <img src="{{ asset('image/reward12.jpg') }}" alt="รางวัล 6"> 
+                <div class="award-title">{{ __('messages.Our pride') }} : {{ __('messages.Certificates') }}</div>
+                <div class="award-gallery">
+                    <img src="{{ asset('image/reward1.jpg') }}" alt="รางวัล 1">
+                    <img src="{{ asset('image/reward2.jpg') }}" alt="รางวัล 2">
+                    <img src="{{ asset('image/reward3.jpg') }}" alt="รางวัล 3">
+                    <img src="{{ asset('image/reward4.jpg') }}" alt="รางวัล 4">
+                    <img src="{{ asset('image/reward5.jpg') }}" alt="รางวัล 5">
+                    <img src="{{ asset('image/reward6.jpg') }}" alt="รางวัล 6">
+                </div>
+                <div class="award-gallery">
+                    <img src="{{ asset('image/reward7.jpg') }}" alt="รางวัล 1">
+                    <img src="{{ asset('image/reward8.jpg') }}" alt="รางวัล 2">
+                    <img src="{{ asset('image/reward9.jpg') }}" alt="รางวัล 3">
+                    <img src="{{ asset('image/reward10.jpg') }}" alt="รางวัล 4">
+                    <img src="{{ asset('image/reward11.jpg') }}" alt="รางวัล 5">
+                    <img src="{{ asset('image/reward12.jpg') }}" alt="รางวัล 6">
+                </div>
             </div>
         </div>
     </body>

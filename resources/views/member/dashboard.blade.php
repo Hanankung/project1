@@ -61,22 +61,22 @@
         <img src="{{ asset('image/snim.jpg') }}" alt="Eco Print Banner" class="eco-banner">
     </div>
     <div class="hero">
-        เสริมโชค เสริมทรัพย์ สักทอง ของขวัญจากธรรมชาติ <br>
-        ผ้าพิมพ์ลายธรรมชาติด้วยเทคนิค Eco Print
+        {{ __('messages.subtitle 1') }}<br>
+        {{ __('messages.subtitle') }}
     </div>
 
     <div class="three-images">
         <div class="image-card">
             <img src="{{ asset('image/ex_product1.jpg') }}" alt="ภาพที่ 1">
-            <p>ผ้าพิมพ์ลายธรรมชาติ Eco Print แบบห่มสีกับน้ำสนิม</p>
+            <p>{{ __('messages.title') }}</p>
         </div>
         <div class="image-card">
             <img src="{{ asset('image/ex_product2.jpg') }}" alt="ภาพที่ 2">
-            <p>ผ้าพิมพ์ลายธรรมชาติ Eco Print แบบห่มสี</p>
+            <p>{{ __('messages.title 1') }}</p>
         </div>
         <div class="image-card">
             <img src="{{ asset('image/ex_product3.jpg') }}" alt="ภาพที่ 3">
-            <p>กล่องดินสอ จากผ้าพิมพ์ลาย Eco Print</p>
+            <p>{{ __('messages.title 2') }}</p>
         </div>
     </div>
 

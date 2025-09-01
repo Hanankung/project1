@@ -75,6 +75,10 @@
             }
         </style>
     </head>
+    @php
+    $locale = app()->getLocale();
+    $nameField = $locale === 'en' ? 'product_name_ENG' : ($locale === 'ms' ? 'product_name_MS' : 'product_name');
+    @endphp
 
     <div class="row row-cols-1 row-cols-md-6 g-4">
         @forelse($products as $product)
@@ -82,13 +86,13 @@
                 <div class="card h-100 shadow-sm">
                     @if ($product->product_image)
                         <img src="{{ asset($product->product_image) }}" class="card-img-top"
-                            alt="{{ $product->product_name }}">
+                            alt="{{ $product->$nameField ?? $product->product_name }}">
                     @else
                         <img src="{{ asset('images/default.png') }}" class="card-img-top" alt="ไม่มีรูปภาพ">
                     @endif
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $product->product_name }}</h5>
-                        <p class="mb-1"><strong>ราคา:</strong> {{ $product->price }} บาท</p>
+                        <h5 class="card-title">{{ $product->$nameField ?? $product->product_name }}</h5>
+                        <p class="mb-1"><strong>{{ __('messages.price') }}:</strong> {{ $product->price }} {{ __('messages.baht') }}</p>
                         <!-- ปุ่มตะกร้า + สั่งซื้อ -->
                         <div class="btn-group-custom mb-2">
                             <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
@@ -99,20 +103,20 @@
                                 </button>
                             </form>
                             <a href="#" class="btn btn-buy">
-                                <i class="bi bi-bag-check"></i> สั่งซื้อ
+                                <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
                             </a>
                         </div>
 
 
                         <!-- ปุ่มรายละเอียด -->
                         <a href="{{ route('guest.products.show', $product->id) }}" class="btn btn-detail mt-auto">
-                            รายละเอียด
+                            {{ __('messages.description') }}
                         </a>
                     </div>
                 </div>
             </div>
         @empty
-            <div class="alert alert-info">ยังไม่มีสินค้าในระบบ</div>
+            <div class="alert alert-info">{{ __('messages.warn') }}</div>
         @endforelse
         
     </div>
