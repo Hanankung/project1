@@ -7,7 +7,23 @@
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+<style>
+    .language-switcher a {
+        text-decoration: none;
+        color: #000000;
+        font-weight: bold;
+        margin: 0 2px;
+        padding: 5px 10px;
+        border: 1px solid #babbba;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
 
+    .language-switcher a:hover {
+        background-color: #2e7d32;
+        color: #fff;
+    }
+</style>
 <body>
     <!-- Top Bar -->
     <div class="top-bar">
@@ -23,7 +39,7 @@
                 </button>
                 <i class="fas fa-language icon"></i>
                 <div class="language-switcher" style="display:inline-block; margin-left:10px;">
-                    <a href="{{ route('lang.switch', 'th') }}">ไทย</a> |
+                    <a href="{{ route('lang.switch', 'th') }}">TH</a> |
                     <a href="{{ route('lang.switch', 'en') }}">EN</a> |
                     <a href="{{ route('lang.switch', 'ms') }}">MS</a>
                 </div>

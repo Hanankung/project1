@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\OrderAdminController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
@@ -175,6 +176,9 @@ Route::get('lang/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('lang.switch');
+// ค้นหาสินค้า
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+
 
 
 require __DIR__.'/auth.php';
