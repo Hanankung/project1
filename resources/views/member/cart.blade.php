@@ -47,19 +47,19 @@
     </head>
 
     <div class="container mt-4">
-        <h2 class="mb-4">ตะกร้าสินค้า</h2>
+        <h2 class="mb-4">{{ __('messages.Shopping cart') }}</h2>
 
         @if (count($cartItems) > 0)
             <div class="table-responsive">
                 <table class="table table-bordered align-middle cart-table">
                     <thead class="table-light">
                         <tr>
-                            <th>สินค้า</th>
-                            <th>ชื่อสินค้า</th>
-                            <th>ราคา</th>
-                            <th>จำนวน</th>
-                            <th>รวม</th>
-                            <th>ลบ</th>
+                            <th>{{ __('messages.product') }}</th>
+                            <th>{{ __('messages.product name') }}</th>
+                            <th>{{ __('messages.price') }}</th>
+                            <th>{{ __('messages.quantity') }}</th>
+                            <th>{{ __('messages.Total price') }}</th>
+                            <th>{{ __('messages.delete') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,8 +74,19 @@
                                     <img src="{{ asset($item->product->product_image) }}"
                                         alt="{{ $item->product->product_name }}">
                                 </td>
-                                <td>{{ $item->product->product_name }}</td>
-                                <td>{{ number_format($item->product->price, 2) }} บาท</td>
+                                <td>
+                                    @php
+                                        $locale = app()->getLocale();
+                                        if ($locale === 'th') {
+                                            echo $item->product->product_name;
+                                        } elseif ($locale === 'en') {
+                                            echo $item->product->product_name_ENG;
+                                        } elseif ($locale === 'ms') {
+                                            echo $item->product->product_name_MS;
+                                        }
+                                    @endphp
+                                </td>
+                                <td>{{ number_format($item->product->price, 2) }} {{ __('messages.baht') }}</td>
                                 <td>
                                     <form action="{{ route('member.cart.update', $item->id) }}" method="POST"
                                         class="d-flex">
@@ -88,7 +99,7 @@
                                         </button>
                                     </form>
                                 </td>
-                                <td>{{ number_format($subtotal, 2) }} บาท</td>
+                                <td>{{ number_format($subtotal, 2) }} {{ __('messages.baht') }}</td>
                                 <td>
                                     <form action="{{ route('member.cart.delete', $item->id) }}" method="POST"
                                         onsubmit="return confirm('ต้องการลบสินค้านี้?')">
@@ -107,16 +118,17 @@
 
             <!-- สรุปราคารวม -->
             <div class="d-flex justify-content-between align-items-center mt-4">
-                <h4>ราคารวมทั้งหมด: <strong>{{ number_format($total, 2) }} บาท</strong></h4>
+                <h4>{{ __('messages.Total price') }}: <strong>{{ number_format($total, 2) }}
+                        {{ __('messages.baht') }}</strong></h4>
                 {{-- ปุ่มสั่งซื้อ (ไปหน้า checkout) --}}
                 <a href="/member/checkout" class="btn-order">
-                    <i class="bi bi-bag-check"></i> สั่งซื้อ
+                    <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
                 </a>
 
             </div>
         @else
             <div class="alert alert-info text-center">
-                ไม่มีสินค้าในตะกร้า
+                {{ __('messages.warn2') }}
             </div>
         @endif
 

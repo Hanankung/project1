@@ -91,5 +91,23 @@ return [
     'Piece' => 'Piece',
 
     'back' => 'Back',
+
+    'delete' => 'Delete',
+
+    'product name' => 'Product Name',
+
+    'Shopping cart' => 'Shopping cart',
+
+    'warn2' => 'No items in the cart',
+
+    'Order Confirmation' => 'Order Confirmation',
+
+    'Recipient information' => 'Recipient information',
+
+    'Recipient name' => 'Recipient name',
+
+    'Shipping address' => 'Shipping address',
+
+    'Items in Cart' => 'Items in Cart',
 ];
 

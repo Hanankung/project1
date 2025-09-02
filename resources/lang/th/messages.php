@@ -88,5 +88,23 @@ return [
     'Piece' => 'ชิ้น',
 
     'back' => 'ย้อนกลับ',
+
+    'delete' => 'ลบ',
+
+    'product name' => 'ชื่อสินค้า',
+
+    'Shopping cart' => 'ตะกร้าสินค้า',
+
+    'warn2' => 'ไม่มีสินค้าในตะกร้า',
+
+    'Order Confirmation' => 'ยืนยันการสั่งซื้อ',
+
+    'Recipient information' => 'ข้อมูลผู้รับสินค้า',
+
+    'Recipient name' => 'ชื่อผู้รับ',
+
+    'Shipping address' => 'ที่อยู่จัดส่ง',
+
+    'Items in Cart' => 'รายการสินค้าในตะกร้า',
 ];
 

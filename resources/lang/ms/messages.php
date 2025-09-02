@@ -91,5 +91,23 @@ return [
     'Piece' => 'Kepingan',
 
     'back' => 'Kembali',
+
+    'delete' => 'Padam',
+
+    'product name' => 'Nama Produk',
+
+    'Shopping cart' => 'Troli Membeli-belah',
+
+    'warn2' => 'Tiada item dalam troli',
+
+    'Order Confirmation' => 'Pengesahan Pesanan',
+
+    'Recipient information' => 'Maklumat penerima',
+
+    'Recipient name' => 'Nama penerima',
+
+    'Shipping address' => 'Alamat penghantaran',
+
+    'Items in Cart' => 'Item dalam Troli',
 ];
 
