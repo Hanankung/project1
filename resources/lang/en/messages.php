@@ -65,5 +65,31 @@ return [
     'details 2' => '13 Village No. 2, Pa Bon Subdistrict, Pa Bon District, Phatthalung Province',
 
     'Supported by' => 'Supported by',
+
+    'Order History' => 'Order History',
+
+    'warn1' => 'You do not have an order yet',
+
+    'Order date' => 'Order date',
+
+    'Total price' => 'Total price',
+
+    'status' => 'Status',
+
+    'detail' => 'Details',
+
+    'Order details' => 'Order details',
+
+    'Buyer' => 'Buyer',
+
+    'Address' => 'Address',
+
+    'Phone' => 'Phone',
+
+    'Product List' => 'Product List',
+
+    'Piece' => 'Piece',
+
+    'back' => 'Back',
 ];
 

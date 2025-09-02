@@ -65,5 +65,31 @@ return [
     'details 2' => '13 Kampung No 2, Mukim Pa Bon, Daerah Pa Bon, Provinsi Phatthalung',
 
     'Supported by' => 'Disokong oleh',
+
+    'Order History' => 'Sejarah Pesanan',
+
+    'warn1' => 'Anda belum mempunyai pesanan lagi',
+
+    'Order date' => 'Tarikh pesanan',
+
+    'Total price' => 'Jumlah harga',
+
+    'status' => 'Status',
+
+    'detail' => 'Perincian',
+
+    'Order details' => 'Perincian pesanan',
+
+    'Buyer' => 'Pembeli',
+
+    'Address' => 'Alamat',
+
+    'Phone' => 'Telefon',
+
+    'Product List' => 'Senarai Produk',
+
+    'Piece' => 'Kepingan',
+
+    'back' => 'Kembali',
 ];
 
