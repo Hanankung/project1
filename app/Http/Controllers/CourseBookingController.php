@@ -115,6 +115,7 @@ class CourseBookingController extends Controller
 }
 
 
+
     /**
      * Display the specified resource.
      */

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/product1.css') }}">
 </head>
 <div class="container py-5">
-    <h2 class="mb-4 text-center">คอร์สเรียนทั้งหมด</h2>
+    <h2 class="mb-4 text-center">{{ __('messages.courses_title') }}</h2>
 
     <div class="row">
         @foreach($courses as $course)
@@ -19,13 +19,13 @@
                     @endif
 
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $course->course_name }}</h5>
+                        <h5 class="card-title">{{ $course->name_i18n }}</h5>
                         <p class="card-text text-muted flex-grow-1">
-                            {{ Str::limit($course->course_detail, 100) }}
+                            {{ Str::limit($course->detail_i18n, 100) }}
                         </p>
-                        <p class="fw-bold text-primary">ราคา: {{ number_format($course->price) }} บาท</p>
-                        <a href="{{ route('member.course.detail', $course->id) }}" class="btn btn-outline-primary mt-auto">ดูรายละเอียด</a>
-                        <a href="{{ route('member.course.booking')}}" class="btn btn-primary btn-sm mt-2 w-100">+จองคอร์สเรียน</a>
+                        <p class="fw-bold text-primary">{{ __('messages.price') }} : {{ number_format($course->price) }} {{ __('messages.baht') }}</p>
+                        <a href="{{ route('member.course.detail', $course->id) }}" class="btn btn-outline-primary mt-auto">{{ __('messages.learn_more') }}</a>
+                        <a href="{{ route('member.course.booking')}}" class="btn btn-primary btn-sm mt-2 w-100"> + {{ __('messages.book_course') }}</a>
                         {{-- <a href="{{ route('create')}}" class="btn btn-primary mb-3">+ Create New Post</a> --}}
                     </div>
                 </div>
@@ -35,7 +35,7 @@
 
     @if($courses->isEmpty())
         <div class="alert alert-info text-center">
-            ยังไม่มีคอร์สเรียนในขณะนี้
+            {{ __('messages.no_courses') }}
         </div>
     @endif
 </div>

@@ -106,5 +106,82 @@ return [
     'Shipping address' => 'ที่อยู่จัดส่ง',
 
     'Items in Cart' => 'รายการสินค้าในตะกร้า',
+
+    'courses_title' => 'คอร์สเรียนทั้งหมด',
+
+    'learn_more'    => 'ดูรายละเอียด',
+
+    'book_course'   => 'จองคอร์สเรียน',
+
+    'no_courses'    => 'ยังไม่มีคอร์สเรียนในขณะนี้',
+
+    'gallery'       => 'ภาพบรรยากาศ',
+
+    'back_to_list'  => 'ย้อนกลับ',
+
+    'booking_form_title' => 'ฟอร์มจองคอร์ส',
+
+    'first_name' => 'ชื่อ',
+
+    'last_name' => 'นามสกุล',
+
+    'email' => 'อีเมล',
+
+    'people_qty' => 'จำนวนคน',
+
+    'price_thb' => 'ราคา (บาท)',
+
+    'booking_date' => 'วันที่จอง',
+
+    'course_name' => 'ชื่อคอร์ส',
+
+    'course_type' => 'ประเภทคอร์ส',
+
+    'course_type_placeholder' => '-- เลือกประเภทคอร์สเรียน --',
+
+    'fabric_type' => 'ชนิดของผ้า',
+
+    'fabric_type_placeholder' => '-- เลือกประเภทของผ้า --',
+
+    'fabric_length_m' => 'ความยาวของผ้า (เมตร)',
+
+    'save_booking' => 'บันทึกการจอง',
+
+// ตัวเลือกแบบเป็นรหัส (เก็บใน DB เป็นโค้ด แต่แสดงผลตามภาษา)
+    'course_type_options' => [
+
+    'mix' => 'แบบสีผสม',
+
+    'pound' => 'แบบทุบ',
+
+    'rust' => 'แบบสีสนิม',
+    ],
+
+    'fabric_type_options' => [
+
+    'cotton' => 'ผ้าฝ้าย',
+
+    'silk' => 'ผ้าไหม',
+
+    'linen' => 'ผ้าลินิน',
+
+    'rayon' => 'ผ้าเรยอน',
+
+    'scarf' => 'ผ้าพันคอ',
+
+    'tshirt' => 'เสื้อยืด',
+
+    ],
+
+    'booking_history_title' => 'ประวัติการจองคอร์สเรียน',
+
+    'status_options' => [
+
+    'pending'  => 'รอดำเนินการ',
+
+    'approved' => 'อนุมัติ',
+
+    'rejected' => 'ไม่อนุมัติ',
+    ],
 ];
 

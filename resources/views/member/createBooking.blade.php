@@ -6,7 +6,17 @@
 </head>
     {{-- สร้างฟอร์มสมัครคอร์ส --}}
     <div class="container mt-4">
-        <h2 class="mb-4">ฟอร์มจองคอร์ส</h2>
+        <h2 class="mb-4">{{ __('messages.booking_form_title') }}</h2>
+        {{-- แสดง error validation แบบรวม --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $err)
+                    <li>{{ $err }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
         <form action="{{ route('member.course.booking.store') }}" method="POST">
             @csrf
@@ -14,22 +24,22 @@
             {{-- ข้อมูลผู้จอง --}}
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="name" class="form-label">ชื่อ</label>
+                    <label for="name" class="form-label">{{ __('messages.first_name') }}</label>
                     <input type="text" class="form-control" id="name" name="name" maxlength="20" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="lastname" class="form-label">นามสกุล</label>
+                    <label for="lastname" class="form-label">{{ __('messages.last_name') }}</label>
                     <input type="text" class="form-control" id="lastname" name="lastname" maxlength="20" required>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
+                    <label for="phone" class="form-label">{{ __('messages.Phone') }}</label>
                     <input type="text" class="form-control" id="phone" name="phone" maxlength="10" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="email" class="form-label">อีเมล</label>
+                    <label for="email" class="form-label">{{ __('messages.email') }}</label>
                     <input type="email" class="form-control" id="email" name="email" maxlength="50" required>
                 </div>
             </div>
@@ -37,15 +47,15 @@
             {{-- รายละเอียดการจอง --}}
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <label for="quantity" class="form-label">จำนวนคน</label>
+                    <label for="quantity" class="form-label">{{ __('messages.people_qty') }}</label>
                     <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
                 </div>
                 <div class="col-md-4">
-                    <label for="price" class="form-label">ราคา (บาท)</label>
+                    <label for="price" class="form-label">{{ __('messages.price_thb') }}</label>
                     <input type="number" step="0.01" class="form-control" id="price" name="price" required>
                 </div>
                 <div class="col-md-4">
-                    <label for="booking_date" class="form-label">วันที่จอง</label>
+                    <label for="booking_date" class="form-label">{{ __('messages.booking_date') }}</label>
                     <input type="date" class="form-control" id="booking_date" name="booking_date" required>
                 </div>
             </div>
@@ -53,37 +63,38 @@
             {{-- รายละเอียดคอร์ส --}}
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="course_name" class="form-label">ชื่อคอร์ส</label>
+                    <label for="course_name" class="form-label">{{ __('messages.course_name') }}</label>
                     <input type="text" class="form-control" id="course_name" name="course_name" maxlength="50" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">ประเภทคอร์ส</label>
+                    <label class="form-label">{{ __('messages.course_type') }}</label>
+                    @php
+                    $courseTypes = trans('messages.course_type_options'); // ดึงเป็น array
+                    $fabricTypes = trans('messages.fabric_type_options');
+                    @endphp
                     <select name="course_type" class="form-select">
-                        <option value="">-- เลือกประเภทคอร์สเรียน --</option>
-                        <option value="แบบสีผสม">แบบสีผสม</option>
-                        <option value="แบบทุบ">แบบทุบ</option>
-                        <option value="แบบสีสนิม">แบบสีสนิม</option>
+                        <option value="">{{ __('messages.fabric_type_placeholder') }}</option>
+                        @foreach($fabricTypes as $val => $label)
+                        <option value="{{ $val }}" @selected(old('fabric_type') === $val)>{{ $label }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
             {{-- รายละเอียดผ้า --}}
             <div class="mb-3">
-                <label class="form-label">ชนิดของผ้า</label>
+                <label class="form-label">{{ __('messages.fabric_type') }}</label>
                 <select name="fabric_type" class="form-select">
-                    <option value="">-- เลือกประเภทของผ้า --</option>
-                    <option value="ผ้าฝ้าย">ผ้าฝ้าย</option>
-                    <option value="ผ้าไหม">ผ้าไหม</option>
-                    <option value="ผ้าลินิน">ผ้าลินิน</option>
-                    <option value="ผ้าเรยอน">ผ้าเรยอน</option>
-                    <option value="ผ้าพันคอ">ผ้าพันคอ</option>
-                    <option value="เสื้อยืด">เสื้อยืด</option>
+                <option value="">{{ __('messages.fabric_type_placeholder') }}</option>
+                @foreach($fabricTypes as $val => $label)
+                    <option value="{{ $val }}" @selected(old('fabric_type') === $val)>{{ $label }}</option>
+                @endforeach
                 </select>
             </div>
             
             {{-- รายละเอียดผ้า --}}
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="fabric_length" class="form-label">ความยาวของผ้า (เมตร)</label>
+                    <label for="fabric_length" class="form-label">{{ __('messages.fabric_length_m') }}</label>
                     <input type="number" step="0.1" class="form-control" id="fabric_length" name="fabric_length">
                 </div>
             </div>
@@ -98,8 +109,8 @@
                 </select>
             </div> --}}
 
-            <button type="submit" class="btn btn-primary">บันทึกการจอง</button>
-            <a href="{{ route('member.courses') }}" class="btn btn-secondary mt-3">ย้อนกลับ</a>
+            <button type="submit" class="btn btn-primary">{{ __('messages.save_booking') }}</button>
+            <a href="{{ route('member.courses') }}" class="btn btn-secondary mt-3">{{ __('messages.back') }}</a>
         </form>
         @if(session('success'))
         <div class="alert alert-success mt-3">

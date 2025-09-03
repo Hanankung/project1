@@ -18,4 +18,25 @@ class course extends Model
         'price',
         'course_image'
     ];
+    // ชื่อคอร์สตามภาษา
+    public function getNameI18nAttribute()
+    {
+        $loc = app()->getLocale();
+        return match ($loc) {
+            'en' => $this->course_name_ENG ?: $this->course_name,
+            'ms' => $this->course_name_MS  ?: $this->course_name,
+            default => $this->course_name,
+        };
+    }
+
+    // รายละเอียดคอร์สตามภาษา
+    public function getDetailI18nAttribute()
+    {
+        $loc = app()->getLocale();
+        return match ($loc) {
+            'en' => $this->course_detail_ENG ?: $this->course_detail,
+            'ms' => $this->course_detail_MS  ?: $this->course_detail,
+            default => $this->course_detail,
+        };
+    }
 }

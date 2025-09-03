@@ -22,19 +22,19 @@
 
             <!-- รายละเอียดคอร์ส -->
             <div class="col-md-6">
-                <h2>{{ $course->course_name }}</h2>
-                <p class="text-muted">{{ $course->course_detail }}</p>
-                <h4 class="text-primary">ราคา: {{ number_format($course->price) }} บาท</h4>
+                <h2>{{ $course->name_i18n }}</h2>
+                <p class="text-muted">{{ $course->detail_i18n }}</p>
+                <h4 class="text-primary">{{ __('messages.price') }}: {{ number_format($course->price) }} {{ __('messages.baht') }}</h4>
 
-                <a href="#" class="btn btn-success mt-3">จองคอร์สเรียน</a>
-                <a href="{{ route('member.courses') }}" class="btn btn-secondary mt-3">ย้อนกลับ</a>
+                <a href="{{ route('member.course.booking')}}" class="btn btn-success mt-3">{{ __('messages.book_course') }}</a>
+                <a href="{{ route('member.courses') }}" class="btn btn-secondary mt-3">{{ __('messages.back_to_list') }}</a>
             </div>
         </div>
 
         <!-- Gallery Section -->
         <div class="row mt-5">
             <div class="col-12">
-                <h4 class="fw-bold mb-4">ภาพบรรยากาศ :</h4>
+                <h4 class="fw-bold mb-4">{{ __('messages.gallery') }} :</h4>
             </div>
 
             <div class="row row-cols-2 row-cols-md-5 g-3">

@@ -109,5 +109,82 @@ return [
     'Shipping address' => 'Shipping address',
 
     'Items in Cart' => 'Items in Cart',
+
+    'courses_title' => 'All Courses',
+
+    'learn_more'    => 'Learn more',
+
+    'book_course'   => 'Book this course',
+
+    'no_courses'    => 'No courses available at the moment',
+
+    'gallery'       => 'Gallery',
+
+    'back_to_list'  => 'Back',
+
+    'booking_form_title' => 'Course Booking Form',
+
+    'first_name' => 'First Name',
+
+    'last_name' => 'Last Name',
+    
+    'email' => 'Email',
+
+    'people_qty' => 'Number of people',
+
+    'price_thb' => 'Price (THB)',
+
+    'booking_date' => 'Booking Date',
+
+    'course_name' => 'Course Name',
+
+    'course_type' => 'Course Type',
+
+    'course_type_placeholder' => '-- Select course type --',
+
+    'fabric_type' => 'Fabric Type',
+
+    'fabric_type_placeholder' => '-- Select fabric type --',
+
+    'fabric_length_m' => 'Fabric Length (meters)',
+
+    'save_booking' => 'Save Booking',
+    
+    'course_type_options' => [
+
+    'mix' => 'Mixed Colors',
+
+    'pound' => 'Pounding',
+
+    'rust' => 'Rust Dye',
+
+    ],
+    'fabric_type_options' => [
+
+    'cotton' => 'Cotton',
+
+    'silk' => 'Silk',
+
+    'linen' => 'Linen',
+
+    'rayon' => 'Rayon',
+
+    'scarf' => 'Scarf',
+
+    'tshirt' => 'T-Shirt',
+
+    ],
+
+    'booking_history_title' => 'Course Booking History',
+
+    'status_options' => [
+
+    'pending'  => 'Pending',
+
+    'approved' => 'Approved',
+
+    'rejected' => 'Rejected',
+
+    ],
 ];
 

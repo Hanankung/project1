@@ -109,5 +109,81 @@ return [
     'Shipping address' => 'Alamat penghantaran',
 
     'Items in Cart' => 'Item dalam Troli',
+
+    'courses_title' => 'Semua Kursus',
+
+    'learn_more'    => 'Lihat lanjut',
+
+    'book_course'   => 'Tempah kursus',
+
+    'no_courses'    => 'Tiada kursus pada masa ini',
+
+    'gallery'       => 'Galeri',
+
+    'back_to_list'  => 'Kembali',
+
+    'booking_form_title' => 'Borang Tempahan Kursus',
+
+    'first_name' => 'Nama',
+
+    'last_name' => 'Nama Keluarga',
+
+    'email' => 'Emel',
+
+    'people_qty' => 'Bilangan orang',
+
+    'price_thb' => 'Harga (THB)',
+
+    'booking_date' => 'Tarikh Tempahan',
+
+    'course_name' => 'Nama Kursus',
+
+    'course_type' => 'Jenis Kursus',
+
+    'course_type_placeholder' => '-- Pilih jenis kursus --',
+
+    'fabric_type' => 'Jenis Kain',
+
+    'fabric_type_placeholder' => '-- Pilih jenis kain --',
+
+    'fabric_length_m' => 'Panjang Kain (meter)',
+
+    'save_booking' => 'Simpan Tempahan',
+
+    'course_type_options' => [
+
+    'mix' => 'Warna Campuran',
+
+    'pound' => 'Tumbuk',
+
+    'rust' => 'Dye Karat',
+
+    ],
+    'fabric_type_options' => [
+
+    'cotton' => 'Kapas',
+
+    'silk' => 'Sutera',
+
+    'linen' => 'Linen',
+
+    'rayon' => 'Rayon',
+
+    'scarf' => 'Skaf',
+
+    'tshirt' => 'Baju-T',
+
+    ],
+
+    'booking_history_title' => 'Sejarah Tempahan Kursus',
+
+    'status_options' => [
+
+    'pending'  => 'Menunggu',
+
+    'approved' => 'Diluluskan',
+
+    'rejected' => 'Ditolak',
+    ],
 ];
 
