@@ -177,6 +177,12 @@ return [
 
     'booking_history_title' => 'Sejarah Tempahan Kursus',
 
+    'cancel_booking' => 'Batal Tempahan',
+
+    'cancel_confirm' => 'Adakah anda pasti ingin membatalkan tempahan ini?',
+    
+    'no_bookings' => 'Belum ada tempahan',
+
     'status_options' => [
 
     'pending'  => 'Menunggu',

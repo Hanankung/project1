@@ -175,6 +175,12 @@ return [
 
     'booking_history_title' => 'ประวัติการจองคอร์สเรียน',
 
+    'cancel_booking' => 'ยกเลิกการจอง',
+
+    'cancel_confirm' => 'คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจองนี้?',
+    
+    'no_bookings' => 'ยังไม่มีการจองคอร์สเรียน',
+
     'status_options' => [
 
     'pending'  => 'รอดำเนินการ',

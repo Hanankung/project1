@@ -177,6 +177,12 @@ return [
 
     'booking_history_title' => 'Course Booking History',
 
+    'cancel_booking' => 'Cancel Booking',
+
+    'cancel_confirm' => 'Are you sure you want to cancel this booking?',
+    
+    'no_bookings' => 'No bookings yet',
+
     'status_options' => [
 
     'pending'  => 'Pending',
