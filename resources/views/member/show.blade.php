@@ -8,7 +8,34 @@
 </head>
 
 <div class="container mt-5">
-    
+
+    {{-- Flash Message --}}
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
+    {{-- สร้างแผนที่สถานะ (ไทย/คีย์เดิม -> คีย์กลาง) ใช้ทั้งหน้า --}}
+    @php
+        $statusMap = [
+            // เก็บไทยใน DB
+            'รอดำเนินการ'      => 'pending',
+            'อนุมัติแล้ว'      => 'approved',
+            'ไม่อนุมัติ'       => 'rejected',
+            'กำลังจัดส่งแล้ว'  => 'status_shipped',
+            'จัดส่งสำเร็จ'      => 'status_delivered',
+            'ยกเลิก'           => 'status_cancelled',
+            // กรณี DB เก็บคีย์กลางอยู่แล้ว
+            'pending'           => 'pending',
+            'approved'          => 'approved',
+            'rejected'          => 'rejected',
+            'status_shipped'    => 'status_shipped',
+            'status_delivered'  => 'status_delivered',
+            'status_cancelled'  => 'status_cancelled',
+        ];
+    @endphp
 
     {{-- รายการออเดอร์ทั้งหมด --}}
     @if (isset($orders))
@@ -25,19 +52,43 @@
                         <th>{{ __('messages.Total price') }}</th>
                         <th>{{ __('messages.status') }}</th>
                         <th>{{ __('messages.detail') }}</th>
+                        <th>{{ __('messages.action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
+                        @php
+                            $rawStatus = $order->status ?? $order->status_i18n_key;
+                            $statusKey = $statusMap[$rawStatus] ?? $rawStatus;
+                        @endphp
                         <tr>
                             <td>{{ $order->id }}</td>
                             <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
                             <td>{{ number_format($order->total_price, 2) }} {{ __('messages.baht') }}</td>
-                            <td>{{ __('messages.status_order.' . $order->status_i18n_key) }}</td>
+
+                            {{-- แสดงสถานะแบบแปลภาษา --}}
+                            <td>{{ __('messages.status_order.' . $statusKey) }}</td>
+
                             <td>
                                 <a href="{{ route('member.orders.show', $order->id) }}" class="btn btn-sm btn-info">
                                     {{ __('messages.description') }}
                                 </a>
+                            </td>
+                            <td>
+                                @if ($statusKey === 'pending')
+                                    <form action="{{ route('member.orders.cancel', $order->id) }}" method="POST"
+                                          class="d-inline"
+                                          onsubmit="return confirm('{{ __('messages.cancel_confirm') }}');">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            {{ __('messages.cancel_order') }}
+                                        </button>
+                                    </form>
+                                @else
+                                    <button class="btn btn-sm btn-secondary" disabled>
+                                        {{ __('messages.cancel_unavailable') }}
+                                    </button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -47,6 +98,11 @@
 
     {{-- รายละเอียดออเดอร์ตัวเดียว --}}
     @elseif (isset($order))
+        @php
+            $rawStatus = $order->status ?? $order->status_i18n_key;
+            $statusKey = $statusMap[$rawStatus] ?? $rawStatus;
+        @endphp
+
         <h2>{{ __('messages.Order details') }} #{{ $order->id }}</h2>
 
         <div class="row g-3 mb-3">
@@ -60,8 +116,7 @@
             </div>
             <div class="col-md-4">
                 <p class="mb-1"><strong>{{ __('messages.status') }}:</strong></p>
-                <div>{{ __('messages.status_order.' . $order->status_i18n_key) }}</div>
-
+                <div>{{ __('messages.status_order.' . $statusKey) }}</div>
             </div>
             <div class="col-12">
                 <p class="mb-1"><strong>{{ __('messages.Address') }}:</strong></p>
@@ -80,10 +135,8 @@
                     <tr>
                         <th>{{ __('messages.product') }}</th>
                         <th class="text-center">{{ __('messages.quantity') }}</th>
-                        <th class="text-end">
-                            {{ __('messages.price') }}/{{ __('messages.Piece') }}
-                        </th>
-                        <th class="text-end">{{ __('messages.line_total') }}</th> {{-- ชัดเจนว่าเป็น line total --}}
+                        <th class="text-end">{{ __('messages.price') }}/{{ __('messages.Piece') }}</th>
+                        <th class="text-end">{{ __('messages.line_total') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,8 +160,6 @@
                         </tr>
                     @endforeach
                 </tbody>
-
-                {{-- สรุปรวมตามบิล ให้ตรงกับยอดบน --}}
                 <tfoot>
                     <tr>
                         <th colspan="3" class="text-end">{{ __('messages.subtotal') }}</th>
@@ -118,30 +169,30 @@
                     </tr>
 
                     @if(($order->shipping_fee ?? 0) > 0)
-                    <tr>
-                        <th colspan="3" class="text-end">{{ __('messages.shipping') }}</th>
-                        <th class="text-end">
-                            {{ number_format($order->shipping_fee, 2) }} {{ __('messages.baht') }}
-                        </th>
-                    </tr>
+                        <tr>
+                            <th colspan="3" class="text-end">{{ __('messages.shipping') }}</th>
+                            <th class="text-end">
+                                {{ number_format($order->shipping_fee, 2) }} {{ __('messages.baht') }}
+                            </th>
+                        </tr>
                     @endif
 
                     @if(($order->box_fee ?? 0) > 0)
-                    <tr>
-                        <th colspan="3" class="text-end">{{ __('messages.box') }}</th>
-                        <th class="text-end">
-                            {{ number_format($order->box_fee, 2) }} {{ __('messages.baht') }}
-                        </th>
-                    </tr>
+                        <tr>
+                            <th colspan="3" class="text-end">{{ __('messages.box') }}</th>
+                            <th class="text-end">
+                                {{ number_format($order->box_fee, 2) }} {{ __('messages.baht') }}
+                            </th>
+                        </tr>
                     @endif
 
                     @if(($order->handling_fee ?? 0) > 0)
-                    <tr>
-                        <th colspan="3" class="text-end">{{ __('messages.handling') }}</th>
-                        <th class="text-end">
-                            {{ number_format($order->handling_fee, 2) }} {{ __('messages.baht') }}
-                        </th>
-                    </tr>
+                        <tr>
+                            <th colspan="3" class="text-end">{{ __('messages.handling') }}</th>
+                            <th class="text-end">
+                                {{ number_format($order->handling_fee, 2) }} {{ __('messages.baht') }}
+                            </th>
+                        </tr>
                     @endif
 
                     <tr class="table-dark">
@@ -157,7 +208,16 @@
         <a href="{{ route('member.orders') }}" class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i> {{ __('messages.back') }}
         </a>
-    @endif
 
+        @if ($statusKey === 'pending')
+            <form action="{{ route('member.orders.cancel', $order->id) }}" method="POST" class="d-inline"
+                  onsubmit="return confirm('{{ __('messages.cancel_confirm') }}');">
+                @csrf
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-x-circle"></i> {{ __('messages.cancel_order') }}
+                </button>
+            </form>
+        @endif
+    @endif
 </div>
 @endsection

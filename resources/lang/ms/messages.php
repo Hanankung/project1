@@ -218,5 +218,17 @@ return [
 
     'status_cancelled' => 'Dibatalkan',
     ],
+
+    'action'             => 'Tindakan',
+
+    'cancel_order'       => 'Batalkan Pesanan',
+
+    'cancel_confirm'     => 'Adakah anda pasti mahu membatalkan pesanan ini?',
+
+    'cancel_unavailable' => 'Pembatalan tidak tersedia',
+
+    'cancelled_success'  => 'Pesanan telah berjaya dibatalkan.',
+    
+    'cannot_cancel'      => 'Pesanan ini tidak boleh dibatalkan.',
 ];
 

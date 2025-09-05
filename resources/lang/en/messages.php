@@ -218,5 +218,17 @@ return [
 
     'status_cancelled' => 'Cancelled',
     ],
+
+    'action'             => 'Action',
+
+    'cancel_order'       => 'Cancel Order',
+
+    'cancel_confirm'     => 'Are you sure you want to cancel this order?',
+
+    'cancel_unavailable' => 'Cancellation unavailable',
+
+    'cancelled_success'  => 'Order has been cancelled successfully.',
+    
+    'cannot_cancel'      => 'This order cannot be cancelled.',
 ];
 

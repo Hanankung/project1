@@ -90,6 +90,12 @@ Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show'
 // แสดงรายการออเดอร์ของสมาชิก
 Route::get('/member/orders', [OrderController::class, 'index'])->name('member.orders');
 
+//ยกเลิกคำสั่งซื้อ
+Route::middleware(['auth'])->group(function () {
+    Route::post('/member/orders/{id}/cancel', [OrderController::class, 'cancel'])
+        ->name('member.orders.cancel');
+});
+
 // แสดงรายละเอียดออเดอร์ของสมาชิก
 Route::get('/member/orders/{id}', [OrderController::class, 'show'])->name('member.orders.show');
 
