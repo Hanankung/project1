@@ -191,5 +191,32 @@ return [
 
     'rejected' => 'Ditolak',
     ],
+
+    'line_total'   => 'Jumlah per Item',
+
+    'subtotal'     => 'Jumlah Kecil',
+
+    'shipping'     => 'Penghantaran',
+
+    'box'          => 'Kotak/Pembungkusan',
+
+    'handling'     => 'Pengendalian',
+
+    'grand_total'  => 'Jumlah Keseluruhan',
+
+    'status_order' => [
+
+    'pending'  => 'Menunggu',
+
+    'approved' => 'Diluluskan',
+
+    'rejected' => 'Ditolak',
+
+    'status_shipped'   => 'Dihantar',
+
+    'status_delivered' => 'Diterima',
+
+    'status_cancelled' => 'Dibatalkan',
+    ],
 ];
 

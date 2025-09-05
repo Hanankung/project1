@@ -2,66 +2,88 @@
 
 @section('content')
 
-    <head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    </head>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
 
-    <div class="container mt-5">
-        </a>
-        {{-- ถ้าเป็นรายการออเดอร์ทั้งหมด --}}
-        {{-- ถ้าเป็นรายการออเดอร์ทั้งหมด --}}
-        @if (isset($orders))
-            <h2>{{ __('messages.Order History') }}</h2>
-            @if ($orders->isEmpty())
-                <div class="alert alert-info mt-3">{{ __('messages.warn1') }}</div>
-            @else
-                <table class="table table-bordered mt-3">
-                    <thead>
+<div class="container mt-5">
+    
+
+    {{-- รายการออเดอร์ทั้งหมด --}}
+    @if (isset($orders))
+        <h2>{{ __('messages.Order History') }}</h2>
+
+        @if ($orders->isEmpty())
+            <div class="alert alert-info mt-3">{{ __('messages.warn1') }}</div>
+        @else
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ __('messages.Order date') }}</th>
+                        <th>{{ __('messages.Total price') }}</th>
+                        <th>{{ __('messages.status') }}</th>
+                        <th>{{ __('messages.detail') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($orders as $order)
                         <tr>
-                            <th>#</th>
-                            <th>{{ __('messages.Order date') }}</th>
-                            <th>{{ __('messages.Total price') }}</th>
-                            <th>{{ __('messages.status') }}</th>
-                            <th>{{ __('messages.detail') }}</th>
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
+                            <td>{{ number_format($order->total_price, 2) }} {{ __('messages.baht') }}</td>
+                            <td>{{ __('messages.status_order.' . $order->status_i18n_key) }}</td>
+                            <td>
+                                <a href="{{ route('member.orders.show', $order->id) }}" class="btn btn-sm btn-info">
+                                    {{ __('messages.description') }}
+                                </a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($orders as $order)
-                            <tr>
-                                <td>{{ $order->id }}</td>
-                                <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
-                                <td>{{ number_format($order->total_price, 2) }} {{ __('messages.baht') }}</td>
-                                <td>{{ ucfirst($order->status) }}</td>
-                                <td>
-                                    <a href="{{ route('member.orders.show', $order->id) }}" class="btn btn-sm btn-info">
-                                        {{ __('messages.description') }}
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @endif
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
 
-            {{-- ถ้าเป็นรายละเอียดออเดอร์ตัวเดียว --}}
-        @elseif(isset($order))
-            <h2>{{ __('messages.Order details') }} #{{ $order->id }}</h2>
-            <p><strong>{{ __('messages.Buyer') }}:</strong> {{ $order->name }}</p>
-            <p><strong>{{ __('messages.Address') }}:</strong> {{ $order->address }}</p>
-            <p><strong>{{ __('messages.Phone') }}:</strong> {{ $order->phone }}</p>
-            <p><strong>{{ __('messages.status') }}:</strong> {{ ucfirst($order->status) }}</p>
-            <p><strong>{{ __('messages.Total price') }}:</strong> {{ number_format($order->total_price, 2) }}
-                {{ __('messages.baht') }}</p>
-            <br>
-            <h4 class="mt-4">{{ __('messages.Product List') }}</h4>
-            <table class="table">
+    {{-- รายละเอียดออเดอร์ตัวเดียว --}}
+    @elseif (isset($order))
+        <h2>{{ __('messages.Order details') }} #{{ $order->id }}</h2>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
+                <p class="mb-1"><strong>{{ __('messages.Buyer') }}:</strong></p>
+                <div>{{ $order->name }}</div>
+            </div>
+            <div class="col-md-4">
+                <p class="mb-1"><strong>{{ __('messages.Phone') }}:</strong></p>
+                <div>{{ $order->phone }}</div>
+            </div>
+            <div class="col-md-4">
+                <p class="mb-1"><strong>{{ __('messages.status') }}:</strong></p>
+                <div>{{ __('messages.status_order.' . $order->status_i18n_key) }}</div>
+
+            </div>
+            <div class="col-12">
+                <p class="mb-1"><strong>{{ __('messages.Address') }}:</strong></p>
+                <div>{{ $order->address }}</div>
+            </div>
+            <div class="col-12">
+                <p class="mb-1"><strong>{{ __('messages.Total price') }}:</strong></p>
+                <div>{{ number_format($order->total_price, 2) }} {{ __('messages.baht') }}</div>
+            </div>
+        </div>
+
+        <h4 class="mt-4">{{ __('messages.Product List') }}</h4>
+        <div class="table-responsive">
+            <table class="table align-middle">
                 <thead>
                     <tr>
                         <th>{{ __('messages.product') }}</th>
-                        <th>{{ __('messages.quantity') }}</th>
-                        <th>{{ __('messages.price') }}/{{ __('messages.Piece') }}</th>
-                        <th>{{ __('messages.Total price') }}</th>
+                        <th class="text-center">{{ __('messages.quantity') }}</th>
+                        <th class="text-end">
+                            {{ __('messages.price') }}/{{ __('messages.Piece') }}
+                        </th>
+                        <th class="text-end">{{ __('messages.line_total') }}</th> {{-- ชัดเจนว่าเป็น line total --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -79,19 +101,63 @@
                                     }
                                 @endphp
                             </td>
-                            <td>{{ $item->quantity }}</td>
-                            <td>{{ number_format($item->price, 2) }}</td>
-                            <td>{{ number_format($item->price * $item->quantity, 2) }}</td>
+                            <td class="text-center">{{ $item->quantity }}</td>
+                            <td class="text-end">{{ number_format($item->price, 2) }}</td>
+                            <td class="text-end">{{ number_format($item->price * $item->quantity, 2) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
 
+                {{-- สรุปรวมตามบิล ให้ตรงกับยอดบน --}}
+                <tfoot>
+                    <tr>
+                        <th colspan="3" class="text-end">{{ __('messages.subtotal') }}</th>
+                        <th class="text-end">
+                            {{ number_format($order->subtotal ?? 0, 2) }} {{ __('messages.baht') }}
+                        </th>
+                    </tr>
+
+                    @if(($order->shipping_fee ?? 0) > 0)
+                    <tr>
+                        <th colspan="3" class="text-end">{{ __('messages.shipping') }}</th>
+                        <th class="text-end">
+                            {{ number_format($order->shipping_fee, 2) }} {{ __('messages.baht') }}
+                        </th>
+                    </tr>
+                    @endif
+
+                    @if(($order->box_fee ?? 0) > 0)
+                    <tr>
+                        <th colspan="3" class="text-end">{{ __('messages.box') }}</th>
+                        <th class="text-end">
+                            {{ number_format($order->box_fee, 2) }} {{ __('messages.baht') }}
+                        </th>
+                    </tr>
+                    @endif
+
+                    @if(($order->handling_fee ?? 0) > 0)
+                    <tr>
+                        <th colspan="3" class="text-end">{{ __('messages.handling') }}</th>
+                        <th class="text-end">
+                            {{ number_format($order->handling_fee, 2) }} {{ __('messages.baht') }}
+                        </th>
+                    </tr>
+                    @endif
+
+                    <tr class="table-dark">
+                        <th colspan="3" class="text-end">{{ __('messages.grand_total') }}</th>
+                        <th class="text-end">
+                            {{ number_format($order->total_price, 2) }} {{ __('messages.baht') }}
+                        </th>
+                    </tr>
+                </tfoot>
             </table>
-            <a href="{{ route('member.orders') }}" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> {{ __('messages.back') }}
-            </a>
-        @endif
+        </div>
 
+        <a href="{{ route('member.orders') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> {{ __('messages.back') }}
+        </a>
+    @endif
 
-    </div>
+</div>
 @endsection

@@ -6,11 +6,11 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     </head>
-    
+
     <div class="container my-5">
         <a href="{{ route('cart.store') }}" class="back-btn">
-                <i class="bi bi-arrow-left-circle"></i>
-            </a>
+            <i class="bi bi-arrow-left-circle"></i>
+        </a>
         <h2 class="mb-4">{{ __('messages.Order Confirmation') }}</h2>
 
         {{-- แสดง Error --}}
@@ -37,6 +37,7 @@
                         {{ __('messages.Recipient information') }}</h2>
                     </div>
                     <div class="card-body">
+
                         <form action="{{ route('checkout.store') }}" method="POST">
                             @csrf
 
@@ -57,9 +58,31 @@
                                     required>
                             </div>
 
-                            <button type="submit"
-                                class="btn btn-success w-100">{{ __('messages.Order Confirmation') }}</button>
+                            {{-- เลือกประเทศปลายทาง --}}
+                            <div class="mb-3">
+                                <label for="country" class="form-label">Country</label>
+                                <select name="country" id="country" class="form-select" required>
+                                    @php
+                                        $countries = [
+                                            'TH' => 'Thailand',
+                                            'MY' => 'Malaysia',
+                                        ];
+                                    @endphp
+                                    @foreach ($countries as $code => $label)
+                                        <option value="{{ $code }}"
+                                            {{ old('country', $country ?? 'TH') === $code ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <small class="text-muted">* ต่างประเทศจะมีค่าส่ง/กล่อง/ดำเนินการเพิ่ม</small>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100">
+                                {{ __('messages.Order Confirmation') }}
+                            </button>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -103,14 +126,56 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="2" class="text-end">{{ __('messages.Total price') }}</th>
-                                    <th class="text-end">{{ number_format($total, 2) }} ฿</th>
+                                    <th colspan="2" class="text-end">ราคารวม</th>
+                                    <th id="subtotal" class="text-end">{{ number_format($subtotal, 2) }} ฿</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="text-end">ค่าจัดส่ง</th>
+                                    <th id="shipping" class="text-end">{{ number_format($quote['shipping'], 2) }} ฿</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="text-end">Box</th>
+                                    <th id="box" class="text-end">{{ number_format($quote['box'], 2) }} ฿</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="text-end">Handling</th>
+                                    <th id="handling" class="text-end">{{ number_format($quote['handling'], 2) }} ฿</th>
+                                </tr>
+                                <tr class="table-dark">
+                                    <th colspan="2" class="text-end">Grand Total</th>
+                                    <th id="grand" class="text-end">{{ number_format($grandTotal, 2) }} ฿</th>
                                 </tr>
                             </tfoot>
+
+
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const select = document.getElementById('country');
+        if (!select) return;
+
+        function updateQuote(country) {
+            fetch(`{{ route('checkout.quote') }}?country=${encodeURIComponent(country)}&ts=${Date.now()}`, {
+                headers: { 'Accept': 'application/json' }
+            })
+              .then(res => res.json())
+              .then(data => {
+                  if (data.error) { alert(data.error); return; }
+                  document.getElementById('subtotal').innerText = data.subtotal + ' ฿';
+                  document.getElementById('shipping').innerText = data.shipping + ' ฿';
+                  document.getElementById('box').innerText = data.box + ' ฿';
+                  document.getElementById('handling').innerText = data.handling + ' ฿';
+                  document.getElementById('grand').innerText = data.grand + ' ฿';
+              })
+              .catch(() => alert('ไม่สามารถคำนวณค่าส่งได้'));
+        }
+
+        select.addEventListener('change', () => updateQuote(select.value));
+    });
+    </script>
 @endsection

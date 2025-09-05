@@ -190,7 +190,33 @@ return [
     'approved' => 'Approved',
 
     'rejected' => 'Rejected',
+    ],
 
+    'line_total'   => 'Line Total',
+
+    'subtotal'     => 'Subtotal',
+
+    'shipping'     => 'Shipping',
+
+    'box'          => 'Box/Packaging',
+
+    'handling'     => 'Handling',
+
+    'grand_total'  => 'Grand Total',
+
+    'status_order' => [
+
+    'pending'  => 'Pending',
+
+    'approved' => 'approved',
+
+    'rejected' => 'rejected',
+
+    'status_shipped'   => 'Shipping',
+
+    'status_delivered' => 'Delivered',
+
+    'status_cancelled' => 'Cancelled',
     ],
 ];
 

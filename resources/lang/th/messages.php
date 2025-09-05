@@ -189,5 +189,32 @@ return [
 
     'rejected' => 'ไม่อนุมัติ',
     ],
+
+    'line_total'   => 'รวมต่อรายการ',
+
+    'subtotal'     => 'ราคารวมย่อย',
+
+    'shipping'     => 'ค่าจัดส่ง',
+
+    'box'          => 'ค่ากล่อง/บรรจุภัณฑ์',
+
+    'handling'     => 'ค่าดำเนินการ',
+
+    'grand_total'  => 'ราคารวมทั้งหมด',
+
+    'status_order' => [
+
+    'pending'  => 'รอดำเนินการ',
+
+    'approved' => 'อนุมัติแล้ว',
+
+    'rejected' => 'ไม่อนุมัติ',
+
+    'status_shipped'   => 'กำลังจัดส่งแล้ว',
+
+    'status_delivered' => 'จัดส่งสำเร็จ',
+
+    'status_cancelled' => 'ยกเลิก',
+    ],
 ];
 
