@@ -121,9 +121,13 @@
                 <h4>{{ __('messages.Total price') }}: <strong>{{ number_format($total, 2) }}
                         {{ __('messages.baht') }}</strong></h4>
                 {{-- ปุ่มสั่งซื้อ (ไปหน้า checkout) --}}
-                <a href="/member/checkout" class="btn-order">
-                    <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
-                </a>
+                <form action="{{ route('checkout.from_cart') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn-order">
+                        <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                    </button>
+                </form>
+
 
             </div>
         @else

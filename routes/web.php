@@ -85,6 +85,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout/quote', [CheckoutController::class, 'quote'])->name('checkout.quote');
 
 });
+
+// ==== BUY NOW (สั่งซื้อทันที ไม่ผ่านตะกร้า) ====
+Route::post('/checkout/buy-now', [CheckoutController::class, 'buyNow'])
+    ->name('checkout.buy_now')->middleware('auth');
+// ==== END BUY NOW ====
+// ==== เตรียม checkout จากตะกร้า (คัดลอกของใน cart มาไว้ชุด checkout) ====
+Route::post('/checkout/from-cart', [CheckoutController::class, 'fromCart'])
+    ->name('checkout.from_cart')->middleware('auth');
 Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
 // แสดงรายการออเดอร์ของสมาชิก

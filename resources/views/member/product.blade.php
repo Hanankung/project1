@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -77,11 +76,11 @@
         </style>
     </head>
     @php
-    $locale = app()->getLocale();
-    $nameField = $locale === 'en' ? 'product_name_ENG' : ($locale === 'ms' ? 'product_name_MS' : 'product_name');
+        $locale = app()->getLocale();
+        $nameField = $locale === 'en' ? 'product_name_ENG' : ($locale === 'ms' ? 'product_name_MS' : 'product_name');
     @endphp
 
-    @if(session('success'))
+    @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -106,7 +105,8 @@
                     @endif
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $product->$nameField ?? $product->product_name }}</h5>
-                        <p class="mb-1"><strong>{{ __('messages.price') }}:</strong> {{ $product->price }} {{ __('messages.baht') }}</p>
+                        <p class="mb-1"><strong>{{ __('messages.price') }}:</strong> {{ $product->price }}
+                            {{ __('messages.baht') }}</p>
                         <!-- ปุ่มตะกร้า + สั่งซื้อ -->
                         <div class="btn-group-custom mb-2">
                             <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
@@ -116,9 +116,14 @@
                                     <i class="bi bi-cart-plus"></i>
                                 </button>
                             </form>
-                            <a href="#" class="btn btn-buy">
-                                <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
-                            </a>
+                            <form action="{{ route('checkout.buy_now') }}" method="POST" style="flex:1; margin-left:8px;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-buy w-100">
+                                    <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                                </button>
+                            </form>
                         </div>
 
 
@@ -132,6 +137,6 @@
         @empty
             <div class="alert alert-info">{{ __('messages.warn') }}</div>
         @endforelse
-        
+
     </div>
 @endsection

@@ -131,9 +131,16 @@
                                 <i class="bi bi-cart-plus"></i> {{ __('messages.add_to_cart') }}
                             </button>
                         </form>
-                        <a href="#" class="btn btn-buy">
-                            <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
-                        </a>
+                        <form action="{{ route('checkout.buy_now') }}" method="POST" style="flex:1;">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <div class="input-group">
+                                <input type="number" name="quantity" value="1" min="1" class="form-control">
+                                <button type="submit" class="btn btn-buy">
+                                    <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

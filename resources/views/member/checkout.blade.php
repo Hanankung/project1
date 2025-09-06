@@ -126,23 +126,23 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="2" class="text-end">ราคารวม</th>
+                                    <th colspan="2" class="text-end">{{ __('messages.Total price') }}</th>
                                     <th id="subtotal" class="text-end">{{ number_format($subtotal, 2) }} ฿</th>
                                 </tr>
                                 <tr>
-                                    <th colspan="2" class="text-end">ค่าจัดส่ง</th>
+                                    <th colspan="2" class="text-end">{{ __('messages.shipping') }}</th>
                                     <th id="shipping" class="text-end">{{ number_format($quote['shipping'], 2) }} ฿</th>
                                 </tr>
                                 <tr>
-                                    <th colspan="2" class="text-end">Box</th>
+                                    <th colspan="2" class="text-end">{{ __('messages.box') }}</th>
                                     <th id="box" class="text-end">{{ number_format($quote['box'], 2) }} ฿</th>
                                 </tr>
                                 <tr>
-                                    <th colspan="2" class="text-end">Handling</th>
+                                    <th colspan="2" class="text-end">{{ __('messages.handling') }}</th>
                                     <th id="handling" class="text-end">{{ number_format($quote['handling'], 2) }} ฿</th>
                                 </tr>
                                 <tr class="table-dark">
-                                    <th colspan="2" class="text-end">Grand Total</th>
+                                    <th colspan="2" class="text-end">{{ __('messages.grand_total') }}</th>
                                     <th id="grand" class="text-end">{{ number_format($grandTotal, 2) }} ฿</th>
                                 </tr>
                             </tfoot>
