@@ -14,6 +14,6 @@ class Cart extends Model
     public function product()
     {
         // ผูกกับ Post (ที่ชี้ไปตาราง products)
-        return $this->belongsTo(Post::class, 'product_id');
+        return $this->belongsTo(Post::class, 'product_id','id');
     }
 }

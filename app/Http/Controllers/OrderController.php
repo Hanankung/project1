@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -29,6 +31,7 @@ public function cancel($id)
 {
     $order = \App\Models\Order::where('id', $id)
         ->where('user_id', \Illuminate\Support\Facades\Auth::id())
+        ->with('items') // << ต้องมีความสัมพันธ์ items
         ->firstOrFail();
 
     // แปลงสถานะดิบจาก DB (เก็บเป็นคำไทย)
@@ -58,16 +61,20 @@ public function cancel($id)
     }
 
     // เซ็ตสถานะใน DB ให้ "สอดคล้องกับที่คุณใช้จริง" (เก็บคำไทย)
-    $order->status = 'ยกเลิก';
+    DB::transaction(function () use ($order) {
+        // คืนสต็อก
+        foreach ($order->items as $it) {
+            $product = Post::where('id', $it->product_id)->lockForUpdate()->first();
+            if ($product) $product->incrementStock($it->quantity);
+        }
 
-    // ถ้ามีคอลัมน์อื่น ๆ ไว้บันทึกก็ใส่ได้
-    // $order->cancelled_by = 'user';
-    // $order->cancelled_at = now();
+        $order->status = 'ยกเลิก';
+        $order->save();
+    });
 
-    $order->save();
 
     return redirect()
         ->route('member.orders.show', $order->id)
         ->with('success', __('messages.cancelled_success'));
-}
+    }
 }

@@ -66,6 +66,7 @@ public function guestShow($id)
             'material_MS' => 'nullable|string|max:50',
             'size' => 'required|string|max:20',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'low_stock_threshold' => 'nullable|integer|min:0',
         ]);
 
         // เตรียม path รูปภาพ
@@ -96,6 +97,7 @@ public function guestShow($id)
             'material_MS' => $validatedData['material_MS'] ?? null,
             'size' => $validatedData['size'],
             'product_image' => $imagePath,
+            'low_stock_threshold' => $validatedData['low_stock_threshold'] ?? 5,
         ]);
 
         // สมมติใช้ Model ชื่อ Product
@@ -143,6 +145,7 @@ public function guestShow($id)
             'material_MS' => 'nullable|string|max:50',
             'size' => 'required|string|max:20',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'low_stock_threshold' => 'nullable|integer|min:0',
         ]);
 
         // เตรียม path รูปภาพ
@@ -173,6 +176,7 @@ public function guestShow($id)
             'material_MS' => $validatedData['material_MS'] ?? null,
             'size' => $validatedData['size'],
             'product_image' => $imagePath,
+            'low_stock_threshold' => $validatedData['low_stock_threshold'] ?? ($post->low_stock_threshold ?? 5),
         ]);
 
          // redirect ไปที่หน้า index พร้อม flash message

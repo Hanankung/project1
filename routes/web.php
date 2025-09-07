@@ -136,9 +136,9 @@ Route::get('/register', function () {
 })->name('register');
 
 // Product Admin
-Route::get('/admin/product', function () {
-    return view('admin.product');
-})->name('admin.product');
+// Route::get('/admin/product', function () {
+//     return view('admin.product');
+// })->name('admin.product');
 
 //create Product
 Route::get('/admin/create', [PostController::class, 'create'])->name('create');

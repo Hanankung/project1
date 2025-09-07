@@ -102,7 +102,7 @@
                                     <i class="bi bi-cart-plus"></i>
                                 </button>
                             </form>
-                            <a href="#" class="btn btn-buy">
+                            <a href="/login" class="btn btn-buy">
                                 <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
                             </a>
                         </div>

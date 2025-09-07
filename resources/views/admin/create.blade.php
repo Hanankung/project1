@@ -62,6 +62,11 @@
             <label for="size" class="form-label">ขนาด</label>
             <textarea class="form-control" id="size" name="size" rows="3" placeholder="ขนาด"></textarea>
         </div>
+        <div class="mb-3">
+            <label class="form-label">เกณฑ์แจ้งเตือน (ชิ้น)</label>
+            <input type="number" class="form-control" name="low_stock_threshold" min="0"
+                value="{{ old('low_stock_threshold', 5) }}">
+        </div>
         <button type="submit" class="btn btn-primary">บันทึกสินค้า</button>
         <a href="{{ route('admin.product') }}" class="btn btn-secondary">ยกเลิก</a>
     </form>
