@@ -132,15 +132,13 @@
                             </button>
                         </form>
                         <form action="{{ route('checkout.buy_now') }}" method="POST" style="flex:1;">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <div class="input-group">
-                                <input type="number" name="quantity" value="1" min="1" class="form-control">
-                                <button type="submit" class="btn btn-buy">
-                                    <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
-                                </button>
-                            </div>
-                        </form>
+    @csrf
+    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <input type="hidden" name="quantity" value="1">  {{-- ส่งค่า 1 แบบไม่แสดงผล --}}
+    <button type="submit" class="btn btn-buy w-100">
+        <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+    </button>
+</form>
                     </div>
                 </div>
             </div>
