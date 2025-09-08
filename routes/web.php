@@ -27,7 +27,7 @@ Route::get('/courses/{id}', [CourseController::class, 'guestShow'])->name('guest
 // หน้าเกี่ยวกับเรา
 Route::get('/aboutme', function () {
     return view('aboutme'); // ไม่ต้องใส่นามสกุล .blade.php
-});
+})->name('aboutme');
 // หน้าเกี่ยวกับเราของสมาชิก
 Route::get('/member/aboutme', function () {
     return view('member.aboutme'); // ไม่ต้องใส่นามสกุล .blade.php
@@ -36,7 +36,7 @@ Route::get('/member/aboutme', function () {
 // ติดต่อเรา
 Route::get('/contect', function () {
     return view('contect'); // ไม่ต้องใส่นามสกุล .blade.php
-});
+})->name('contect');
 // ติดต่อเราของสมาชิก
 Route::get('/member/contect', function () {
     return view('member.contect'); // ไม่ต้องใส่นามสกุล .blade.php

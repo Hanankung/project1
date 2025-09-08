@@ -107,7 +107,7 @@
                         <h5 class="card-title d-flex align-items-center justify-content-between">
                             <span>{{ $product->$nameField ?? $product->product_name }}</span>
                             @if ((int) $product->quantity <= 0)
-                                <span class="badge bg-secondary">หมด</span>
+                                <span class="badge bg-secondary">{{ __('messages.Sold out') }}</span>
                             @endif
                         </h5>
 

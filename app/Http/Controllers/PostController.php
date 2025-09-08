@@ -103,7 +103,7 @@ public function guestShow($id)
         // สมมติใช้ Model ชื่อ Product
     // \App\Models\Post::create($validatedData);
          // redirect ไปที่หน้า index พร้อม flash message
-        return redirect()->route('admin.product')->with('success', 'เพิ่มสินค้าสำเร็จแล้ว');
+        return redirect()->route('admin.product')->with('success', __('messages.product_created'));
     }
 
     /**
@@ -180,7 +180,7 @@ public function guestShow($id)
         ]);
 
          // redirect ไปที่หน้า index พร้อม flash message
-        return redirect()->route('admin.product')->with('success', 'แก้ไชสินค้าสำเร็จแล้ว');
+        return redirect()->route('admin.product')->with('success', __('messages.product_updated'));
     }
     /**
      * Remove the specified resource from storage.
@@ -189,6 +189,6 @@ public function guestShow($id)
     {
         $post->delete();
         // redirect ไปที่หน้า index พร้อม flash message
-        return redirect()->route('admin.product')->with('success', 'ลบสินค้าสำเร็จแล้ว');
+        return redirect()->route('admin.product')->with('success', __('messages.product_deleted'));
     }
 }

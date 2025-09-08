@@ -13,7 +13,7 @@ class SearchController extends Controller
         $query = trim($request->input('query'));
 
         if ($query === '') {
-            return redirect()->back()->with('error', 'กรุณากรอกคำค้นหา');
+            return redirect()->back()->with('error', __('messages.search_enter_query'));
         }
 
         // ค้นหาในสินค้า
@@ -73,6 +73,6 @@ class SearchController extends Controller
         }
 
         // ถ้าไม่พบอะไรเลย
-        return redirect()->back()->with('error', 'ไม่พบสิ่งที่ค้นหา');
+        return redirect()->back()->with('error', __('messages.search_not_found'));
     }
 }

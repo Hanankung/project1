@@ -107,7 +107,7 @@ public function guestShow($id)
         ]);
 
          // redirect ไปที่หน้า index พร้อม flash message
-        return redirect()->route('admin.course')->with('success', 'เพิ่มคอร์สเรียนสำเร็จแล้ว');
+        return redirect()->route('admin.course')->with('success', __('messages.course_created'));
 
     }
 
@@ -171,7 +171,7 @@ public function guestShow($id)
         ]);
 
          // redirect ไปที่หน้า index พร้อม flash message
-        return redirect()->route('admin.course')->with('success', 'แก้ไขคอร์สเรียนสำเร็จแล้ว');
+        return redirect()->route('admin.course')->with('success', __('messages.course_updated'));
     }
 
     /**
@@ -181,7 +181,7 @@ public function guestShow($id)
     {
          $course->delete();
         // redirect ไปที่หน้า index พร้อม flash message
-        return redirect()->route('admin.course')->with('success', 'ลบสินค้าสำเร็จแล้ว');
+        return redirect()->route('admin.course')->with('success', __('messages.course_deleted'));
     }
 }
 

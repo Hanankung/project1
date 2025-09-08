@@ -69,7 +69,7 @@ class CourseBookingController extends Controller
             'fabric_length' => $validated['fabric_length'],
         ]);
 
-        return redirect()->route('member.courses')->with('success', 'บันทึกการจองเรียบร้อยแล้ว!');
+        return redirect()->route('member.courses')->with('success', __('messages.booking_saved'));
     }
 
     public function cancel($id)
@@ -80,10 +80,10 @@ class CourseBookingController extends Controller
 
     if ($booking->status === 'รอดำเนินการ') {
         $booking->delete(); // หรือจะ update เป็น "ยกเลิก" ก็ได้
-        return redirect()->route('member.course.booking.list')->with('success', 'ยกเลิกการจองเรียบร้อยแล้ว');
+        return redirect()->route('member.course.booking.list')->with('success', __('messages.booking_cancelled'));
     }
 
-    return redirect()->route('member.course.booking.list')->with('error', 'ไม่สามารถยกเลิกได้ เนื่องจากแอดมินได้อนุมัติแล้ว');
+    return redirect()->route('member.course.booking.list')->with('error', __('messages.booking_cancel_denied'));
 }
 // แสดงรายการการจองทั้งหมด (ฝั่ง Admin)
     public function adminIndex()
@@ -100,7 +100,7 @@ class CourseBookingController extends Controller
         $booking->status = 'อนุมัติ';
         $booking->save();
     }
-    return redirect()->route('admin.course.booking.index')->with('success', 'อนุมัติการจองเรียบร้อยแล้ว');
+    return redirect()->route('admin.course.booking.index')->with('success', __('messages.admin_booking_approved'));
 }
 
 // ไม่อนุมัติการจอง
@@ -111,7 +111,7 @@ class CourseBookingController extends Controller
         $booking->status = 'ไม่อนุมัติ';
         $booking->save();
     }
-    return redirect()->route('admin.course.booking.index')->with('success', 'ไม่อนุมัติการจองเรียบร้อยแล้ว');
+    return redirect()->route('admin.course.booking.index')->with('success', __('messages.admin_booking_rejected'));
 }
 
 

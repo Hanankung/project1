@@ -75,7 +75,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <small class="text-muted">* ต่างประเทศจะมีค่าส่ง/กล่อง/ดำเนินการเพิ่ม</small>
+                                <small class="text-muted">{{ __('messages.International') }}</small>
                             </div>
 
                             <button type="submit" class="btn btn-success w-100">

@@ -7,29 +7,19 @@
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<style>
-    .language-switcher a {
-        text-decoration: none;
-        color: #000000;
-        font-weight: bold;
-        margin: 0 2px;
-        padding: 5px 10px;
-        border: 1px solid #babbba;
-        border-radius: 5px;
-        transition: 0.3s;
-    }
 
-    .language-switcher a:hover {
-        background-color: #2e7d32;
-        color: #fff;
-    }
-</style>
+@php
+    $currentLocale = app()->getLocale();
+@endphp
+
 <body>
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="brand">
-            <div class="brand-title">Siro-Secret</div>
-            <div class="brand-subtitle">ผ้าพิมพ์ลายธรรมชาติ ด้วยเทคนิค Eco Print</div>
+             <a href="/" class="brand-link" aria-label="ไปหน้าแดชบอร์ด">
+                <div class="brand-title">Siro-Secret</div>
+                <div class="brand-subtitle">ผ้าพิมพ์ลายธรรมชาติ ด้วยเทคนิค Eco Print</div>
+            </a>
         </div>
         <div class="top-right">
             <div class="search-center">
@@ -37,17 +27,29 @@
                 <button class="search-button">
                     <i class="fas fa-search"></i>
                 </button>
-                <i class="fas fa-language icon"></i>
+
+                <i class="fas fa-language icon" aria-hidden="true"></i>
                 <div class="language-switcher" style="display:inline-block; margin-left:10px;">
-                    <a href="{{ route('lang.switch', 'th') }}">TH</a> |
-                    <a href="{{ route('lang.switch', 'en') }}">EN</a> |
-                    <a href="{{ route('lang.switch', 'ms') }}">MS</a>
+                    <a class="{{ $currentLocale === 'th' ? 'active' : '' }}"
+                       href="{{ route('lang.switch', 'th') }}">TH</a> |
+                    <a class="{{ $currentLocale === 'en' ? 'active' : '' }}"
+                       href="{{ route('lang.switch', 'en') }}">EN</a> |
+                    <a class="{{ $currentLocale === 'ms' ? 'active' : '' }}"
+                       href="{{ route('lang.switch', 'ms') }}">MS</a>
                 </div>
             </div>
+
             <div class="icon-right">
-                <i class="fas fa-shopping-cart icon"></i>
-                <i class="fas fa-calendar icon"></i>
-                <a href="/login" class="fas fa-user icon"></a>
+                <a class="cart-icon" href="{{ route('member.cart') }}" aria-label="ตะกร้าสินค้า">
+                    <i class="fas fa-shopping-cart icon"></i>
+                    @isset($cartCount)
+                        @if($cartCount > 0)
+                            <span class="cart-badge">{{ $cartCount }}</span>
+                        @endif
+                    @endisset
+                </a>
+                <i class="fas fa-calendar icon" aria-hidden="true"></i>
+                <a href="{{ route('login') }}" class="fas fa-user icon" aria-label="เข้าสู่ระบบ"></a>
             </div>
         </div>
     </div>
@@ -55,15 +57,34 @@
     <!-- Navigation Bar -->
     <div class="nav-bar">
         <div class="nav-center">
-            <a href="{{ route('guest.products') }}">{{ __('messages.product') }}</a>
-            <a href="{{ route('guest.courses') }}">{{ __('messages.course') }}</a>
-            <a href="/aboutme">{{ __('messages.about_me') }}</a>
+            {{-- สินค้า: ให้ active ทั้งหน้ารายการและหน้ารายละเอียด --}}
+            <a class="{{ request()->routeIs('guest.products*') ? 'active' : '' }}"
+               href="{{ route('guest.products') }}">
+                {{ __('messages.product') }}
+            </a>
+
+            {{-- คอร์สเรียน: ให้ active ทั้งหน้ารายการและหน้ารายละเอียด --}}
+            <a class="{{ request()->routeIs('guest.courses*') ? 'active' : '' }}"
+               href="{{ route('guest.courses') }}">
+                {{ __('messages.course') }}
+            </a>
+
+            {{-- เกี่ยวกับเรา --}}
+            <a class="{{ request()->routeIs('aboutme') ? 'active' : '' }}"
+               href="{{ route('aboutme') }}">
+                {{ __('messages.about_me') }}
+            </a>
         </div>
+
         <div class="nav-right">
-            <a href="/contect">{{ __('messages.contact') }}</a>
+            {{-- ติดต่อเรา (route ของคุณสะกด contect) --}}
+            <a class="{{ request()->routeIs('contect') ? 'active' : '' }}"
+               href="{{ route('contect') }}">
+                {{ __('messages.contact') }}
+            </a>
         </div>
     </div>
     <div class="container mt-5">
         @yield('content')
     </div>
-</body>    
+</body>

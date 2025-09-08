@@ -102,7 +102,7 @@
                                 <td>{{ number_format($subtotal, 2) }} {{ __('messages.baht') }}</td>
                                 <td>
                                     <form action="{{ route('member.cart.delete', $item->id) }}" method="POST"
-                                        onsubmit="return confirm('ต้องการลบสินค้านี้?')">
+                                        onsubmit="return confirm(@js(__('messages.confirm_delete')));">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-remove">

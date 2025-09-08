@@ -126,7 +126,7 @@
                     <div class="btn-group-custom">
                         @if ((int) $product->quantity <= 0)
                             <div class="alert alert-danger w-100 mb-0">
-                                สินค้าชิ้นนี้หมดแล้ว ไม่สามารถสั่งซื้อได้ในขณะนี้
+                                {{ __('messages.status_product') }}
                             </div>
 
                             <button class="btn btn-secondary" disabled style="flex:1;">

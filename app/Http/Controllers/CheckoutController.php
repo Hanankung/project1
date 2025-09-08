@@ -48,13 +48,15 @@ class CheckoutController extends Controller
             ])->where('user_id', Auth::id())->get();
 
             if ($cartItems->isEmpty()) {
-                return redirect()->route('member.cart')->with('error', 'ตะกร้าของคุณว่างเปล่า');
+                return redirect()->route('member.cart')->with('error', __('messages.cart_empty'));
             }
         }
         $errors = [];
         foreach ($cartItems as $item) {
             if ((int)$item->product->quantity <= 0) {
-                $errors[] = "สินค้า {$item->product->product_name} หมดแล้ว กรุณาลบออกจากตะกร้า";
+                $errors[] = __('messages.product_out_of_stock_remove', [
+                    'name' => $item->product->product_name
+                ]);
             }
         }
         if (!empty($errors)) {
@@ -106,7 +108,7 @@ class CheckoutController extends Controller
     {
         $cartItems = Cart::where('user_id', Auth::id())->get();
         if ($cartItems->isEmpty()) {
-            return redirect()->route('member.cart')->with('error', 'ตะกร้าของคุณว่างเปล่า');
+            return redirect()->route('member.cart')->with('error', __('messages.cart_empty'));
         }
 
         $lines = [];
@@ -133,7 +135,7 @@ class CheckoutController extends Controller
         ])->where('user_id', Auth::id())->get();
 
         if ($cartItems->isEmpty()) {
-            return response()->json(['error' => 'ตะกร้าว่าง'], 400);
+            return response()->json(['error' => __('messages.quote_cart_empty')], 400);
         }
 
         $subtotal = 0;
@@ -194,7 +196,7 @@ class CheckoutController extends Controller
                 ->get();
 
             if ($items->isEmpty()) {
-                return redirect()->route('member.cart')->with('error', 'ไม่มีสินค้าในตะกร้า');
+                return redirect()->route('member.cart')->with('error', __('messages.cart_empty'));
             }
         }
 
@@ -235,7 +237,7 @@ class CheckoutController extends Controller
                     // ✅ หา productId ที่เชื่อถือได้ (ทั้งเคส session และ cart)
                     $productId = $item->product_id ?? optional($item->product)->getKey();
                     if (!$productId) {
-                        throw new \RuntimeException('ไม่พบรหัสสินค้าในตะกร้า');
+                        throw new \RuntimeException(__('messages.product_id_missing_in_cart'));
                     }
 
                     /** @var \App\Models\Post $product */
@@ -244,7 +246,10 @@ class CheckoutController extends Controller
                         ->firstOrFail();
 
                     if (!$product->hasStock($item->quantity)) {
-                        throw new \RuntimeException("สินค้า {$product->product_name} คงเหลือไม่พอ (เหลือ {$product->quantity})");
+                        throw new \RuntimeException(__('messages.insufficient_stock', [
+                            'name' => $product->product_name,
+                            'left' => $product->quantity
+                        ]));
                     }
 
                     // ตัดสต็อก
@@ -293,6 +298,6 @@ class CheckoutController extends Controller
 
         return redirect()
             ->route('member.orders.show', $orderId ?? Order::latest('id')->value('id'))
-            ->with('success', 'สั่งซื้อสำเร็จแล้ว!');
+            ->with('success', __('messages.order_success'));
     }
 }

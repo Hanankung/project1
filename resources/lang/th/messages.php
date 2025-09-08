@@ -228,4 +228,66 @@ return [
     'cancelled_success'  => 'ยกเลิกคำสั่งซื้อเรียบร้อยแล้ว',
 
     'cannot_cancel'      => 'ไม่สามารถยกเลิกคำสั่งซื้อนี้ได้',
+
+    'status_product' => 'สินค้าชิ้นนี้หมดแล้ว ไม่สามารถสั่งซื้อได้ในขณะนี้',
+
+    'Sold out' => 'สินค้าหมด',
+
+    'International' => '* ต่างประเทศจะมีค่าส่ง/กล่อง/ดำเนินการเพิ่ม',
+
+    'out_of_stock' => 'สินค้าชิ้นนี้หมดแล้ว',
+
+    'product_out_of_stock' => 'สินค้า :name หมดแล้ว',
+
+    'cart_reached_stock_limit' => 'จำนวนในตะกร้าถึงสต็อกสูงสุดแล้ว',
+
+    'added_to_cart' => 'เพิ่มสินค้าลงตะกร้าแล้ว',
+
+    'removed_from_cart_stock_zero' => 'สินค้าหมดแล้ว จึงลบออกจากตะกร้า',
+
+    'updated_quantity' => 'อัปเดตจำนวนสินค้าแล้ว',
+
+    'updated_quantity_limited' => 'อัปเดตจำนวนแล้ว (จำกัดตามสต็อกที่คงเหลือ)',
+
+    'confirm_delete' => 'ต้องการลบสินค้านี้หรือไม่?',
+
+    'confirm_delete_item' => 'ต้องการลบ ":name" ออกจากตะกร้าหรือไม่?',
+
+    'cart_empty' => 'ตะกร้าของคุณว่างเปล่า',
+
+    'quote_cart_empty' => 'ตะกร้าว่าง',
+
+    'product_out_of_stock_remove' => 'สินค้า :name หมดแล้ว กรุณาลบออกจากตะกร้า',
+
+    'insufficient_stock' => 'สินค้า :name คงเหลือไม่พอ (เหลือ :left)',
+
+    'product_id_missing_in_cart' => 'ไม่พบรหัสสินค้าในตะกร้า',
+
+    'order_success' => 'สั่งซื้อสำเร็จแล้ว!',
+
+    'booking_saved' => 'บันทึกการจองเรียบร้อยแล้ว!',
+
+    'booking_cancelled' => 'ยกเลิกการจองเรียบร้อยแล้ว',
+
+    'booking_cancel_denied' => 'ไม่สามารถยกเลิกได้ เนื่องจากแอดมินได้อนุมัติแล้ว',
+
+    'admin_booking_approved' => 'อนุมัติการจองเรียบร้อยแล้ว',
+
+    'admin_booking_rejected' => 'ไม่อนุมัติการจองเรียบร้อยแล้ว',
+
+    'course_created' => 'เพิ่มคอร์สเรียนสำเร็จแล้ว',
+
+    'course_updated' => 'แก้ไขคอร์สเรียนสำเร็จแล้ว',
+
+    'course_deleted' => 'ลบคอร์สเรียนสำเร็จแล้ว',
+
+    'product_created' => 'เพิ่มสินค้าสำเร็จแล้ว',
+
+    'product_updated' => 'แก้ไขสินค้าสำเร็จแล้ว',
+
+    'product_deleted' => 'ลบสินค้าสำเร็จแล้ว',
+
+    'search_enter_query' => 'กรุณากรอกคำค้นหา',
+    
+    'search_not_found'   => 'ไม่พบสิ่งที่ค้นหา',
 ];

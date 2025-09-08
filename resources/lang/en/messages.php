@@ -230,5 +230,67 @@ return [
     'cancelled_success'  => 'Order has been cancelled successfully.',
     
     'cannot_cancel'      => 'This order cannot be cancelled.',
+
+    'status_product' => 'This product is out of stock and cannot be ordered at this time',
+
+    'Sold out' => 'Sold out',
+
+    'International' => '* International shipping/box/handling charges will apply',
+
+    'out_of_stock' => 'This item is out of stock',
+
+    'product_out_of_stock' => 'Item :name is out of stock',
+
+    'cart_reached_stock_limit' => 'Cart quantity already at stock limit',
+
+    'added_to_cart' => 'Added to cart',
+
+    'removed_from_cart_stock_zero' => 'Item is out of stock and was removed from your cart',
+
+    'updated_quantity' => 'Quantity updated',
+
+    'updated_quantity_limited' => 'Quantity updated (limited by available stock)',
+
+    'confirm_delete' => 'Do you want to remove this item?',
+
+    'confirm_delete_item' => 'Remove ":name" from cart?',
+
+    'cart_empty' => 'Your cart is empty',
+
+    'quote_cart_empty' => 'Cart is empty',
+
+    'product_out_of_stock_remove' => 'Item :name is out of stock, please remove it from your cart',
+
+    'insufficient_stock' => 'Not enough stock for :name (left :left)',
+
+    'product_id_missing_in_cart' => 'Product ID not found in cart',
+
+    'order_success' => 'Order placed successfully!',
+
+    'booking_saved' => 'Booking saved successfully!',
+
+    'booking_cancelled' => 'Booking cancelled successfully',
+
+    'booking_cancel_denied' => 'Cannot cancel because it has already been approved',
+
+    'admin_booking_approved' => 'Booking approved successfully',
+
+    'admin_booking_rejected' => 'Booking rejected successfully',
+
+    'course_created' => 'Course created successfully',
+
+    'course_updated' => 'Course updated successfully',
+
+    'course_deleted' => 'Course deleted successfully',
+
+    'product_created' => 'Product created successfully',
+
+    'product_updated' => 'Product updated successfully',
+
+    'product_deleted' => 'Product deleted successfully',
+
+    'search_enter_query' => 'Please enter a search query.',
+    
+    'search_not_found'   => 'No results found.',
 ];
 

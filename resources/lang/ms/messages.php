@@ -230,5 +230,68 @@ return [
     'cancelled_success'  => 'Pesanan telah berjaya dibatalkan.',
     
     'cannot_cancel'      => 'Pesanan ini tidak boleh dibatalkan.',
+
+    'status_product' => 'Produk ini kehabisan stok dan tidak boleh dipesan buat masa ini',
+
+    'Sold out' => 'Habis dijual',
+
+    'International' => '* Caj penghantaran/kotak/pengendalian antarabangsa akan dikenakan',
+
+    'out_of_stock' => 'Item ini kehabisan stok',
+
+    'product_out_of_stock' => 'Item :name kehabisan stok',
+
+    'cart_reached_stock_limit' => 'Kuantiti dalam troli telah mencapai had stok',
+
+    'added_to_cart' => 'Ditambah ke troli',
+
+    'removed_from_cart_stock_zero' => 'Item kehabisan stok dan telah dikeluarkan dari troli anda',
+
+    'updated_quantity' => 'Kuantiti dikemas kini',
+
+    'updated_quantity_limited' => 'Kuantiti dikemas kini (terhad mengikut stok yang ada)',
+
+    'confirm_delete' => 'Anda pasti mahu buang item ini?',
+
+    'confirm_delete_item' => 'Buang ":name" daripada troli?',
+
+    'cart_empty' => 'Troli anda kosong',
+
+    'quote_cart_empty' => 'Troli kosong',
+
+    'product_out_of_stock_remove' => 'Item :name kehabisan stok, sila keluarkan daripada troli',
+
+    'insufficient_stock' => 'Stok tidak mencukupi untuk :name (baki :left)',
+
+    'product_id_missing_in_cart' => 'ID produk tiada dalam troli',
+
+    'order_success' => 'Pesanan berjaya dibuat!',
+
+    'booking_saved' => 'Tempahan berjaya disimpan!',
+
+    'booking_cancelled' => 'Tempahan berjaya dibatalkan',
+
+    'booking_cancel_denied' => 'Tidak boleh batalkan kerana telah diluluskan',
+
+    'admin_booking_approved' => 'Tempahan berjaya diluluskan',
+
+    'admin_booking_rejected' => 'Tempahan berjaya ditolak',
+
+    'course_created' => 'Kursus berjaya dicipta',
+
+    'course_updated' => 'Kemas kini kursus berjaya',
+
+    'course_deleted' => 'Kursus berjaya dipadam',
+
+    'product_created' => 'Produk berjaya dicipta',
+
+    'product_updated' => 'Produk berjaya dikemas kini',
+
+    'product_deleted' => 'Produk berjaya dipadam',
+
+    'search_enter_query' => 'Sila masukkan kata carian.',
+    
+    'search_not_found'   => 'Tiada hasil dijumpai.',
 ];
+
 
