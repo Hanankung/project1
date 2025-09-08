@@ -109,11 +109,80 @@
                 <h1 class="product-title">{{ $product->$nameField ?? '-' }}</h1>
                     <p><strong>{{ __('messages.price') }}:</strong> {{ number_format($product->price, 2) }}
                         {{ __('messages.baht') }}</p>
-                    <p><strong>{{ __('messages.description') }}:</strong> {{ $product->$descField ?? '-' }}</p>
+                    {{-- <p><strong>{{ __('messages.description') }}:</strong> {{ $product->$descField ?? '-' }}</p> --}}
                     <p><strong>{{ __('messages.quantity') }}:</strong> {{ $product->quantity ?? '-' }}</p>
                     <p><strong>{{ __('messages.material') }}:</strong> {{ $product->$materialField ?? '-' }}</p>
                     <p><strong>{{ __('messages.size') }}:</strong> {{ $product->size ?? '-' }}</p>
 
+                     {{-- ===== แยกหัวข้อ รายละเอียด/คุณสมบัติ/การดูแลรักษา (รองรับ TH/EN/MS) ===== --}}
+        @php
+          $raw = (string)($product->$descField ?? '');
+          $labelMap = [
+            'th' => ['desc'=>['รายละเอียด'], 'features'=>['คุณสมบัติ'], 'care'=>['การดูแลรักษา']],
+            'en' => ['desc'=>['Details','Description'], 'features'=>['Features'], 'care'=>['Care','Care Instructions','How to care']],
+            'ms' => ['desc'=>['Perincian','Keterangan'], 'features'=>['Ciri-ciri','Ciri'], 'care'=>['Penjagaan','Cara penjagaan']],
+          ];
+          $display = [
+            'th' => ['desc'=>'รายละเอียด', 'features'=>'คุณสมบัติ', 'care'=>'การดูแลรักษา'],
+            'en' => ['desc'=>'Details', 'features'=>'Features', 'care'=>'Care'],
+            'ms' => ['desc'=>'Perincian', 'features'=>'Ciri-ciri', 'care'=>'Penjagaan'],
+          ];
+          $labels = $labelMap[$locale] ?? $labelMap['en'];
+          $titles = $display[$locale]  ?? $display['en'];
+
+          $allNames = [];
+          foreach ($labels as $arr) { $allNames = array_merge($allNames, $arr); }
+          $pregQuote = fn($v) => preg_quote($v, '/');
+          $joinAlt   = fn($arr) => implode('|', array_map($pregQuote, $arr));
+          $allAlt    = $joinAlt($allNames);
+
+          $extract = function(string $text, array $names) use ($allAlt, $joinAlt) {
+            $thisAlt = $joinAlt($names);
+            $pattern = "/(?:{$thisAlt})\\s*:\\s*(.*?)(?=(?:{$allAlt})\\s*:|$)/isu";
+            return preg_match($pattern, $text, $m) ? trim($m[1]) : null;
+          };
+
+          $sec = [
+            'desc'     => $extract($raw, $labels['desc']),
+            'features' => $extract($raw, $labels['features']),
+            'care'     => $extract($raw, $labels['care']),
+          ];
+
+          $splitLines = function(?string $s) {
+            if (!$s) return [];
+            $parts = preg_split('/\r\n|\r|\n|[•·]|[–—-]/u', $s);
+            return array_values(array_filter(array_map('trim', $parts), fn($t)=>$t!==''));
+          };
+          $features = $splitLines($sec['features']);
+          $care     = $splitLines($sec['care']);
+
+          $noSections = empty($sec['desc']) && empty($features) && empty($care);
+        @endphp
+
+        @if($noSections && $raw !== '')
+          <h5 class="mt-3">{{ $titles['desc'] }}</h5>
+          <p style="white-space:pre-line">{{ $raw }}</p>
+        @else
+          @if(!empty($sec['desc']))
+            <h5 class="mt-3">{{ $titles['desc'] }}</h5>
+            <p style="white-space:pre-line">{{ $sec['desc'] }}</p>
+          @endif
+
+          @if(!empty($features))
+            <h5 class="mt-3">{{ $titles['features'] }}</h5>
+            <ul class="mb-3">
+              @foreach($features as $f) <li>{{ $f }}</li> @endforeach
+            </ul>
+          @endif
+
+          @if(!empty($care))
+            <h5 class="mt-3">{{ $titles['care'] }}</h5>
+            <ul class="mb-3">
+              @foreach($care as $c) <li>{{ $c }}</li> @endforeach
+            </ul>
+          @endif
+        @endif
+        {{-- ===== จบส่วนแยกหัวข้อ ===== --}}
                 <!-- ปุ่มตะกร้า + สั่งซื้อ -->
                 <div class="btn-group-custom">
                     <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
