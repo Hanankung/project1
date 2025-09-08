@@ -15,11 +15,10 @@ class CartController extends Controller
     public function index()
     {
         $cartItems = Cart::with('product')
-        ->where('user_id', Auth::id())
-        ->get();
+            ->where('user_id', Auth::id())
+            ->get();
 
-    return view('member.cart', compact('cartItems'));
-
+        return view('member.cart', compact('cartItems'));
     }
 
     /**
@@ -35,27 +34,41 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'integer|min:1'
+            'quantity'   => 'nullable|integer|min:1',
         ]);
 
+        $product = Post::findOrFail($data['product_id']);
+        $incomingQty = (int)($data['quantity'] ?? 1);
+
+        // หมดสต็อกหรือขอมากกว่าสต็อก
+        if ($product->quantity <= 0) {
+            return back()->with('error', 'สินค้าชิ้นนี้หมดแล้ว');
+        }
+        if ($incomingQty > $product->quantity) {
+            $incomingQty = $product->quantity; // จำกัดไม่ให้เกินสต็อก
+        }
+
         $cart = Cart::where('user_id', Auth::id())
-            ->where('product_id', $request->product_id)
+            ->where('product_id', $product->id)
             ->first();
 
         if ($cart) {
-            $cart->quantity += $request->quantity ?? 1;
-            $cart->save();
+            $newQty = min($cart->quantity + $incomingQty, $product->quantity);
+            if ($newQty === $cart->quantity) {
+                return back()->with('error', 'จำนวนในตะกร้าถึงสต็อกสูงสุดแล้ว');
+            }
+            $cart->update(['quantity' => $newQty]);
         } else {
             Cart::create([
-                'user_id' => Auth::id(),
-                'product_id' => $request->product_id,
-                'quantity' => $request->quantity ?? 1
+                'user_id'    => Auth::id(),
+                'product_id' => $product->id,
+                'quantity'   => min($incomingQty, $product->quantity),
             ]);
         }
 
-        return redirect()->back()->with('success', 'เพิ่มสินค้าลงตะกร้าแล้ว');
+        return back()->with('success', 'เพิ่มสินค้าลงตะกร้าแล้ว');
     }
 
     /**
@@ -79,18 +92,32 @@ class CartController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'quantity' => 'required|integer|min:1'
-        ]);
+        $data = $request->validate([
+        'quantity' => 'required|integer|min:1'
+    ]);
 
-        $cart = Cart::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+    $cart = Cart::where('id', $id)
+        ->where('user_id', Auth::id())
+        ->firstOrFail();
 
-        $cart->update(['quantity' => $request->quantity]);
+    $product = Post::findOrFail($cart->product_id);
 
-        return redirect()->back()->with('success', 'อัปเดตจำนวนสินค้าแล้ว');
+    if ($product->quantity <= 0) {
+        // ลบออกเพราะสินค้าหมดแล้ว
+        $cart->delete();
+        return back()->with('error', 'สินค้าหมดแล้ว จึงลบออกจากตะกร้า');
     }
+
+    $newQty = min((int)$data['quantity'], (int)$product->quantity);
+    $cart->update(['quantity' => $newQty]);
+
+    if ($newQty < (int)$data['quantity']) {
+        return back()->with('success', 'อัปเดตจำนวนแล้ว (จำกัดตามสต็อกที่คงเหลือ)');
+    }
+
+    return back()->with('success', 'อัปเดตจำนวนสินค้าแล้ว');
+}
+
 
     /**
      * Remove the specified resource from storage.

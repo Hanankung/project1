@@ -124,22 +124,39 @@
 
                     <!-- ปุ่มตะกร้า + สั่งซื้อ -->
                     <div class="btn-group-custom">
-                        <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <button type="submit" class="btn btn-cart">
+                        @if ((int) $product->quantity <= 0)
+                            <div class="alert alert-danger w-100 mb-0">
+                                สินค้าชิ้นนี้หมดแล้ว ไม่สามารถสั่งซื้อได้ในขณะนี้
+                            </div>
+
+                            <button class="btn btn-secondary" disabled style="flex:1;">
                                 <i class="bi bi-cart-plus"></i> {{ __('messages.add_to_cart') }}
                             </button>
-                        </form>
-                        <form action="{{ route('checkout.buy_now') }}" method="POST" style="flex:1;">
-    @csrf
-    <input type="hidden" name="product_id" value="{{ $product->id }}">
-    <input type="hidden" name="quantity" value="1">  {{-- ส่งค่า 1 แบบไม่แสดงผล --}}
-    <button type="submit" class="btn btn-buy w-100">
-        <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
-    </button>
-</form>
+
+                            <button class="btn btn-secondary" disabled style="flex:1;">
+                                <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                            </button>
+                        @else
+                            <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                {{-- ถ้าอยากให้เลือกจำนวนเอง ค่อยเพิ่ม input number ทีหลังได้ --}}
+                                <button type="submit" class="btn btn-cart">
+                                    <i class="bi bi-cart-plus"></i> {{ __('messages.add_to_cart') }}
+                                </button>
+                            </form>
+
+                            <form action="{{ route('checkout.buy_now') }}" method="POST" style="flex:1;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-buy w-100">
+                                    <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                                </button>
+                            </form>
+                        @endif
                     </div>
+
                 </div>
             </div>
         </div>

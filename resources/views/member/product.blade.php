@@ -104,27 +104,46 @@
                         <img src="{{ asset('images/default.png') }}" class="card-img-top" alt="ไม่มีรูปภาพ">
                     @endif
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $product->$nameField ?? $product->product_name }}</h5>
+                        <h5 class="card-title d-flex align-items-center justify-content-between">
+                            <span>{{ $product->$nameField ?? $product->product_name }}</span>
+                            @if ((int) $product->quantity <= 0)
+                                <span class="badge bg-secondary">หมด</span>
+                            @endif
+                        </h5>
+
                         <p class="mb-1"><strong>{{ __('messages.price') }}:</strong> {{ $product->price }}
                             {{ __('messages.baht') }}</p>
                         <!-- ปุ่มตะกร้า + สั่งซื้อ -->
                         <div class="btn-group-custom mb-2">
-                            <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <button type="submit" class="btn btn-cart">
+                            @if ((int) $product->quantity <= 0)
+                                <button class="btn btn-secondary" style="width:48px;height:38px;" disabled>
                                     <i class="bi bi-cart-plus"></i>
                                 </button>
-                            </form>
-                            <form action="{{ route('checkout.buy_now') }}" method="POST" style="flex:1; margin-left:8px;">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="btn btn-buy w-100">
+                                <button class="btn btn-secondary flex-1 w-100" disabled>
                                     <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
                                 </button>
-                            </form>
+                            @else
+                                <form action="{{ route('cart.store') }}" method="POST" style="margin:0; padding:0;">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-cart">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </button>
+                                </form>
+
+                                <form action="{{ route('checkout.buy_now') }}" method="POST"
+                                    style="flex:1; margin-left:8px;">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-buy w-100">
+                                        <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                                    </button>
+                                </form>
+                            @endif
                         </div>
+
 
 
                         <!-- ปุ่มรายละเอียด -->

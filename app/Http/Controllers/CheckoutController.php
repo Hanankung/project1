@@ -51,6 +51,16 @@ class CheckoutController extends Controller
                 return redirect()->route('member.cart')->with('error', 'ตะกร้าของคุณว่างเปล่า');
             }
         }
+        $errors = [];
+        foreach ($cartItems as $item) {
+            if ((int)$item->product->quantity <= 0) {
+                $errors[] = "สินค้า {$item->product->product_name} หมดแล้ว กรุณาลบออกจากตะกร้า";
+            }
+        }
+        if (!empty($errors)) {
+            return redirect()->route('member.cart')->with('error', implode("\n", $errors));
+        }
+
 
         // คำนวณ subtotal / ค่าขนส่ง / grand total
         $subtotal = 0;
