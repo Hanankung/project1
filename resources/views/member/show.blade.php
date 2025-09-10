@@ -118,6 +118,18 @@
                     <p class="mb-1"><strong>{{ __('messages.status') }}:</strong></p>
                     <div>{{ __('messages.status_order.' . $statusKey) }}</div>
                 </div>
+                {{-- ✅ คอลัมน์ลิงก์สลิป --}}
+                @if (!empty($order->payment_slip_path))
+                    <div class="col-md-3">
+                        <p class="mb-1"><strong>สลิปการชำระเงิน:</strong></p>
+                        <div>
+                            <a href="{{ asset('storage/' . $order->payment_slip_path) }}" target="_blank"
+                                class="btn btn-sm btn-outline-primary">
+                                เปิดดูสลิป
+                            </a>
+                        </div>
+                    </div>
+                @endif
                 <div class="col-12">
                     <p class="mb-1"><strong>{{ __('messages.Address') }}:</strong></p>
                     <div>{{ $order->address }}</div>

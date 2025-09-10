@@ -38,7 +38,7 @@
                     </div>
                     <div class="card-body">
 
-                        <form action="{{ route('checkout.store') }}" method="POST">
+                        <form action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="mb-3">
@@ -77,6 +77,23 @@
                                 </select>
                                 <small class="text-muted">{{ __('messages.International') }}</small>
                             </div>
+                            {{-- หมายเหตุการชำระเงินล่วงหน้า --}}
+                            <div class="alert alert-warning mt-3">
+                                <strong>หมายเหตุ:</strong> ลูกค้าจำเป็นต้องชำระเงินก่อน แล้วแนบสลิปการชำระเงิน
+                                จากนั้นผู้ดูแลระบบจะตรวจสอบและ <u>อนุมัติคำสั่งซื้อ</u>
+                            </div>
+
+                            {{-- แนบสลิปการชำระเงิน --}}
+                            <div class="mb-3">
+                                <label for="payment_slip" class="form-label">แนบสลิปการชำระเงิน</label>
+                                <input type="file" name="payment_slip" id="payment_slip" class="form-control"
+                                    accept=".jpg,.jpeg,.png,.pdf" required>
+                                <small class="text-muted">รองรับ .jpg .jpeg .png หรือ .pdf ขนาดไม่เกิน 4MB</small>
+                                @error('payment_slip')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
 
                             <button type="submit" class="btn btn-success w-100">
                                 {{ __('messages.Order Confirmation') }}

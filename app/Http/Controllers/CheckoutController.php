@@ -203,144 +203,143 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'    => 'required|string|max:255',
-            'address' => 'required|string|max:500',
-            'phone'   => 'required|string|max:20',
-            'country' => 'required|string|size:2',
-        ]);
+        'name'          => 'required|string|max:255',
+        'address'       => 'required|string|max:500',
+        'phone'         => 'required|string|max:20',
+        'country'       => 'required|string|size:2',
+        'payment_slip'  => 'required|file|mimes:jpg,jpeg,png,pdf|max:4096',
+    ]);
 
-        $source = session('checkout_source');
-        $lines  = session('checkout', []);
+    $source = session('checkout_source');
+    $lines  = session('checkout', []);
 
-        // เตรียม items สำหรับคำนวณ/บันทึก
-        $items = collect();
-
-        if (!empty($lines)) {
-            // กรณี Buy Now หรือ From Cart ที่คัดลอกมาไว้ใน session แล้ว
-            $qtyMap = [];
-            foreach ($lines as $line) {
-                $qtyMap[(int)$line['product_id']] = (int)$line['quantity'];
-            }
-
-            $products = Post::whereIn('id', array_keys($qtyMap))->get()->keyBy('id');
-
-            foreach ($qtyMap as $pid => $qty) {
-                if (!$products->has($pid)) continue;
-                $row = new stdClass();
-                $row->product_id = $pid;           // ✅ เก็บ product_id
-                $row->product    = $products[$pid];
-                $row->quantity   = $qty;
-                $items->push($row);
-            }
-        } else {
-            // fallback: ดึงจากตะกร้าจริง
-            $items = Cart::with('product')
-                ->where('user_id', Auth::id())
-                ->get();
-
-            if ($items->isEmpty()) {
-                return redirect()->route('member.cart')->with('error', __('messages.cart_empty'));
-            }
+    // เตรียม items สำหรับคำนวณ/บันทึก
+    $items = collect();
+    if (!empty($lines)) {
+        $qtyMap = [];
+        foreach ($lines as $line) {
+            $qtyMap[(int)$line['product_id']] = (int)$line['quantity'];
         }
-
-        // คำนวณเงิน
-        $subtotal = 0;
-        foreach ($items as $item) {
-            $subtotal += $item->product->price * $item->quantity;
+        $products = Post::whereIn('id', array_keys($qtyMap))->get()->keyBy('id');
+        foreach ($qtyMap as $pid => $qty) {
+            if (!$products->has($pid)) continue;
+            $row = new \stdClass();
+            $row->product_id = $pid;
+            $row->product    = $products[$pid];
+            $row->quantity   = $qty;
+            $items->push($row);
         }
+    } else {
+        $items = Cart::with('product')->where('user_id', Auth::id())->get();
+        if ($items->isEmpty()) {
+            return redirect()->route('member.cart')->with('error', __('messages.cart_empty'));
+        }
+    }
 
-        $quote      = ShippingQuote::quote($items, strtoupper($request->country));
-        $grandTotal = $subtotal + $quote['total_fee'];
+    // คำนวณเงิน
+    $subtotal = 0;
+    foreach ($items as $item) {
+        $subtotal += $item->product->price * $item->quantity;
+    }
+    $quote      = ShippingQuote::quote($items, strtoupper($request->country));
+    $grandTotal = $subtotal + $quote['total_fee'];
 
-        // ทำงานแบบ transaction + lock row เพื่อตัดสต็อก
-        $lowStockProducts = [];
-        $orderId = null;
+    // อัปโหลดสลิปก่อนเข้า transaction
+    $slipPath = null;
+    if ($request->hasFile('payment_slip')) {
+        $slipPath = $request->file('payment_slip')->store('slips', 'public');
+    }
 
-        try {
-            DB::transaction(function () use ($items, $request, $subtotal, $quote, $grandTotal, &$lowStockProducts, &$orderId) {
+    // ทำงานแบบ transaction + lock row เพื่อตัดสต็อก (ครั้งเดียวเท่านั้น)
+    $lowStockProducts = [];
+    $orderId = null;
 
-                $order = Order::create([
-                    'user_id'      => Auth::id(),
-                    'name'         => $request->name,
-                    'address'      => $request->address,
-                    'phone'        => $request->phone,
-                    'country'      => strtoupper($request->country),
-                    'subtotal'     => $subtotal,
-                    'shipping_fee' => $quote['shipping'],
-                    'box_fee'      => $quote['box'],
-                    'handling_fee' => $quote['handling'],
-                    'currency'     => 'THB',
-                    'total_price'  => $grandTotal,
-                    'status'       => 'รอดำเนินการ',
+    try {
+        DB::transaction(function () use (
+            $items, $request, $subtotal, $quote, $grandTotal,
+            $slipPath, &$lowStockProducts, &$orderId
+        ) {
+            $order = Order::create([
+                'user_id'      => Auth::id(),
+                'name'         => $request->name,
+                'address'      => $request->address,
+                'phone'        => $request->phone,
+                'country'      => strtoupper($request->country),
+                'subtotal'     => $subtotal,
+                'shipping_fee' => $quote['shipping'],
+                'box_fee'      => $quote['box'],
+                'handling_fee' => $quote['handling'],
+                'currency'     => 'THB',
+                'total_price'  => $grandTotal,
+                'status'       => 'รอดำเนินการ',
+                'payment_slip_path' => $slipPath,
+                'payment_status'    => $slipPath ? 'submitted' : 'unpaid',
+            ]);
+
+            $orderId = $order->id;
+
+            foreach ($items as $item) {
+                $productId = $item->product_id ?? optional($item->product)->getKey();
+                if (!$productId) {
+                    throw new \RuntimeException(__('messages.product_id_missing_in_cart'));
+                }
+
+                /** @var \App\Models\Post $product */
+                $product = Post::where('id', $productId)
+                    ->lockForUpdate()
+                    ->firstOrFail();
+
+                if (!$product->hasStock($item->quantity)) {
+                    throw new \RuntimeException(__('messages.insufficient_stock', [
+                        'name' => $product->product_name,
+                        'left' => $product->quantity
+                    ]));
+                }
+
+                // ตัดสต็อก
+                $product->decrementStock($item->quantity);
+
+                // บันทึกรายการสินค้าในออเดอร์
+                OrderItem::create([
+                    'order_id'   => $order->id,
+                    'product_id' => $productId,
+                    'quantity'   => $item->quantity,
+                    'price'      => $product->price,
                 ]);
 
-                $orderId = $order->id;
-
-                foreach ($items as $item) {
-                    // ✅ หา productId ที่เชื่อถือได้ (ทั้งเคส session และ cart)
-                    $productId = $item->product_id ?? optional($item->product)->getKey();
-                    if (!$productId) {
-                        throw new \RuntimeException(__('messages.product_id_missing_in_cart'));
-                    }
-
-                    /** @var \App\Models\Post $product */
-                    $product = Post::where('id', $productId)
-                        ->lockForUpdate()
-                        ->firstOrFail();
-
-                    if (!$product->hasStock($item->quantity)) {
-                        throw new \RuntimeException(__('messages.insufficient_stock', [
-                            'name' => $product->product_name,
-                            'left' => $product->quantity
-                        ]));
-                    }
-
-                    // ตัดสต็อก
-                    $product->decrementStock($item->quantity);
-
-                    // บันทึกรายการสินค้าในออเดอร์
-                    OrderItem::create([
-                        'order_id'   => $order->id,
-                        'product_id' => $productId,     // ✅ ใช้ productId ที่หาไว้
-                        'quantity'   => $item->quantity,
-                        'price'      => $product->price,
-                    ]);
-
-                    // ถ้าสต็อกต่ำกว่าเกณฑ์ เก็บไว้แจ้งเตือน (อย่าใช้ fresh([...]) กับชื่อคอลัมน์)
-                    if ($product->isLow()) {
-                        $lowStockProducts[] = (object)[
-                            'id' => $product->id,
-                            'product_name' => $product->product_name,
-                            'quantity' => $product->quantity,
-                            'low_stock_threshold' => $product->low_stock_threshold,
-                        ];
-                    }
+                if ($product->isLow()) {
+                    $lowStockProducts[] = (object)[
+                        'id' => $product->id,
+                        'product_name' => $product->product_name,
+                        'quantity' => $product->quantity,
+                        'low_stock_threshold' => $product->low_stock_threshold,
+                    ];
                 }
+            }
 
-                // Flash คำเตือนไปหน้าแอดมิน
-                if (!empty($lowStockProducts)) {
-                    session()->flash('low_stock_warnings', collect($lowStockProducts)->map(function ($p) {
-                        return [
-                            'id'        => $p->id,
-                            'name'      => $p->product_name,
-                            'qty'       => $p->quantity,
-                            'threshold' => $p->low_stock_threshold,
-                        ];
-                    })->values()->all());
-                }
-            });
-        } catch (\Throwable $e) {
-            return back()->withErrors($e->getMessage());
-        }
+            if (!empty($lowStockProducts)) {
+                session()->flash('low_stock_warnings', collect($lowStockProducts)->map(function ($p) {
+                    return [
+                        'id'        => $p->id,
+                        'name'      => $p->product_name,
+                        'qty'       => $p->quantity,
+                        'threshold' => $p->low_stock_threshold,
+                    ];
+                })->values()->all());
+            }
+        });
+    } catch (\Throwable $e) {
+        return back()->withErrors($e->getMessage())->withInput();
+    }
 
-        // เคลียร์สถานะ checkout
-        session()->forget(['checkout', 'checkout_source']);
-        if ($source === 'cart') {
-            Cart::where('user_id', Auth::id())->delete();
-        }
+    // เคลียร์สถานะ checkout
+    session()->forget(['checkout', 'checkout_source']);
+    if ($source === 'cart') {
+        Cart::where('user_id', Auth::id())->delete();
+    }
 
-        return redirect()
-            ->route('member.orders.show', $orderId ?? Order::latest('id')->value('id'))
-            ->with('success', __('messages.order_success'));
+    return redirect()
+        ->route('member.orders.show', $orderId ?? Order::latest('id')->value('id'))
+        ->with('success', __('messages.order_success'));
     }
 }

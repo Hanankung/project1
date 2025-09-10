@@ -19,6 +19,8 @@ class Order extends Model
         'currency',
         'total_price',
         'status',
+        'payment_slip_path',
+        'payment_status',
     ];
     // ความสัมพันธ์: 1 Order มีหลาย OrderItem
     public function items()
