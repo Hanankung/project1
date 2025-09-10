@@ -122,7 +122,7 @@ return [
 
     'back_to_list'  => 'Back',
 
-    'booking_form_title' => 'Course Booking Form',
+    'booking_form_title' => 'Course reservation form',
 
     'first_name' => 'First Name',
 

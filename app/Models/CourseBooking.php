@@ -19,9 +19,6 @@ class CourseBooking extends Model
         'price',
         'booking_date',
         'course_name',
-        'course_type',
-        'fabric_type',
-        'fabric_length',
         'status',
     ];
     public function user()

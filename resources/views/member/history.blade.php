@@ -73,9 +73,6 @@
                         <p><strong>{{ __('messages.people_qty') }}:</strong> {{ $post->quantity }}</p>
                         <p><strong>{{ __('messages.price') }}:</strong> {{ $post->price }} {{ __('messages.baht') }}</p>
                         <p><strong>{{ __('messages.booking_date') }}:</strong> {{ $post->booking_date }}</p>
-                        <p><strong>{{ __('messages.course_type') }}:</strong> {{ $post->course_type }}</p>
-                        <p><strong>{{ __('messages.fabric_type') }}:</strong> {{ $post->fabric_type }}</p>
-                        <p><strong>{{ __('messages.fabric_length_m') }}:</strong> {{ $post->fabric_length }}</p>
                         @php
                             $statusKey = $normalizeStatus($post->status);
                         @endphp

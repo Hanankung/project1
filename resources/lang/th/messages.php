@@ -119,7 +119,7 @@ return [
 
     'back_to_list'  => 'ย้อนกลับ',
 
-    'booking_form_title' => 'ฟอร์มจองคอร์ส',
+    'booking_form_title' => 'แบบฟอร์มจองคอร์สเรียน',
 
     'first_name' => 'ชื่อ',
 

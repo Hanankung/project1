@@ -1,22 +1,28 @@
 @extends('member.layout')
 
 @section('content')
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
     {{-- สร้างฟอร์มสมัครคอร์ส --}}
     <div class="container mt-4">
         <h2 class="mb-4">{{ __('messages.booking_form_title') }}</h2>
         {{-- แสดง error validation แบบรวม --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $err)
-                    <li>{{ $err }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $err)
+                        <li>{{ $err }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @php $isLocked = !empty($prefill['courseId']); @endphp
+        @if ($isLocked)
+            <input type="hidden" name="course_id" value="{{ $prefill['courseId'] }}">
+        @endif
+
 
         <form action="{{ route('member.course.booking.store') }}" method="POST">
             @csrf
@@ -64,59 +70,20 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="course_name" class="form-label">{{ __('messages.course_name') }}</label>
-                    <input type="text" class="form-control" id="course_name" name="course_name" maxlength="50" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">{{ __('messages.course_type') }}</label>
-                    @php
-                    $courseTypes = trans('messages.course_type_options'); // ดึงเป็น array
-                    $fabricTypes = trans('messages.fabric_type_options');
-                    @endphp
-                    <select name="course_type" class="form-select">
-                        <option value="">{{ __('messages.fabric_type_placeholder') }}</option>
-                        @foreach($fabricTypes as $val => $label)
-                        <option value="{{ $val }}" @selected(old('fabric_type') === $val)>{{ $label }}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" id="course_name" name="course_name" maxlength="50"
+                        value="{{ old('course_name', $prefill['courseName']) }}" {{ $isLocked ? 'readonly' : '' }}
+                        required>
                 </div>
             </div>
-            {{-- รายละเอียดผ้า --}}
-            <div class="mb-3">
-                <label class="form-label">{{ __('messages.fabric_type') }}</label>
-                <select name="fabric_type" class="form-select">
-                <option value="">{{ __('messages.fabric_type_placeholder') }}</option>
-                @foreach($fabricTypes as $val => $label)
-                    <option value="{{ $val }}" @selected(old('fabric_type') === $val)>{{ $label }}</option>
-                @endforeach
-                </select>
-            </div>
-            
-            {{-- รายละเอียดผ้า --}}
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="fabric_length" class="form-label">{{ __('messages.fabric_length_m') }}</label>
-                    <input type="number" step="0.1" class="form-control" id="fabric_length" name="fabric_length">
-                </div>
-            </div>
-
-            {{-- สถานะ (ให้แอดมินใช้ แต่เผื่อใส่ไว้สำหรับการทดสอบ) --}}
-            {{-- <div class="mb-3">
-                <label for="status" class="form-label">สถานะ</label>
-                <select class="form-select" id="status" name="status">
-                    <option value="pending" selected>รอดำเนินการ</option>
-                    <option value="approved">อนุมัติ</option>
-                    <option value="rejected">ไม่อนุมัติ</option>
-                </select>
-            </div> --}}
-
+           
             <button type="submit" class="btn btn-primary">{{ __('messages.save_booking') }}</button>
             <a href="{{ route('member.courses') }}" class="btn btn-secondary mt-3">{{ __('messages.back') }}</a>
         </form>
-        @if(session('success'))
-        <div class="alert alert-success mt-3">
-            {{ session('success') }}
-        </div>
-    @endif
+        @if (session('success'))
+            <div class="alert alert-success mt-3">
+                {{ session('success') }}
+            </div>
+        @endif
     </div>
-    
+
 @endsection

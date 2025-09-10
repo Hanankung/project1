@@ -25,7 +25,7 @@
                         </p>
                         <p class="fw-bold text-primary">{{ __('messages.price') }} : {{ number_format($course->price) }} {{ __('messages.baht') }}</p>
                         <a href="{{ route('member.course.detail', $course->id) }}" class="btn btn-outline-primary mt-auto">{{ __('messages.learn_more') }}</a>
-                        <a href="{{ route('member.course.booking')}}" class="btn btn-primary btn-sm mt-2 w-100"> + {{ __('messages.book_course') }}</a>
+                        <a href="{{ route('member.course.booking', $course->id) }}" class="btn btn-primary btn-sm mt-2 w-100"> + {{ __('messages.book_course') }}</a>
                         {{-- <a href="{{ route('create')}}" class="btn btn-primary mb-3">+ Create New Post</a> --}}
                     </div>
                 </div>

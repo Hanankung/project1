@@ -42,8 +42,8 @@
             <input type="number" class="form-control" id="price" name="price" placeholder="ราคา">
         </div>
         <div class="mb-3">
-            <label for="course_image" class="form-label">รูปภาพสินค้า</label>
-            <input type="file" class="form-control" id="course_image" name="course_image">
+            <label for="course_image" class="form-label">รูปภาพคอร์ส</label>
+            <input type="file" class="form-control" id="course_image" name="course_image" accept="image/*">
         </div>
         <button type="submit" class="btn btn-primary">บันทึกสินค้า</button>
         <a href="{{ route('admin.course') }}" class="btn btn-secondary">ยกเลิก</a>

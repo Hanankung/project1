@@ -122,7 +122,7 @@ return [
 
     'back_to_list'  => 'Kembali',
 
-    'booking_form_title' => 'Borang Tempahan Kursus',
+    'booking_form_title' => 'Borang tempahan kursus',
 
     'first_name' => 'Nama',
 
