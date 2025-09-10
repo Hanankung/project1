@@ -73,6 +73,8 @@ class CheckoutController extends Controller
         $country = strtoupper($request->input('country', 'TH'));
         $quote   = ShippingQuote::quote($cartItems, $country);
         $grand   = $subtotal + $quote['total_fee'];
+        $rateMyr  = (float) config('currency.rates.THB_MYR', 0.13);
+        $grandMyr = ($country === 'MY') ? round($grand * $rateMyr, 2) : null;
 
         return view('member.checkout', [
             'cartItems'  => $cartItems,
@@ -80,6 +82,8 @@ class CheckoutController extends Controller
             'quote'      => $quote,
             'grandTotal' => $grand,
             'country'    => $country,
+            'rateMyr'    => $rateMyr,     // ✅ ส่งเรทไปด้วย
+            'grandMyr'   => $grandMyr,    // ✅ ส่งยอด MYR (หรือ null ถ้าไม่ใช่ MY)
         ]);
     }
 
@@ -130,29 +134,68 @@ class CheckoutController extends Controller
     // คำนวณค่าส่งแบบ AJAX เมื่อเปลี่ยนประเทศ
     public function quote(Request $request)
     {
-        $cartItems = Cart::with([
-            'product:id,product_name,price,product_image,quantity,low_stock_threshold'
-        ])->where('user_id', Auth::id())->get();
+        // 1) พยายามอ่านจาก session('checkout') ก่อน (กรณี Buy Now/From Cart)
+        $lines = session('checkout', []);
+        $items = collect();
 
-        if ($cartItems->isEmpty()) {
+        if (!empty($lines)) {
+            // build items จาก session เหมือนใน index()
+            $qtyMap = [];
+            foreach ($lines as $line) {
+                $qtyMap[(int) $line['product_id']] = (int) $line['quantity'];
+            }
+
+            $products = Post::whereIn('id', array_keys($qtyMap))
+                ->get()
+                ->keyBy('id');
+
+            foreach ($qtyMap as $pid => $qty) {
+                if (!$products->has($pid)) continue;
+                $row = new \stdClass();
+                $row->product_id = $pid;
+                $row->product    = $products[$pid];
+                $row->quantity   = $qty;
+                $items->push($row);
+            }
+        }
+
+        // 2) ถ้า session ไม่มีของ ให้ดึงจากตะกร้าจริง
+        if ($items->isEmpty()) {
+            $items = Cart::with([
+                'product:id,product_name,price,product_image,quantity,low_stock_threshold'
+            ])->where('user_id', Auth::id())->get();
+        }
+
+        // 3) ถ้ายังว่างอยู่จริง ๆ ให้แจ้ง error
+        if ($items->isEmpty()) {
             return response()->json(['error' => __('messages.quote_cart_empty')], 400);
         }
 
+        // 4) คำนวณ subtotal / ค่าขนส่ง / grand
         $subtotal = 0;
-        foreach ($cartItems as $item) {
+        foreach ($items as $item) {
             $subtotal += $item->product->price * $item->quantity;
         }
 
         $country = strtoupper($request->input('country', 'TH'));
-        $quote   = ShippingQuote::quote($cartItems, $country);
+        $quote   = ShippingQuote::quote($items, $country);
         $grand   = $subtotal + $quote['total_fee'];
 
+        // 5) แปลงเป็นริงกิต (แค่แสดงให้เห็น)
+        $rateMyr  = (float) config('currency.rates.THB_MYR', 0.13);
+        $grandMyr = ($country === 'MY') ? number_format($grand * $rateMyr, 2) : null;
+
         return response()->json([
-            'subtotal' => number_format($subtotal, 2),
-            'shipping' => number_format($quote['shipping'], 2),
-            'box'      => number_format($quote['box'], 2),
-            'handling' => number_format($quote['handling'], 2),
-            'grand'    => number_format($grand, 2),
+            'subtotal'  => number_format($subtotal, 2),
+            'shipping'  => number_format($quote['shipping'], 2),
+            'box'       => number_format($quote['box'], 2),
+            'handling'  => number_format($quote['handling'], 2),
+            'grand'     => number_format($grand, 2),
+
+            // ข้อมูลสำหรับแสดง MYR
+            'grand_myr' => $grandMyr,
+            'rate_myr'  => number_format($rateMyr, 4),
+            'country'   => $country,
         ]);
     }
 

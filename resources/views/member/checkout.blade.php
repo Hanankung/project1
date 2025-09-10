@@ -145,6 +145,22 @@
                                     <th colspan="2" class="text-end">{{ __('messages.grand_total') }}</th>
                                     <th id="grand" class="text-end">{{ number_format($grandTotal, 2) }} ฿</th>
                                 </tr>
+                                <tr id="grand-myr-row" style="{{ ($country ?? 'TH') === 'MY' ? '' : 'display:none' }}">
+                                    <th colspan="2" class="text-end">
+                                        ≈ รวมเป็นเงินมาเลเซีย (MYR)
+                                        <small class="text-muted d-block">
+                                            ใช้อัตราแลกเปลี่ยน 1 THB = <span id="rate-myr-note">
+                                                {{ number_format($rateMyr ?? 0.13, 4) }}
+                                            </span> MYR
+                                        </small>
+                                    </th>
+                                    <th id="grand-myr" class="text-end">
+                                        @if (!empty($grandMyr))
+                                            {{ number_format($grandMyr, 2) }} RM
+                                        @endif
+                                    </th>
+                                </tr>
+
                             </tfoot>
 
 
@@ -155,27 +171,45 @@
         </div>
     </div>
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const select = document.getElementById('country');
-        if (!select) return;
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.getElementById('country');
+            if (!select) return;
 
-        function updateQuote(country) {
-            fetch(`{{ route('checkout.quote') }}?country=${encodeURIComponent(country)}&ts=${Date.now()}`, {
-                headers: { 'Accept': 'application/json' }
-            })
-              .then(res => res.json())
-              .then(data => {
-                  if (data.error) { alert(data.error); return; }
-                  document.getElementById('subtotal').innerText = data.subtotal + ' ฿';
-                  document.getElementById('shipping').innerText = data.shipping + ' ฿';
-                  document.getElementById('box').innerText = data.box + ' ฿';
-                  document.getElementById('handling').innerText = data.handling + ' ฿';
-                  document.getElementById('grand').innerText = data.grand + ' ฿';
-              })
-              .catch(() => alert('ไม่สามารถคำนวณค่าส่งได้'));
-        }
+            const rowMYR = document.getElementById('grand-myr-row');
+            const cellMYR = document.getElementById('grand-myr');
+            const rateNote = document.getElementById('rate-myr-note');
 
-        select.addEventListener('change', () => updateQuote(select.value));
-    });
+            function updateQuote(country) {
+                fetch(`{{ route('checkout.quote') }}?country=${encodeURIComponent(country)}&ts=${Date.now()}`, {
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                            return;
+                        }
+                        document.getElementById('subtotal').innerText = data.subtotal + ' ฿';
+                        document.getElementById('shipping').innerText = data.shipping + ' ฿';
+                        document.getElementById('box').innerText = data.box + ' ฿';
+                        document.getElementById('handling').innerText = data.handling + ' ฿';
+                        document.getElementById('grand').innerText = data.grand + ' ฿';
+
+                        // ✅ อัปเดตส่วน MYR (โชว์เมื่อ country=MY เท่านั้น)
+                        if (data.country === 'MY' && data.grand_myr) {
+                            rowMYR.style.display = '';
+                            cellMYR.textContent = data.grand_myr + ' RM';
+                            if (rateNote && data.rate_myr) rateNote.textContent = data.rate_myr;
+                        } else {
+                            rowMYR.style.display = 'none';
+                        }
+                    })
+                    .catch(() => alert('ไม่สามารถคำนวณค่าส่งได้'));
+            }
+
+            select.addEventListener('change', () => updateQuote(select.value));
+        });
     </script>
 @endsection
