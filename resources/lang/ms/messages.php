@@ -110,7 +110,7 @@ return [
 
     'Items in Cart' => 'Item dalam Troli',
 
-    'courses_title' => 'Semua Kursus',
+    'courses_title' => 'Kursus cetakan eko',
 
     'learn_more'    => 'Lihat lanjut',
 
@@ -292,6 +292,32 @@ return [
     'search_enter_query' => 'Sila masukkan kata carian.',
     
     'search_not_found'   => 'Tiada hasil dijumpai.',
+
+    'Payment slip'   => 'Slip pembayaran',
+
+    'Open Slip View'   => 'Buka Paparan Slip',
+
+    'Total_MY'   => 'Jumlah dalam Ringgit Malaysia (MYR)',
+
+    'exchange rate'   => 'Menggunakan kadar pertukaran 1 THB',
+
+    'note'   => 'Nota',
+
+    'note_slip'   => 'Pelanggan perlu membuat pembayaran terlebih dahulu dan melampirkan slip pembayaran, kemudian pentadbir akan menyemak dan',
+
+    'note_slip_approve'   => 'meluluskan pesanan',
+
+    'Attach payment slip'   => 'Lampirkan slip pembayaran',
+
+    'Support'   => 'Sokongan',
+
+    'or'   => 'atau',
+
+    'Size not exceeding'   => 'Saiz tidak melebihi ',
+
+    'choose_file' => 'Pilih fail',
+
+    'no_file_selected' => 'Tiada fail dipilih',
 ];
 
 

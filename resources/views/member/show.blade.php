@@ -121,11 +121,11 @@
                 {{-- ✅ คอลัมน์ลิงก์สลิป --}}
                 @if (!empty($order->payment_slip_path))
                     <div class="col-md-3">
-                        <p class="mb-1"><strong>สลิปการชำระเงิน:</strong></p>
+                        <p class="mb-1"><strong>{{ __('messages.Payment slip') }}:</strong></p>
                         <div>
                             <a href="{{ asset('storage/' . $order->payment_slip_path) }}" target="_blank"
                                 class="btn btn-sm btn-outline-primary">
-                                เปิดดูสลิป
+                            {{ __('messages.Open Slip View') }}
                             </a>
                         </div>
                     </div>
@@ -237,9 +237,9 @@
                         @if ($isMY)
                             <tr>
                                 <th colspan="3" class="text-end">
-                                    ≈ รวมเป็นเงินมาเลเซีย (MYR)
+                                    ≈ {{ __('messages.Total_MY') }}
                                     <small class="text-muted d-block">
-                                        ใช้อัตราแลกเปลี่ยน 1 THB = {{ number_format($rateMyr, 4) }} MYR
+                                        {{ __('messages.exchange rate') }} = {{ number_format($rateMyr, 4) }} MYR
                                     </small>
                                 </th>
                                 <th class="text-end">

@@ -13,7 +13,7 @@
         </a>
         <h2 class="mb-4">{{ __('messages.Order Confirmation') }}</h2>
 
-        {{-- แสดง Error --}}
+        {{-- Errors --}}
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul class="mb-0">
@@ -24,21 +24,22 @@
             </div>
         @endif
 
-        {{-- แสดง Alert ถ้ามี --}}
+        {{-- Flash alert --}}
         @if (session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
         <div class="row">
-            {{-- ฟอร์มข้อมูลการจัดส่ง --}}
+            {{-- LEFT: Checkout form --}}
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
-                        {{ __('messages.Recipient information') }}</h2>
+                        {{ __('messages.Recipient information') }}
                     </div>
                     <div class="card-body">
 
-                        <form action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
+                        <form id="checkout-form" action="{{ route('checkout.store') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="mb-3">
@@ -58,7 +59,7 @@
                                     required>
                             </div>
 
-                            {{-- เลือกประเทศปลายทาง --}}
+                            {{-- Country --}}
                             <div class="mb-3">
                                 <label for="country" class="form-label">Country</label>
                                 <select name="country" id="country" class="form-select" required>
@@ -77,34 +78,47 @@
                                 </select>
                                 <small class="text-muted">{{ __('messages.International') }}</small>
                             </div>
-                            {{-- หมายเหตุการชำระเงินล่วงหน้า --}}
+
+                            {{-- Note --}}
                             <div class="alert alert-warning mt-3">
-                                <strong>หมายเหตุ:</strong> ลูกค้าจำเป็นต้องชำระเงินก่อน แล้วแนบสลิปการชำระเงิน
-                                จากนั้นผู้ดูแลระบบจะตรวจสอบและ <u>อนุมัติคำสั่งซื้อ</u>
+                                <strong>{{ __('messages.note') }}:</strong>
+                                {{ __('messages.note_slip') }}
+                                <u>{{ __('messages.note_slip_approve') }}</u>
                             </div>
 
-                            {{-- แนบสลิปการชำระเงิน --}}
+                            {{-- Payment slip (custom UI) --}}
                             <div class="mb-3">
-                                <label for="payment_slip" class="form-label">แนบสลิปการชำระเงิน</label>
-                                <input type="file" name="payment_slip" id="payment_slip" class="form-control"
-                                    accept=".jpg,.jpeg,.png,.pdf" required>
-                                <small class="text-muted">รองรับ .jpg .jpeg .png หรือ .pdf ขนาดไม่เกิน 4MB</small>
+                                <label class="form-label">{{ __('messages.Attach payment slip') }}</label>
+
+                                <div class="input-group">
+                                    <input type="file" name="payment_slip" id="payment_slip" class="d-none"
+                                        accept=".jpg,.jpeg,.png,.pdf" required>
+
+                                    <button type="button" id="btn-choose-slip" class="btn btn-outline-secondary">
+                                        {{ __('messages.choose_file') }}
+                                    </button>
+
+                                    <input type="text" id="slip-filename" class="form-control"
+                                        value="{{ __('messages.no_file_selected') }}" readonly>
+                                </div>
+
+                                <small class="text-muted">
+                                    {{ __('messages.Support') }} .jpg .jpeg .png {{ __('messages.or') }} .pdf
+                                    {{ __('messages.Size not exceeding') }} 4MB
+                                </small>
+
                                 @error('payment_slip')
                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-
-                            <button type="submit" class="btn btn-success w-100">
-                                {{ __('messages.Order Confirmation') }}
-                            </button>
+                            {{-- ไม่มีปุ่ม submit ที่ฝั่งซ้ายแล้ว --}}
                         </form>
-
                     </div>
                 </div>
             </div>
 
-            {{-- แสดงรายละเอียดสินค้า --}}
+            {{-- RIGHT: Summary + Submit button --}}
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header bg-secondary text-white">
@@ -136,8 +150,8 @@
                                         </td>
                                         <td class="text-center">{{ $item->quantity }}</td>
                                         <td class="text-end">
-                                            {{ number_format($item->product->price * $item->quantity, 2) }}
-                                            ฿</td>
+                                            {{ number_format($item->product->price * $item->quantity, 2) }} ฿
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -164,11 +178,11 @@
                                 </tr>
                                 <tr id="grand-myr-row" style="{{ ($country ?? 'TH') === 'MY' ? '' : 'display:none' }}">
                                     <th colspan="2" class="text-end">
-                                        ≈ รวมเป็นเงินมาเลเซีย (MYR)
+                                        ≈ {{ __('messages.Total_MY') }}
                                         <small class="text-muted d-block">
-                                            ใช้อัตราแลกเปลี่ยน 1 THB = <span id="rate-myr-note">
-                                                {{ number_format($rateMyr ?? 0.13, 4) }}
-                                            </span> MYR
+                                            {{ __('messages.exchange rate') }} =
+                                            <span id="rate-myr-note">{{ number_format($rateMyr ?? 0.13, 4) }}</span>
+                                            MYR
                                         </small>
                                     </th>
                                     <th id="grand-myr" class="text-end">
@@ -177,21 +191,37 @@
                                         @endif
                                     </th>
                                 </tr>
-
                             </tfoot>
-
-
                         </table>
+                    </div>
+
+                    {{-- Submit button on the right --}}
+                    <div class="card-footer bg-transparent border-0">
+                        <button id="btn-submit-order" type="submit" class="btn btn-success w-100" form="checkout-form">
+                            {{ __('messages.Order Confirmation') }}
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const select = document.getElementById('country');
-            if (!select) return;
+            /* 1) Prevent double-submit */
+            const form = document.getElementById('checkout-form');
+            const submitBtn = document.getElementById('btn-submit-order');
+            if (form) {
+                form.addEventListener('submit', () => {
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = 'กำลังบันทึก...';
+                    }
+                });
+            }
 
+            /* 2) Update shipping / totals + MYR when country changes */
+            const selectCountry = document.getElementById('country');
             const rowMYR = document.getElementById('grand-myr-row');
             const cellMYR = document.getElementById('grand-myr');
             const rateNote = document.getElementById('rate-myr-note');
@@ -208,25 +238,48 @@
                             alert(data.error);
                             return;
                         }
-                        document.getElementById('subtotal').innerText = data.subtotal + ' ฿';
-                        document.getElementById('shipping').innerText = data.shipping + ' ฿';
-                        document.getElementById('box').innerText = data.box + ' ฿';
-                        document.getElementById('handling').innerText = data.handling + ' ฿';
-                        document.getElementById('grand').innerText = data.grand + ' ฿';
 
-                        // ✅ อัปเดตส่วน MYR (โชว์เมื่อ country=MY เท่านั้น)
+                        const el = id => document.getElementById(id);
+                        el('subtotal').innerText = data.subtotal + ' ฿';
+                        el('shipping').innerText = data.shipping + ' ฿';
+                        el('box').innerText = data.box + ' ฿';
+                        el('handling').innerText = data.handling + ' ฿';
+                        el('grand').innerText = data.grand + ' ฿';
+
                         if (data.country === 'MY' && data.grand_myr) {
-                            rowMYR.style.display = '';
-                            cellMYR.textContent = data.grand_myr + ' RM';
+                            if (rowMYR) rowMYR.style.display = '';
+                            if (cellMYR) cellMYR.textContent = data.grand_myr + ' RM';
                             if (rateNote && data.rate_myr) rateNote.textContent = data.rate_myr;
                         } else {
-                            rowMYR.style.display = 'none';
+                            if (rowMYR) rowMYR.style.display = 'none';
                         }
                     })
                     .catch(() => alert('ไม่สามารถคำนวณค่าส่งได้'));
             }
 
-            select.addEventListener('change', () => updateQuote(select.value));
+            if (selectCountry) {
+                selectCountry.addEventListener('change', () => updateQuote(selectCountry.value));
+            }
+
+            /* 3) Custom file input (multilang labels) */
+            const slipInput = document.getElementById('payment_slip');
+            const chooseBtn = document.getElementById('btn-choose-slip');
+            const slipNameEl = document.getElementById('slip-filename');
+
+            if (slipInput && chooseBtn && slipNameEl) {
+                const showNoFile = "{{ __('messages.no_file_selected') }}";
+                const openPicker = () => slipInput.click();
+
+                chooseBtn.addEventListener('click', openPicker);
+                slipNameEl.addEventListener('click', openPicker);
+
+                slipInput.addEventListener('change', () => {
+                    const name = slipInput.files && slipInput.files.length ? slipInput.files[0].name :
+                        showNoFile;
+                    slipNameEl.value = name;
+                });
+            }
         });
     </script>
+
 @endsection

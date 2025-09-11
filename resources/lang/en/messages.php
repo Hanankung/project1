@@ -44,7 +44,7 @@ return [
 
     'title 2' => 'Natural printed fabric bags',
 
-    'View orders' => 'View orders',
+    'View orders' => 'order history',
 
     'warn' => 'There are no products in the system yet',
 
@@ -110,7 +110,7 @@ return [
 
     'Items in Cart' => 'Items in Cart',
 
-    'courses_title' => 'All Courses',
+    'courses_title' => 'Eco print course',
 
     'learn_more'    => 'Learn more',
 
@@ -292,5 +292,31 @@ return [
     'search_enter_query' => 'Please enter a search query.',
     
     'search_not_found'   => 'No results found.',
+
+    'Payment slip'   => 'Payment slip',
+
+    'Open Slip View'   => 'Open Slip View',
+
+    'Total_MY'   => 'Total in Malaysian (MYR)',
+
+    'exchange rate'   => 'Using exchange rate 1 THB',
+
+    'note'   => 'Note',
+
+    'note_slip'   => 'Customer needs to make payment first and attach the payment slip, then the admin will verify and approve the order',
+
+    'note_slip_approve'   => 'Approve the order',
+
+    'Attach payment slip'   => 'Attach payment slip',
+
+    'Support'   => 'Support',
+
+    'or'   => 'or',
+
+    'Size not exceeding'   => 'Size not exceeding ',
+
+    'choose_file' => 'Choose file',
+
+    'no_file_selected' => 'No file selected',
 ];
 

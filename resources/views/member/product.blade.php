@@ -73,6 +73,7 @@
                 flex-direction: column;
                 justify-content: space-between;
             }
+            .card-img-top { cursor: pointer; }
         </style>
     </head>
     @php
@@ -97,12 +98,15 @@
         @forelse($products as $product)
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    @if ($product->product_image)
-                        <img src="{{ asset($product->product_image) }}" class="card-img-top"
-                            alt="{{ $product->$nameField ?? $product->product_name }}">
-                    @else
-                        <img src="{{ asset('images/default.png') }}" class="card-img-top" alt="ไม่มีรูปภาพ">
-                    @endif
+                    <a href="{{ route('member.product.show', $product->id) }}" class="d-block">
+                        @if ($product->product_image)
+                            <img src="{{ asset($product->product_image) }}" class="card-img-top"
+                                alt="{{ $product->$nameField ?? $product->product_name }}">
+                        @else
+                            <img src="{{ asset('images/default.png') }}" class="card-img-top" alt="ไม่มีรูปภาพ">
+                        @endif
+                    </a>
+
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title d-flex align-items-center justify-content-between">
                             <span>{{ $product->$nameField ?? $product->product_name }}</span>
