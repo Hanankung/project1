@@ -316,4 +316,74 @@ return [
     'choose_file' => 'เลือกไฟล์',
 
     'no_file_selected' => 'ยังไม่ได้เลือกไฟล์',
+
+    'price_per_person' => 'ราคา/คน (บาท)',
+
+    'total_price_thb' => 'ราคารวม (บาท)',
+
+    'people_limit_15' => 'ไม่เกิน 15 คน',
+
+    'price_per_person_myr' => 'ราคา/คน (ริงกิต)',
+
+    'total_price_myr' => 'ราคารวม (ริงกิต)',
+
+    'payment_note_approval' => 'กรุณาแนบสลิปการชำระเงินเพื่อให้แอดมินตรวจสอบและอนุมัติคำขอ',
+
+    'payment_slip_label'    => 'แนบสลิปการชำระเงิน',
+
+    'payment_slip_hint'     => 'รองรับ JPG, PNG, WEBP, PDF ขนาดไม่เกิน 4MB',
+
+    'preview'               => 'ตัวอย่างสลิป',
+
+    'payment_slip_label' => 'สลิปการชำระเงิน',
+
+    'view_slip'          => 'ดูสลิป',
+
+    'open_original'      => 'เปิดไฟล์ต้นฉบับ',
+
+    'open_slip_pdf'      => 'เปิดสลิป (PDF)',
+
+    'no_slip'            => 'ไม่มีสลิป',
+
+    'section_customer'      => 'ข้อมูลผู้จอง',
+
+    'summary_title'         => 'สรุปรายการจอง',
+
+    'summary_estimate'      => 'ยอดชำระโดยประมาณ',
+
+    'summary_exchange_note' => 'คำนวณจากอัตราแลกเปลี่ยนล่าสุดที่กำหนดในระบบ',
+
+    'history_totals_note'   => 'แสดงยอดทั้ง THB และ MYR',
+
+    'class_time_template' => 'เวลาเรียน: :start - :end น. เรียน :hours ชั่วโมง',
+
+    'cost'                => 'ค่าใช้จ่าย',
+
+    'baht_per_person'     => 'บาท / คน',
+
+    'course_meal_note'    => 'มีอาหารกลางวัน 1 มื้อ + ขนมทานเล่น 2 มื้อ และเครื่องดื่ม',
+
+    'take_home_artwork'   => 'ได้รับผลงานศิลปะที่ทำด้วยตัวเอง :count ผืน',
+
+    'contact_channel'     => 'ช่องทางติดต่อ',
+
+    'form_fill_hint'          => 'กรอกข้อมูลให้ครบ แล้วกด “บันทึกการจอง”',
+
+    'price_details'           => 'รายละเอียดราคา',
+
+    'exchange_calc_note'      => 'คำนวณจากอัตราแลกเปลี่ยนล่าสุดที่กำหนดในระบบ (โดยประมาณ)',
+
+    'summary_date_empty'      => 'ยังไม่เลือกวันที่',
+
+    'currency_thb'            => 'ไทยบาท (THB)',
+
+    'currency_myr'            => 'ริงกิต (MYR)',
+
+    'exchange_adjustable_note'=> 'อัตราแลกเปลี่ยนปรับได้ในระบบ',
+
+    'show_both_thb_myr' => 'แสดงทั้ง THB และ MYR',
+
+    'no_file_chosen'     => 'ไม่มีไฟล์ที่เลือก',
+    
+    'payment_slip_hint'  => 'อนุญาต: JPG, PNG, WEBP, PDF สูงสุด 4MB',
 ];

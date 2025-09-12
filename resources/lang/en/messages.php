@@ -318,5 +318,75 @@ return [
     'choose_file' => 'Choose file',
 
     'no_file_selected' => 'No file selected',
+
+    'price_per_person' => 'Price/Person (THB)',
+
+    'total_price_thb' => 'Total Price (THB)',
+
+    'people_limit_15' => 'No more than 15 people',
+
+    'price_per_person_myr' => 'Price / person (MYR)',
+
+    'total_price_myr' => 'Total price (MYR)',
+
+    'payment_note_approval' => 'Please attach the payment slip for admin review and approval.',
+
+    'payment_slip_label'    => 'Payment slip',
+
+    'payment_slip_hint'     => 'Accepted: JPG, PNG, WEBP, PDF up to 4MB',
+
+    'preview'               => 'Preview',
+
+    'payment_slip_label' => 'Payment slip',
+
+    'view_slip'          => 'View slip',
+
+    'open_original'      => 'Open original',
+
+    'open_slip_pdf'      => 'Open slip (PDF)',
+
+    'no_slip'            => 'No slip',
+
+    'section_customer'      => 'Customer info',
+
+    'summary_title'         => 'Booking summary',
+
+    'summary_estimate'      => 'Estimated total',
+
+    'summary_exchange_note' => 'Calculated using the latest configured exchange rate',
+
+    'history_totals_note'   => 'Totals shown in both THB and MYR',
+
+    'class_time_template' => 'Class time: :start - :end ( :hours hours )',
+
+    'cost'                => 'Cost',
+
+    'baht_per_person'     => 'THB / person',
+
+    'course_meal_note'    => 'Includes 1 lunch + 2 snack breaks and beverages',
+
+    'take_home_artwork'   => 'Take home your own artwork (:count piece)',
+
+    'contact_channel'     => 'Contact',
+
+    'form_fill_hint'          => 'Please complete all fields and press “Save booking”.',
+
+    'price_details'           => 'Price details',
+
+    'exchange_calc_note'      => 'Calculated using the latest configured exchange rate (approximate).',
+
+    'summary_date_empty'      => 'No date selected',
+
+    'currency_thb'            => 'Thai Baht (THB)',
+
+    'currency_myr'            => 'Ringgit (MYR)',
+
+    'exchange_adjustable_note'=> 'The exchange rate can be adjusted in the system.',
+
+    'show_both_thb_myr' => 'Show both THB and MYR',
+
+    'no_file_chosen'     => 'No file chosen',
+    
+    'allowed_file_types' => 'Allowed: JPG, PNG, WEBP, PDF up to 4MB',
 ];
 

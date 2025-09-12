@@ -17,9 +17,11 @@ class CourseBooking extends Model
         'email',
         'quantity',
         'price',
+        'total_price',
         'booking_date',
         'course_name',
         'status',
+        'payment_slip',
     ];
     public function user()
 {

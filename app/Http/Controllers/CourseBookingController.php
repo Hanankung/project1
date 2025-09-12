@@ -49,8 +49,10 @@ class CourseBookingController extends Controller
             $prefill['courseName'] = trim((string)($course->$nameField ?? $course->course_name));
             $prefill['price']      = $course->price ?? '';
         }
+        // ใช้เรตจาก config/currency.php (อิง .env: CURRENCY_THB_TO_MYR)
+        $rate = (float) config('currency.rates.THB_MYR', 0.13);
 
-        return view('member.createBooking', compact('prefill'));
+        return view('member.createBooking', compact('prefill', 'rate'));
     }
 
     /**
@@ -63,29 +65,40 @@ class CourseBookingController extends Controller
             'lastname'      => 'required|string|max:20',
             'phone'         => 'required|string|max:10',
             'email'         => 'required|email|max:50',
-            'quantity'      => 'required|integer|min:1',
-            'price'         => 'required|numeric|min:0',
+            'quantity'     => 'required|integer|min:1|max:15',
             'booking_date'  => 'required|date',
             'course_name'   => 'required|string|max:50',
             'course_id' => 'nullable|exists:courses,id',
+            'price'         => 'required|numeric|min:0',
+            'total_price'  => 'nullable|numeric|min:0',
+            'payment_slip' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:4096', // ≤ 4MB
 
         ]);
-        if ($request->filled('course_id')) {
-            $course = Course::find($request->course_id);
+        $unit = null;
+        if (!empty($validated['course_id'])) {
+            $course = \App\Models\Course::find($validated['course_id']);
             if ($course) {
                 $locale = app()->getLocale();
-                $nameField = $locale === 'en'
-                    ? 'course_name_ENG'
-                    : ($locale === 'ms' ? 'course_name_MS' : 'course_name');
+                $nameField = $locale === 'en' ? 'course_name_ENG' : ($locale === 'ms' ? 'course_name_MS' : 'course_name');
 
-                // เขียนทับชื่อคอร์สให้ตรงกับ DB เสมอ
+                // ชื่อคอร์สยึด DB เสมอ
                 $validated['course_name'] = trim((string)($course->$nameField ?? $course->course_name));
-
-                // ถ้าต้องการล็อกราคาให้ตรง DB เสมอ ให้ปลดคอมเมนท์ด้านล่าง
-                // $validated['price'] = $course->price ?? $validated['price'];
+                // ราคา/คนจาก DB
+                $unit = (float) ($course->price ?? 0);
             }
         }
+        // หากไม่มี course_id (หน้า manual) ให้ใช้ราคาที่ผู้ใช้กรอกเป็นราคา/คน
+        if ($unit === null) {
+            $unit = (float) ($validated['price'] ?? 0);
+        }
 
+        $qty   = (int) $validated['quantity'];
+        $total = $unit * $qty;
+
+        $slipPath = null;
+        if ($request->hasFile('payment_slip')) {
+            $slipPath = $request->file('payment_slip')->store('payment_slips', 'public'); // public/storage/payment_slips/...
+        }
 
         CourseBooking::create([
             'user_id'       => Auth::id(), // ✅ ผูกกับ user ที่ล็อกอิน
@@ -93,10 +106,12 @@ class CourseBookingController extends Controller
             'lastname'      => $validated['lastname'],
             'phone'         => $validated['phone'],
             'email'         => $validated['email'],
-            'quantity'      => $validated['quantity'],
-            'price'         => $validated['price'],
+            'quantity'      => $qty,
+            'price'        => $unit,
+            'total_price'  => $total,
             'booking_date'  => $validated['booking_date'],
             'course_name'   => $validated['course_name'],
+            'payment_slip' => $slipPath,
         ]);
 
         return redirect()->route('member.courses')->with('success', __('messages.booking_saved'));

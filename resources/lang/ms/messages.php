@@ -318,6 +318,74 @@ return [
     'choose_file' => 'Pilih fail',
 
     'no_file_selected' => 'Tiada fail dipilih',
+
+    'price_per_person' => 'Harga/Orang (THB)',
+
+    'total_price_thb' => 'Jumlah Harga (THB)',
+
+    'people_limit_15' => 'Tidak lebih dari 15 orang',
+
+    'price_per_person_myr' => 'Harga / orang (MYR)',
+
+    'total_price_myr' => 'Jumlah harga (MYR)',
+
+    'payment_note_approval' => 'Sila lampirkan slip pembayaran untuk semakan dan kelulusan admin.',
+
+    'payment_slip_label'    => 'Lampirkan slip pembayaran',
+
+    'payment_slip_hint'     => 'Dibenarkan: JPG, PNG, WEBP, PDF sehingga 4MB',
+    
+    'preview'               => 'Pratonton',
+
+    'payment_slip_label' => 'Slip pembayaran',
+
+    'view_slip'          => 'Lihat slip',
+
+    'open_original'      => 'Buka fail asal',
+
+    'open_slip_pdf'      => 'Buka slip (PDF)',
+
+    'no_slip'            => 'Tiada slip',
+
+    'section_customer'      => 'Maklumat pelanggan',
+
+    'summary_title'         => 'Ringkasan tempahan',
+
+    'summary_estimate'      => 'Jumlah anggaran',
+
+    'summary_exchange_note' => 'Dikira menggunakan kadar pertukaran terkini yang ditetapkan',
+
+    'history_totals_note'   => 'Jumlah dipaparkan dalam THB dan MYR',
+
+    'class_time_template' => 'Masa kelas: :start - :end ( :hours jam )',
+
+    'cost'                => 'Kos',
+
+    'baht_per_person'     => 'Baht / seorang',
+
+    'course_meal_note'    => 'Termasuk 1 hidangan tengah hari + 2 sajian snek dan minuman',
+
+    'take_home_artwork'   => 'Bawa pulang karya seni anda sendiri (:count helai)',
+
+    'contact_channel'     => 'Maklumat hubungan',
+
+    'form_fill_hint'          => 'Sila isi semua maklumat dan tekan “Simpan tempahan”.',
+
+    'price_details'           => 'Butiran harga',
+
+    'exchange_calc_note'      => 'Dikira menggunakan kadar pertukaran terkini yang ditetapkan dalam sistem (anggaran).',
+
+    'summary_date_empty'      => 'Belum pilih tarikh',
+
+    'currency_thb'            => 'Baht Thai (THB)',
+
+    'currency_myr'            => 'Ringgit (MYR)',
+
+    'exchange_adjustable_note'=> 'Kadar pertukaran boleh dilaraskan dalam sistem.',
+
+    'show_both_thb_myr' => 'Papar kedua-dua THB dan MYR',
+
+    'no_file_chosen'     => 'Tiada fail dipilih',
+    
+    'allowed_file_types' => 'Dibenarkan: JPG, PNG, WEBP, PDF sehingga 4MB',
 ];
-
-
