@@ -22,6 +22,7 @@ class CourseBooking extends Model
         'course_name',
         'status',
         'payment_slip',
+        'course_id',
     ];
     public function user()
 {

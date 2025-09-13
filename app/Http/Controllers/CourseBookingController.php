@@ -7,6 +7,7 @@ use App\Models\CourseBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
+use Illuminate\Support\Facades\DB;
 
 class CourseBookingController extends Controller
 {
@@ -51,8 +52,21 @@ class CourseBookingController extends Controller
         }
         // ใช้เรตจาก config/currency.php (อิง .env: CURRENCY_THB_TO_MYR)
         $rate = (float) config('currency.rates.THB_MYR', 0.13);
+        $capacity = 15; // ความจุคงที่/วัน
 
-        return view('member.createBooking', compact('prefill', 'rate'));
+        // นับยอดจองต่อวัน (เฉพาะที่ “กินโควตา”)
+        $rows = CourseBooking::select('booking_date', DB::raw('SUM(quantity) as qty'))
+            ->whereNotIn('status', ['ไม่อนุมัติ', 'rejected', 'cancelled'])
+            ->groupBy('booking_date')
+            ->get();
+
+        // map เป็น ['YYYY-MM-DD' => ยอดจองวันนั้น]
+        $bookedMap = [];
+        foreach ($rows as $r) {
+            // ถ้า booking_date เป็น DATE อยู่แล้ว จะได้รูปแบบ YYYY-MM-DD
+            $bookedMap[$r->booking_date] = (int) $r->qty;
+        }
+        return view('member.createBooking', compact('prefill', 'rate', 'capacity', 'bookedMap'));
     }
 
     /**
@@ -74,6 +88,19 @@ class CourseBookingController extends Controller
             'payment_slip' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:4096', // ≤ 4MB
 
         ]);
+        $capacity = 15; // ความจุคงที่/วัน
+        // ตรวจสอบยอดจองรวม (เฉพาะที่ “กินโควตา”)
+        $booked = CourseBooking::whereDate('booking_date', $validated['booking_date'])
+            ->whereNotIn('status', ['ไม่อนุมัติ', 'rejected', 'cancelled'])
+            ->sum('quantity');
+
+        $remain = max(0, $capacity - $booked);
+        if ($validated['quantity'] > $remain) {
+            return back()
+                ->withErrors(['booking_date' => __('messages.booking_date_full_or_not_enough', ['remain' => $remain])])
+                ->withInput();
+        }
+
         $unit = null;
         if (!empty($validated['course_id'])) {
             $course = \App\Models\Course::find($validated['course_id']);
@@ -102,6 +129,7 @@ class CourseBookingController extends Controller
 
         CourseBooking::create([
             'user_id'       => Auth::id(), // ✅ ผูกกับ user ที่ล็อกอิน
+            'course_id'    => $validated['course_id'] ?? null,
             'name'          => $validated['name'],
             'lastname'      => $validated['lastname'],
             'phone'         => $validated['phone'],

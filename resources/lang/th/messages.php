@@ -386,4 +386,54 @@ return [
     'no_file_chosen'     => 'ไม่มีไฟล์ที่เลือก',
     
     'payment_slip_hint'  => 'อนุญาต: JPG, PNG, WEBP, PDF สูงสุด 4MB',
+
+    'shop_map'             => 'แผนที่ร้าน',
+
+    'open_in_google_maps'  => 'เปิดใน Google Maps',
+
+    'navigate'             => 'นำทาง',
+
+    'search_results'      => 'ผลการค้นหา',
+
+    'products'            => 'สินค้า',
+
+    'courses'             => 'คอร์ส',
+
+    'view_detail'         => 'รายละเอียด',
+
+    'no_products'         => 'ไม่พบสินค้า',
+
+    'no_courses'          => 'ไม่พบคอร์ส',
+
+    'search_enter_query'  => 'กรุณากรอกคำค้นหา',
+
+    'search_not_found'    => 'ไม่พบผลลัพธ์ที่ตรงกับคำค้นหา',
+
+    'booking_history_menu' => 'ประวัติการจองคอร์ส',
+
+    'available' => 'ว่าง',
+
+    'some_seats_left' => 'เหลือที่นั่ง',
+
+    'full' => 'เต็มแล้ว',
+
+    'remaining' => 'คงเหลือ',
+
+    'seats' => 'ที่นั่ง',
+
+    'booking_date_full_or_not_enough' => 'วันที่เลือกเต็มแล้วหรือคงเหลือไม่พอ (เหลือ :remain ที่นั่ง)',
+    
+    'remaining_seats' => 'เหลือที่ว่าง',
+
+    'date_full' => 'วันที่นี้เต็มแล้ว กรุณาเลือกวันอื่น',
+
+    'people_limit_dynamic' => 'สมัครได้สูงสุด',
+
+    'people_unit' => 'คน',
+
+    'booking_date_full_or_not_enough' => 'วันที่เลือกเหลือที่ว่างเพียง :remain ที่นั่ง',
+
+    'people_limit_dynamic' => 'สมัครได้สูงสุด (โควตรวมทุกคอร์ส)',
+
+    'booked_some' => 'มีคนจองแล้วบางส่วน',
 ];

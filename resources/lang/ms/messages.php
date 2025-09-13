@@ -388,4 +388,54 @@ return [
     'no_file_chosen'     => 'Tiada fail dipilih',
     
     'allowed_file_types' => 'Dibenarkan: JPG, PNG, WEBP, PDF sehingga 4MB',
+
+    'shop_map'             => 'Peta kedai',
+
+    'open_in_google_maps'  => 'Buka dalam Google Maps',
+    
+    'navigate'             => 'Dapatkan arah',
+
+    'search_results'      => 'Hasil carian',
+
+    'products'            => 'Produk',
+
+    'courses'             => 'Kursus',
+
+    'view_detail'         => 'Lihat butiran',
+
+    'no_products'         => 'Tiada produk ditemui',
+
+    'no_courses'          => 'Tiada kursus ditemui',
+
+    'search_enter_query'  => 'Sila masukkan kata carian',
+
+    'search_not_found'    => 'Tiada hasil yang sepadan',
+
+    'booking_history_menu' => 'Sejarah tempahan kursus',
+
+    'available' => 'Tersedia',
+
+    'some_seats_left' => 'Tinggal sedikit',
+
+    'full' => 'Penuh',
+
+    'remaining' => 'Baki',
+
+    'seats' => 'tempat',
+
+    'booking_date_full_or_not_enough' => 'Tarikh pilihan penuh atau tempat tidak mencukupi (baki :remain tempat).',
+
+    'remaining_seats' => 'Tempat kosong',
+
+    'date_full' => 'Tarikh ini penuh. Sila pilih hari lain.',
+
+    'people_limit_dynamic' => 'Boleh tempah maksimum',
+
+    'people_unit' => 'orang',
+
+    'booking_date_full_or_not_enough' => 'Hanya tinggal :remain tempat pada tarikh tersebut.',
+
+    'people_limit_dynamic' => 'Tempahan maksimum (kuota dikongsi semua kursus)',
+
+    'booked_some' => 'Sebahagian ditempah',
 ];

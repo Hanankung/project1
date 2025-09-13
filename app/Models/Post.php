@@ -9,21 +9,21 @@ class Post extends Model
     protected $table = 'products'; // บอกให้ Model ใช้ตาราง products
 
     protected $fillable = [
-    'product_name',
-    'product_name_ENG',
-    'product_name_MS',
-    'description',
-    'description_ENG',
-    'description_MS',
-    'price',
-    'quantity',
-    'low_stock_threshold',
-    'material',
-    'material_ENG',
-    'material_MS',
-    'size',
-    'product_image'
-];
+        'product_name',
+        'product_name_ENG',
+        'product_name_MS',
+        'description',
+        'description_ENG',
+        'description_MS',
+        'price',
+        'quantity',
+        'low_stock_threshold',
+        'material',
+        'material_ENG',
+        'material_MS',
+        'size',
+        'product_image'
+    ];
     protected $casts = [
         'quantity' => 'integer',
         'low_stock_threshold' => 'integer',
@@ -49,5 +49,25 @@ class Post extends Model
     public function isLow(): bool
     {
         return $this->quantity <= $this->low_stock_threshold;
+    }
+
+    public function getNameI18nAttribute()
+    {
+        $loc = app()->getLocale();
+        return match ($loc) {
+            'en' => $this->product_name_ENG ?: $this->product_name,
+            'ms' => $this->product_name_MS  ?: $this->product_name,
+            default => $this->product_name,
+        };
+    }
+
+    public function getDescriptionI18nAttribute()
+    {
+        $loc = app()->getLocale();
+        return match ($loc) {
+            'en' => $this->description_ENG ?: $this->description,
+            'ms' => $this->description_MS  ?: $this->description,
+            default => $this->description,
+        };
     }
 }

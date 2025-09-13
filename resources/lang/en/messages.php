@@ -388,5 +388,55 @@ return [
     'no_file_chosen'     => 'No file chosen',
     
     'allowed_file_types' => 'Allowed: JPG, PNG, WEBP, PDF up to 4MB',
+
+    'shop_map'             => 'Shop map',
+
+    'open_in_google_maps'  => 'Open in Google Maps',
+    
+    'navigate'             => 'Navigate',
+
+    'search_results'      => 'Search results',
+
+    'products'            => 'Products',
+
+    'courses'             => 'Courses',
+
+    'view_detail'         => 'View details',
+
+    'no_products'         => 'No products found',
+
+    'no_courses'          => 'No courses found',
+
+    'search_enter_query'  => 'Please enter a search term',
+
+    'search_not_found'    => 'No matching results found',
+
+    'booking_history_menu' => 'Course booking history',
+
+    'available' => 'Available',
+
+    'some_seats_left' => 'Limited',
+
+    'full' => 'Fully booked',
+
+    'remaining' => 'Remaining',
+
+    'seats' => 'seats',
+
+    'booking_date_full_or_not_enough' => 'Selected date is fully booked or not enough seats (remaining :remain seats).',
+
+    'remaining_seats' => 'Seats available',
+
+    'date_full' => 'This date is fully booked. Please choose another day.',
+
+    'people_limit_dynamic' => 'Maximum you can book',
+
+    'people_unit' => 'people',
+
+    'booking_date_full_or_not_enough' => 'Only :remain seat(s) left on that date.',
+
+    'people_limit_dynamic' => 'Max you can book (shared quota across courses)',
+
+    'booked_some' => 'Partially booked',
 ];
 

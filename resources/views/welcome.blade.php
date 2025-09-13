@@ -24,10 +24,12 @@
 
         <div class="top-right">
             <div class="search-center">
-                <input type="text" class="search-input" placeholder="{{ __('messages.search') }}">
-                <button class="search-button">
-                    <i class="fas fa-search"></i>
-                </button>
+                <form action="{{ route('search') }}" method="GET" style="display:flex; align-items:center; gap:10px;">
+                    <input type="text" name="query" class="search-input" placeholder="{{ __('messages.search') }}">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
 
                 <i class="fas fa-language icon" aria-hidden="true"></i>
                 <div class="language-switcher" style="display:inline-block; margin-left:10px;">
