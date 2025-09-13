@@ -161,7 +161,7 @@
                     <a href="{{ route('lang.switch', 'en') }}"
                         class="{{ $currentLocale === 'en' ? 'active' : '' }}">EN</a>|
                     <a href="{{ route('lang.switch', 'ms') }}"
-                        class="{{ $currentLocale === 'ms' ? 'active' : '' }}">MS</a>
+                        class="{{ $currentLocale === 'ms' ? 'active' : '' }}">MY</a>
                 </div>
             </div>
 

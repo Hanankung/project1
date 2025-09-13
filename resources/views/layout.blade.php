@@ -37,7 +37,7 @@
                     <a class="{{ $currentLocale === 'en' ? 'active' : '' }}"
                        href="{{ route('lang.switch', 'en') }}">EN</a> |
                     <a class="{{ $currentLocale === 'ms' ? 'active' : '' }}"
-                       href="{{ route('lang.switch', 'ms') }}">MS</a>
+                       href="{{ route('lang.switch', 'ms') }}">MY</a>
                 </div>
             </div>
 
