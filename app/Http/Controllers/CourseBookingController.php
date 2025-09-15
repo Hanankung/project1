@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\CourseBookedNotification;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\BookingStatusUpdatedNotification;
 
 class CourseBookingController extends Controller
 {
@@ -127,7 +130,7 @@ class CourseBookingController extends Controller
             $slipPath = $request->file('payment_slip')->store('payment_slips', 'public'); // public/storage/payment_slips/...
         }
 
-        CourseBooking::create([
+        $booking = CourseBooking::create([
             'user_id'       => Auth::id(), // ✅ ผูกกับ user ที่ล็อกอิน
             'course_id'    => $validated['course_id'] ?? null,
             'name'          => $validated['name'],
@@ -140,7 +143,27 @@ class CourseBookingController extends Controller
             'booking_date'  => $validated['booking_date'],
             'course_name'   => $validated['course_name'],
             'payment_slip' => $slipPath,
+            'status'       => 'รอดำเนินการ',
         ]);
+
+        // ===== ส่งอีเมลแจ้งเตือน =====
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+
+        // ผู้จอง
+        if ($user && !empty($user->email)) {
+            $user->notify((new CourseBookedNotification($booking, 'customer'))->delay(now()->addSeconds(1)));
+        } elseif (!empty($booking->email)) {
+            Notification::route('mail', $booking->email)
+                ->notify((new CourseBookedNotification($booking, 'customer'))->delay(now()->addSeconds(1)));
+        }
+
+        // แอดมิน
+        if ($adminEmail = env('ADMIN_EMAIL')) {
+            Notification::route('mail', $adminEmail)
+                ->notify((new CourseBookedNotification($booking, 'admin'))->delay(now()->addSeconds(6)));
+        }
+
 
         return redirect()->route('member.courses')->with('success', __('messages.booking_saved'));
     }
@@ -168,23 +191,49 @@ class CourseBookingController extends Controller
     // อนุมัติการจอง
     public function approve($id)
     {
-        $booking = CourseBooking::findOrFail($id);
-        if ($booking->status === 'รอดำเนินการ') {
-            $booking->status = 'อนุมัติ';
-            $booking->save();
+         $booking = CourseBooking::findOrFail($id);
+
+    if ($booking->status === 'รอดำเนินการ') {
+        $booking->status = 'อนุมัติ';
+        $booking->save();
+
+        // ส่งแจ้งผู้จอง
+        $notify = (new BookingStatusUpdatedNotification($booking))->delay(now()->addSeconds(1));
+        $user   = $booking->user;
+
+        if ($user && !empty($user->email)) {
+            $user->notify($notify);
+        } elseif (!empty($booking->email)) {
+            Notification::route('mail', $booking->email)->notify($notify);
         }
-        return redirect()->route('admin.course.booking.index')->with('success', __('messages.admin_booking_approved'));
+    }
+
+    return redirect()->route('admin.course.booking.index')
+        ->with('success', __('messages.admin_booking_approved'));
     }
 
     // ไม่อนุมัติการจอง
     public function reject($id)
     {
         $booking = CourseBooking::findOrFail($id);
-        if ($booking->status === 'รอดำเนินการ') {
-            $booking->status = 'ไม่อนุมัติ';
-            $booking->save();
+
+    if ($booking->status === 'รอดำเนินการ') {
+        $booking->status = 'ไม่อนุมัติ';
+        $booking->save();
+
+        // ส่งแจ้งผู้จอง
+        $notify = (new BookingStatusUpdatedNotification($booking))->delay(now()->addSeconds(1));
+        $user   = $booking->user;
+
+        if ($user && !empty($user->email)) {
+            $user->notify($notify);
+        } elseif (!empty($booking->email)) {
+            Notification::route('mail', $booking->email)->notify($notify);
         }
-        return redirect()->route('admin.course.booking.index')->with('success', __('messages.admin_booking_rejected'));
+    }
+
+    return redirect()->route('admin.course.booking.index')
+        ->with('success', __('messages.admin_booking_rejected'));
     }
 
 

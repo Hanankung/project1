@@ -1,82 +1,117 @@
-body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
-    }
-    header {
-        background-color: #d8c0a6;
-        padding: 10px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    header .logo {
-        font-size: 24px;
-        font-weight: bold;
-        color: #2f7d5d;
-    }
-    nav {
-        background-color: #4a2c20;
-        display: flex;
-        justify-content: center;
-    }
-    nav a {
-        color: white;
-        padding: 14px 20px;
-        text-decoration: none;
-    }
-    nav a.active {
-        background-color: #7a4b38;
-    }
-    .breadcrumb {
-        padding: 10px 20px;
-        font-size: 14px;
-        background-color: #f5f5f5;
-        color: #555;
-    }
-    .container {
-        padding: 20px;
-        max-width: 1000px;
-        margin: auto;
-        background-color: white;
-    }
-    .about-title {
-        font-size: 22px;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-    .about-box {
-        display: flex;
-        gap: 15px;
-        background-color: #fff;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-bottom: 20px;
-    }
-    .about-box img {
-        width: 200px;
-        height: auto;
-        border-radius: 4px;
-    }
-    .about-info p {
-        margin: 5px 0;
-        line-height: 1.5;
-    }
-    .award-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-    .award-gallery {
-        display: flex;
-        gap: 15px;
-        overflow-x: auto;
-        padding-bottom: 10px;
-    }
-    .award-gallery img {
-        height: 200px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
+/* ===== Siro-Secret | About Me (Premium) ===== */
+:root{
+  --brand:#6b4e2e;         /* โทนน้ำตาลพรีเมี่ยม */
+  --gold-1:#d4af37;        /* ไลน์ทอง */
+  --gold-2:#f6e27a;        /* ทองอ่อน */
+  --ink:#1f2937;           /* สีตัวอักษรหลัก */
+  --muted:#6b7280;         /* สีข้อความรอง */
+  --paper:#ffffff;
+  --bg:#faf7f2;
+  --ring:rgba(212,175,55,.28);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:linear-gradient(180deg,var(--bg) 0%, #fff 55%);
+  color:var(--ink);
+  font-family: "Prompt", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Thai", Arial, sans-serif;
+}
+
+/* Wrapper + heading */
+.header{
+  padding:28px 0 40px;
+}
+.header h1{
+  margin:8px auto 22px;
+  text-align:center;
+  font-size:clamp(1.6rem, 2vw + 1rem, 2.2rem);
+  font-weight:800;
+  letter-spacing:.3px;
+  background:linear-gradient(120deg,var(--gold-1),var(--gold-2),var(--gold-1));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  position:relative;
+}
+.header h1::after{
+  content:"";
+  display:block; margin:10px auto 0;
+  width:120px; height:4px; border-radius:999px;
+  background:linear-gradient(90deg,transparent,var(--ring),transparent);
+}
+
+/* Container width */
+.container{
+  max-width:min(1100px, 92vw);
+  margin:0 auto;
+}
+
+/* About card */
+.about-box{
+  display:grid;
+  grid-template-columns: 360px 1fr;
+  gap:22px;
+  background:var(--paper);
+  border:1px solid rgba(139,106,70,.12);
+  border-radius:18px;
+  box-shadow:0 18px 44px rgba(0,0,0,.08);
+  padding:18px;
+  margin:10px 0 28px;
+}
+.about-box img{
+  width:100%; height:100%; max-height:360px;
+  object-fit:cover; border-radius:14px;
+  transition:transform .35s ease;
+}
+.about-box img:hover{ transform:scale(1.015) }
+
+.about-info{
+  display:flex; flex-direction:column; justify-content:center;
+  gap:8px; color:#374151; line-height:1.7;
+}
+.about-info b{ color:#111827 }
+.about-info p{ margin:.1rem 0 }
+
+/* Section title: awards */
+.award-title{
+  margin:8px 2px 12px;
+  font-weight:800; color:#3b3b3b;
+  display:flex; align-items:center; gap:10px;
+}
+.award-title::before, .award-title::after{
+  content:""; flex:1; height:2px;
+  background:linear-gradient(90deg,transparent,var(--ring),transparent);
+}
+
+/* Awards gallery (responsive grid) */
+.award-gallery{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap:14px;
+  margin-bottom:16px;
+}
+.award-gallery img{
+  width:100%; aspect-ratio: 4/3;
+  object-fit:cover;
+  border-radius:14px;
+  border:1px solid #eee;
+  background:#fff;
+  box-shadow:0 10px 24px rgba(0,0,0,.06);
+  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
+}
+.award-gallery img:hover{
+  transform:translateY(-2px) scale(1.015);
+  box-shadow:0 16px 36px rgba(0,0,0,.12);
+  filter:saturate(1.05);
+}
+
+/* Small screens */
+@media (max-width: 900px){
+  .about-box{ grid-template-columns: 1fr; }
+  .about-box img{ max-height: 280px }
+}
+
+/* Subtle separators */
+hr {
+  height:1px; border:0; margin:18px 0;
+  background:linear-gradient(90deg,transparent,var(--ring),transparent);
+}

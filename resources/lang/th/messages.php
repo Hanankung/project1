@@ -1,7 +1,7 @@
 ﻿<?php
 return [
 
-	'home' => 'หน้าแรก',
+    'home' => 'หน้าแรก',
 
     'product' => 'สินค้า',
 
@@ -147,29 +147,29 @@ return [
 
     'save_booking' => 'บันทึกการจอง',
 
-// ตัวเลือกแบบเป็นรหัส (เก็บใน DB เป็นโค้ด แต่แสดงผลตามภาษา)
+    // ตัวเลือกแบบเป็นรหัส (เก็บใน DB เป็นโค้ด แต่แสดงผลตามภาษา)
     'course_type_options' => [
 
-    'mix' => 'แบบสีผสม',
+        'mix' => 'แบบสีผสม',
 
-    'pound' => 'แบบทุบ',
+        'pound' => 'แบบทุบ',
 
-    'rust' => 'แบบสีสนิม',
+        'rust' => 'แบบสีสนิม',
     ],
 
     'fabric_type_options' => [
 
-    'cotton' => 'ผ้าฝ้าย',
+        'cotton' => 'ผ้าฝ้าย',
 
-    'silk' => 'ผ้าไหม',
+        'silk' => 'ผ้าไหม',
 
-    'linen' => 'ผ้าลินิน',
+        'linen' => 'ผ้าลินิน',
 
-    'rayon' => 'ผ้าเรยอน',
+        'rayon' => 'ผ้าเรยอน',
 
-    'scarf' => 'ผ้าพันคอ',
+        'scarf' => 'ผ้าพันคอ',
 
-    'tshirt' => 'เสื้อยืด',
+        'tshirt' => 'เสื้อยืด',
 
     ],
 
@@ -178,16 +178,16 @@ return [
     'cancel_booking' => 'ยกเลิกการจอง',
 
     'cancel_confirm' => 'คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจองนี้?',
-    
+
     'no_bookings' => 'ยังไม่มีการจองคอร์สเรียน',
 
     'status_options' => [
 
-    'pending'  => 'รอดำเนินการ',
+        'pending'  => 'รอดำเนินการ',
 
-    'approved' => 'อนุมัติ',
+        'approved' => 'อนุมัติ',
 
-    'rejected' => 'ไม่อนุมัติ',
+        'rejected' => 'ไม่อนุมัติ',
     ],
 
     'line_total'   => 'รวมต่อรายการ',
@@ -204,17 +204,17 @@ return [
 
     'status_order' => [
 
-    'pending'  => 'รอดำเนินการ',
+        'pending'  => 'รอดำเนินการ',
 
-    'approved' => 'อนุมัติแล้ว',
+        'approved' => 'อนุมัติแล้ว',
 
-    'rejected' => 'ไม่อนุมัติ',
+        'rejected' => 'ไม่อนุมัติ',
 
-    'status_shipped'   => 'กำลังจัดส่งแล้ว',
+        'status_shipped'   => 'กำลังจัดส่งแล้ว',
 
-    'status_delivered' => 'จัดส่งสำเร็จ',
+        'status_delivered' => 'จัดส่งสำเร็จ',
 
-    'status_cancelled' => 'ยกเลิก',
+        'status_cancelled' => 'ยกเลิก',
     ],
 
     'action'             => 'การทำงาน',
@@ -288,9 +288,9 @@ return [
     'product_deleted' => 'ลบสินค้าสำเร็จแล้ว',
 
     'search_enter_query' => 'กรุณากรอกคำค้นหา',
-    
+
     'search_not_found'   => 'ไม่พบสิ่งที่ค้นหา',
-    
+
     'Payment slip'   => 'สลิปการชำระเงิน',
 
     'Open Slip View'   => 'เปิดดูสลิป',
@@ -379,12 +379,12 @@ return [
 
     'currency_myr'            => 'ริงกิต (MYR)',
 
-    'exchange_adjustable_note'=> 'อัตราแลกเปลี่ยนปรับได้ในระบบ',
+    'exchange_adjustable_note' => 'อัตราแลกเปลี่ยนปรับได้ในระบบ',
 
     'show_both_thb_myr' => 'แสดงทั้ง THB และ MYR',
 
     'no_file_chosen'     => 'ไม่มีไฟล์ที่เลือก',
-    
+
     'payment_slip_hint'  => 'อนุญาต: JPG, PNG, WEBP, PDF สูงสุด 4MB',
 
     'shop_map'             => 'แผนที่ร้าน',
@@ -422,7 +422,7 @@ return [
     'seats' => 'ที่นั่ง',
 
     'booking_date_full_or_not_enough' => 'วันที่เลือกเต็มแล้วหรือคงเหลือไม่พอ (เหลือ :remain ที่นั่ง)',
-    
+
     'remaining_seats' => 'เหลือที่ว่าง',
 
     'date_full' => 'วันที่นี้เต็มแล้ว กรุณาเลือกวันอื่น',
@@ -436,4 +436,13 @@ return [
     'people_limit_dynamic' => 'สมัครได้สูงสุด (โควตรวมทุกคอร์ส)',
 
     'booked_some' => 'มีคนจองแล้วบางส่วน',
+
+    'trust' => [
+        'ready' => 'พร้อมส่ง',
+        'ready_desc' => 'แพ็กดี ส่งเรียบร้อย',
+        'support' => 'ช่วยเหลือ',
+        'support_desc' => 'สอบถามเพิ่มเติมได้',
+        'quality' => 'มั่นใจ',
+        'quality_desc' => 'สินค้าคุณภาพดี',
+    ],
 ];

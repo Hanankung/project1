@@ -132,6 +132,12 @@
             }
         </style>
     </head>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     {{-- Hero --}}
     <div class="booking-hero">
@@ -526,7 +532,7 @@
                         dateVisualInput.classList.add('is-valid');
                         dateInvalid.style.display = 'none';
                         dateHelp.textContent = `{{ __('messages.remaining_seats') ?? 'เหลือที่ว่าง' }}: ` +
-                        rem;
+                            rem;
                         submitBtn.disabled = false;
                     }
                     qtyHelp.textContent =
@@ -593,7 +599,8 @@
                 const okTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
                 if (!okTypes.includes(f.type)) {
                     alert(
-                        '{{ __('messages.file_type_invalid') ?? 'ไฟล์ไม่ถูกชนิด (อนุญาต JPG, PNG, WEBP หรือ PDF)' }}');
+                        '{{ __('messages.file_type_invalid') ?? 'ไฟล์ไม่ถูกชนิด (อนุญาต JPG, PNG, WEBP หรือ PDF)' }}'
+                        );
                     input.value = '';
                     fileText.value = noFileTxt;
                     wrap?.classList.add('d-none');

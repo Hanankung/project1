@@ -5,6 +5,167 @@
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+        {{-- เพิ่มฟอนต์สวยอ่านง่าย (ไม่กระทบฟังก์ชัน) --}}
+        <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+            /* ===== THEME: พรีเมี่ยมโทนทอง–น้ำตาล (Styling only) ===== */
+            :root {
+                --brand: #6b4e2e;
+                /* น้ำตาลพรีเมี่ยม */
+                --gold-1: #d4af37;
+                /* ทอง */
+                --gold-2: #f6e27a;
+                /* ทองอ่อน */
+                --ink: #222;
+                --muted: #6b7280;
+                --ring: rgba(212, 175, 55, .35);
+            }
+
+            * {
+                font-family: "Prompt", system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans Thai", sans-serif
+            }
+
+            /* พื้นหลังหน้าแบบนุ่ม ๆ */
+            body {
+                background: linear-gradient(180deg, #faf7f2 0%, #ffffff 60%);
+            }
+
+            /* ปุ่มย้อนกลับ (ไม่เปลี่ยน href เดิม) */
+            .back-btn {
+                position: sticky;
+                top: 16px;
+                display: inline-grid;
+                place-items: center;
+                width: 44px;
+                height: 44px;
+                border-radius: 999px;
+                background: #fff;
+                border: 1px solid #eee;
+                color: #333;
+                box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
+                text-decoration: none;
+                margin-bottom: 8px;
+                transition: transform .18s ease, box-shadow .18s ease;
+            }
+
+            .back-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 16px 36px rgba(0, 0, 0, .10);
+            }
+
+            /* หัวข้อหลัก */
+            .container.my-5>h2 {
+                font-weight: 800;
+                letter-spacing: .2px;
+                color: var(--ink);
+                background: linear-gradient(120deg, var(--gold-1), var(--gold-2), var(--gold-1));
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin-top: 8px;
+            }
+
+            /* Card look พรีเมี่ยม (ไม่แตะโครง) */
+            .card {
+                border-radius: 18px !important;
+                border: 1px solid rgba(139, 106, 70, .12);
+                box-shadow: 0 18px 44px rgba(0, 0, 0, .08);
+                overflow: hidden;
+                background: #fff;
+            }
+
+            .card-header {
+                background: linear-gradient(180deg, #fff, #fff8e6);
+                border-bottom: 1px solid rgba(212, 175, 55, .25) !important;
+                color: #4a4a4a;
+                font-weight: 700;
+            }
+
+            /* ฟอร์ม */
+            .form-control,
+            .form-select {
+                border-radius: 12px;
+                padding: 10px 12px;
+                border-color: #e5e7eb;
+            }
+
+            .form-control:focus,
+            .form-select:focus {
+                border-color: var(--gold-1);
+                box-shadow: 0 0 0 .2rem rgba(212, 175, 55, .15);
+            }
+
+            /* กล่องอัปสลิปเดิม: แต่งให้ดูเป็น dropzone (ยังใช้ input-group เดิม) */
+            .input-group {
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, .05);
+            }
+
+            #slip-filename {
+                background: #fffdf5;
+            }
+
+            /* ตารางสรุป */
+            .table thead.table-light th {
+                color: #4a4a4a;
+            }
+
+            .table tbody tr td {
+                vertical-align: middle;
+            }
+
+            .table tfoot th {
+                font-size: 1.02rem;
+            }
+
+            .table-dark {
+                --bs-table-bg: #1f2937;
+            }
+
+            /* ปุ่ม */
+            .btn-success {
+                border: none;
+                border-radius: 12px;
+                font-weight: 800;
+                letter-spacing: .2px;
+                background: linear-gradient(180deg, #34d399, #28a745) !important;
+                color: #fff !important;
+                box-shadow: 0 14px 28px rgba(40, 167, 69, .25);
+                padding: 12px 16px;
+            }
+
+            .btn-outline-secondary {
+                border-radius: 12px;
+            }
+
+            /* ทำให้การ์ดสรุปด้านขวา sticky โดยไม่แตะโครงสร้าง/ID */
+            @media (min-width: 768px) {
+                .row>.col-md-6:last-child>.card {
+                    position: sticky;
+                    top: 24px;
+                }
+            }
+
+            /* รายละเอียดเล็ก ๆ */
+            .alert-warning {
+                border-radius: 14px;
+                border-color: rgba(212, 175, 55, .35);
+            }
+
+            .text-muted {
+                color: var(--muted) !important;
+            }
+
+            .card-header.text-white {
+                color: #222 !important;
+            }
+
+            .card-header.bg-primary.text-white,
+            .card-header.bg-secondary.text-white {
+                color: #222 !important;
+            }
+        </style>
     </head>
 
     <div class="container my-5">
@@ -208,7 +369,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            /* 1) Prevent double-submit */
+            /* 1) Prevent double-submit (ต้นฉบับ) */
             const form = document.getElementById('checkout-form');
             const submitBtn = document.getElementById('btn-submit-order');
             if (form) {
@@ -220,7 +381,7 @@
                 });
             }
 
-            /* 2) Update shipping / totals + MYR when country changes */
+            /* 2) Update shipping / totals + MYR when country changes (ต้นฉบับ) */
             const selectCountry = document.getElementById('country');
             const rowMYR = document.getElementById('grand-myr-row');
             const cellMYR = document.getElementById('grand-myr');
@@ -261,7 +422,7 @@
                 selectCountry.addEventListener('change', () => updateQuote(selectCountry.value));
             }
 
-            /* 3) Custom file input (multilang labels) */
+            /* 3) Custom file input (ต้นฉบับ) */
             const slipInput = document.getElementById('payment_slip');
             const chooseBtn = document.getElementById('btn-choose-slip');
             const slipNameEl = document.getElementById('slip-filename');

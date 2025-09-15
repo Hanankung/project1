@@ -152,26 +152,26 @@ return [
 
     'course_type_options' => [
 
-    'mix' => 'Warna Campuran',
+        'mix' => 'Warna Campuran',
 
-    'pound' => 'Tumbuk',
+        'pound' => 'Tumbuk',
 
-    'rust' => 'Dye Karat',
+        'rust' => 'Dye Karat',
 
     ],
     'fabric_type_options' => [
 
-    'cotton' => 'Kapas',
+        'cotton' => 'Kapas',
 
-    'silk' => 'Sutera',
+        'silk' => 'Sutera',
 
-    'linen' => 'Linen',
+        'linen' => 'Linen',
 
-    'rayon' => 'Rayon',
+        'rayon' => 'Rayon',
 
-    'scarf' => 'Skaf',
+        'scarf' => 'Skaf',
 
-    'tshirt' => 'Baju-T',
+        'tshirt' => 'Baju-T',
 
     ],
 
@@ -180,16 +180,16 @@ return [
     'cancel_booking' => 'Batal Tempahan',
 
     'cancel_confirm' => 'Adakah anda pasti ingin membatalkan tempahan ini?',
-    
+
     'no_bookings' => 'Belum ada tempahan',
 
     'status_options' => [
 
-    'pending'  => 'Menunggu',
+        'pending'  => 'Menunggu',
 
-    'approved' => 'Diluluskan',
+        'approved' => 'Diluluskan',
 
-    'rejected' => 'Ditolak',
+        'rejected' => 'Ditolak',
     ],
 
     'line_total'   => 'Jumlah per Item',
@@ -206,17 +206,17 @@ return [
 
     'status_order' => [
 
-    'pending'  => 'Menunggu',
+        'pending'  => 'Menunggu',
 
-    'approved' => 'Diluluskan',
+        'approved' => 'Diluluskan',
 
-    'rejected' => 'Ditolak',
+        'rejected' => 'Ditolak',
 
-    'status_shipped'   => 'Dihantar',
+        'status_shipped'   => 'Dihantar',
 
-    'status_delivered' => 'Diterima',
+        'status_delivered' => 'Diterima',
 
-    'status_cancelled' => 'Dibatalkan',
+        'status_cancelled' => 'Dibatalkan',
     ],
 
     'action'             => 'Tindakan',
@@ -228,7 +228,7 @@ return [
     'cancel_unavailable' => 'Pembatalan tidak tersedia',
 
     'cancelled_success'  => 'Pesanan telah berjaya dibatalkan.',
-    
+
     'cannot_cancel'      => 'Pesanan ini tidak boleh dibatalkan.',
 
     'status_product' => 'Produk ini kehabisan stok dan tidak boleh dipesan buat masa ini',
@@ -290,7 +290,7 @@ return [
     'product_deleted' => 'Produk berjaya dipadam',
 
     'search_enter_query' => 'Sila masukkan kata carian.',
-    
+
     'search_not_found'   => 'Tiada hasil dijumpai.',
 
     'Payment slip'   => 'Slip pembayaran',
@@ -334,7 +334,7 @@ return [
     'payment_slip_label'    => 'Lampirkan slip pembayaran',
 
     'payment_slip_hint'     => 'Dibenarkan: JPG, PNG, WEBP, PDF sehingga 4MB',
-    
+
     'preview'               => 'Pratonton',
 
     'payment_slip_label' => 'Slip pembayaran',
@@ -381,18 +381,18 @@ return [
 
     'currency_myr'            => 'Ringgit (MYR)',
 
-    'exchange_adjustable_note'=> 'Kadar pertukaran boleh dilaraskan dalam sistem.',
+    'exchange_adjustable_note' => 'Kadar pertukaran boleh dilaraskan dalam sistem.',
 
     'show_both_thb_myr' => 'Papar kedua-dua THB dan MYR',
 
     'no_file_chosen'     => 'Tiada fail dipilih',
-    
+
     'allowed_file_types' => 'Dibenarkan: JPG, PNG, WEBP, PDF sehingga 4MB',
 
     'shop_map'             => 'Peta kedai',
 
     'open_in_google_maps'  => 'Buka dalam Google Maps',
-    
+
     'navigate'             => 'Dapatkan arah',
 
     'search_results'      => 'Hasil carian',
@@ -438,4 +438,13 @@ return [
     'people_limit_dynamic' => 'Tempahan maksimum (kuota dikongsi semua kursus)',
 
     'booked_some' => 'Sebahagian ditempah',
+
+    'trust' => [
+        'ready' => 'Sedia dihantar',
+        'ready_desc' => 'Dibungkus kemas, dihantar rapi',
+        'support' => 'Bantuan',
+        'support_desc' => 'Boleh tanya lanjut',
+        'quality' => 'Kualiti Terjamin',
+        'quality_desc' => 'Produk berkualiti',
+    ],
 ];

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');

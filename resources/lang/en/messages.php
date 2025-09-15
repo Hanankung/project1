@@ -127,7 +127,7 @@ return [
     'first_name' => 'First Name',
 
     'last_name' => 'Last Name',
-    
+
     'email' => 'Email',
 
     'people_qty' => 'Number of people',
@@ -149,29 +149,29 @@ return [
     'fabric_length_m' => 'Fabric Length (meters)',
 
     'save_booking' => 'Save Booking',
-    
+
     'course_type_options' => [
 
-    'mix' => 'Mixed Colors',
+        'mix' => 'Mixed Colors',
 
-    'pound' => 'Pounding',
+        'pound' => 'Pounding',
 
-    'rust' => 'Rust Dye',
+        'rust' => 'Rust Dye',
 
     ],
     'fabric_type_options' => [
 
-    'cotton' => 'Cotton',
+        'cotton' => 'Cotton',
 
-    'silk' => 'Silk',
+        'silk' => 'Silk',
 
-    'linen' => 'Linen',
+        'linen' => 'Linen',
 
-    'rayon' => 'Rayon',
+        'rayon' => 'Rayon',
 
-    'scarf' => 'Scarf',
+        'scarf' => 'Scarf',
 
-    'tshirt' => 'T-Shirt',
+        'tshirt' => 'T-Shirt',
 
     ],
 
@@ -180,16 +180,16 @@ return [
     'cancel_booking' => 'Cancel Booking',
 
     'cancel_confirm' => 'Are you sure you want to cancel this booking?',
-    
+
     'no_bookings' => 'No bookings yet',
 
     'status_options' => [
 
-    'pending'  => 'Pending',
+        'pending'  => 'Pending',
 
-    'approved' => 'Approved',
+        'approved' => 'Approved',
 
-    'rejected' => 'Rejected',
+        'rejected' => 'Rejected',
     ],
 
     'line_total'   => 'Line Total',
@@ -206,17 +206,17 @@ return [
 
     'status_order' => [
 
-    'pending'  => 'Pending',
+        'pending'  => 'Pending',
 
-    'approved' => 'approved',
+        'approved' => 'approved',
 
-    'rejected' => 'rejected',
+        'rejected' => 'rejected',
 
-    'status_shipped'   => 'Shipping',
+        'status_shipped'   => 'Shipping',
 
-    'status_delivered' => 'Delivered',
+        'status_delivered' => 'Delivered',
 
-    'status_cancelled' => 'Cancelled',
+        'status_cancelled' => 'Cancelled',
     ],
 
     'action'             => 'Action',
@@ -228,7 +228,7 @@ return [
     'cancel_unavailable' => 'Cancellation unavailable',
 
     'cancelled_success'  => 'Order has been cancelled successfully.',
-    
+
     'cannot_cancel'      => 'This order cannot be cancelled.',
 
     'status_product' => 'This product is out of stock and cannot be ordered at this time',
@@ -290,7 +290,7 @@ return [
     'product_deleted' => 'Product deleted successfully',
 
     'search_enter_query' => 'Please enter a search query.',
-    
+
     'search_not_found'   => 'No results found.',
 
     'Payment slip'   => 'Payment slip',
@@ -381,18 +381,18 @@ return [
 
     'currency_myr'            => 'Ringgit (MYR)',
 
-    'exchange_adjustable_note'=> 'The exchange rate can be adjusted in the system.',
+    'exchange_adjustable_note' => 'The exchange rate can be adjusted in the system.',
 
     'show_both_thb_myr' => 'Show both THB and MYR',
 
     'no_file_chosen'     => 'No file chosen',
-    
+
     'allowed_file_types' => 'Allowed: JPG, PNG, WEBP, PDF up to 4MB',
 
     'shop_map'             => 'Shop map',
 
     'open_in_google_maps'  => 'Open in Google Maps',
-    
+
     'navigate'             => 'Navigate',
 
     'search_results'      => 'Search results',
@@ -438,5 +438,13 @@ return [
     'people_limit_dynamic' => 'Max you can book (shared quota across courses)',
 
     'booked_some' => 'Partially booked',
-];
 
+    'trust' => [
+        'ready' => 'Ready to Ship',
+        'ready_desc' => 'Carefully packed, neatly shipped',
+        'support' => 'Support',
+        'support_desc' => 'Ask us anytime',
+        'quality' => 'Quality Assured',
+        'quality_desc' => 'Quality products',
+    ],
+];

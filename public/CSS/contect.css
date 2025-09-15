@@ -1,8 +1,8 @@
-body {
-            font-family: Tahoma, sans-serif;
-            margin: 0;
-            background-color: #f9f4ef;
-        }
+body{
+  background:linear-gradient(180deg,var(--bg) 0%, #fff 55%);
+  color:var(--ink);
+  font-family: "Prompt", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Thai", Arial, sans-serif;
+}
 
         /* เนื้อหา */
         .container {

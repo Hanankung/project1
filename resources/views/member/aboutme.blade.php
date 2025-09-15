@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="{{ asset('css/aboutme.css') }}">
     </head>
 
+
     <body>
         <div class="header">
             <h1>{{ __('messages.about_me') }}</h1>
