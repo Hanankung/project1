@@ -6,9 +6,9 @@ return [
 
     'home' => 'Home',
 
-    'product' => 'Product',
+    'product' => 'Products',
 
-    'course' => 'Course',
+    'course' => 'Courses',
 
     'about_me' => 'About me',
 
@@ -108,9 +108,9 @@ return [
 
     'Shipping address' => 'Shipping address',
 
-    'Items in Cart' => 'Items in Cart',
+    'Items in Cart' => 'Product list',
 
-    'courses_title' => 'Eco print course',
+    'courses_title' => 'Eco print courses',
 
     'learn_more'    => 'Learn more',
 
@@ -447,4 +447,64 @@ return [
         'quality' => 'Quality Assured',
         'quality_desc' => 'Quality products',
     ],
+
+    'scan_to_pay'   => 'Scan to pay',
+
+    'checkout_notice' => 'Please make the payment first and upload the payment slip. The admin will verify it. If you request to cancel the order, there will be no refund in any case.',
+
+    'scan_to_pay'             => 'Scan to pay',
+
+    'scan_caption_course'     => 'Scan with your mobile banking app to pay for the course.',
+
+    'course_pay_notice_strict' => 'Customers must pay first and then upload the payment slip. The administrator will review it. If you cancel the course booking, the shop will not issue any refund under any circumstances.',
+
+    'booking_created_at' => 'Submitted on',
+
+    'keep_shopping' => 'No items yet — keep shopping.',
+
+    'go_shopping' => 'Browse products',
+
+    'added_to_cart_title' => 'Added to cart!',
+
+    'go_to_cart' => 'Go to cart',
+
+    'continue_shopping' => 'Continue shopping',
+
+    'confirm_delete_title' => 'Confirm deletion',
+
+    'confirm_delete' => 'Do you want to remove this item from the cart?',
+
+    'cancel' => 'Cancel',
+
+    'success' => 'Success',
+
+    'removed_from_cart' => 'Item removed from cart.',
+
+    'ok' => 'OK',
+
+    'added_to_cart_message' => 'The item was added to your cart.',
+
+    'cancel_confirm_title' => 'Confirm cancellation',
+
+    'cancel_confirm' => 'Do you want to cancel this order?',
+
+    'cancel_order' => 'Cancel order',
+
+    'cancel_unavailable' => 'Cannot cancel',
+
+    'order_cancelled' => 'The order has been cancelled.',
+
+    'cancel_booking' => 'Cancel booking',
+
+    'cancel_booking_confirm_title' => 'Confirm booking cancellation',
+
+    'cancel_booking_confirm' => 'Do you want to cancel this booking?',
+
+    'continue_booking' => 'Continue booking',
+
+    'booking_cancelled' => 'The booking has been cancelled.',
+
+    'in_stock' => 'In stock',
+    
+    'add_to_cart_login_first' => 'Please sign in to add to cart',
 ];

@@ -11,44 +11,44 @@
                 background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 40%, #e8f5ff 100%);
                 border-bottom: 1px solid #eef2f7;
                 padding: 26px 0 14px;
-                margin-bottom: 18px;
+                margin-bottom: 18px
             }
 
             .booking-card {
                 border: 0;
                 border-radius: 16px;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, .06)
             }
 
             .section-title {
                 font-weight: 700;
-                font-size: 1.05rem;
+                font-size: 1.05rem
             }
 
             .divider {
                 height: 1px;
                 background: #eef2f7;
-                margin: 10px 0 14px;
+                margin: 10px 0 14px
             }
 
             .kv {
                 display: flex;
                 justify-content: space-between;
-                gap: 12px;
+                gap: 12px
             }
 
             .kv span:first-child {
-                color: #6c757d;
+                color: #6c757d
             }
 
             .price-strong {
-                font-weight: 800;
+                font-weight: 800
             }
 
             .thumb-slip {
                 max-width: 220px;
                 border: 1px solid #e9ecef;
-                border-radius: 10px;
+                border-radius: 10px
             }
         </style>
     </head>
@@ -57,14 +57,15 @@
     <div class="history-hero">
         <div class="container">
             <h2 class="mb-1">{{ __('messages.booking_history_title') }}</h2>
-            <div class="text-muted"><i
-                    class="bi bi-clock-history me-1"></i>{{ __('messages.summary_estimate') ?? 'ยอดชำระโดยประมาณ' }} {{ __('messages.show_both_thb_myr') }}</div>
+            <div class="text-muted">
+                <i class="bi bi-clock-history me-1"></i>{{ __('messages.summary_estimate') ?? 'ยอดชำระโดยประมาณ' }}
+                {{ __('messages.show_both_thb_myr') }}
+            </div>
         </div>
     </div>
 
     @php
-        // เรต THB -> MYR จาก config/currency.php
-        $rate = (float) config('currency.rates.THB_MYR', 0.13);
+        $rate = (float) config('currency.rates.THB_MYR', 0.13); // เรต THB -> MYR
 
         // map สถานะ
         $normalizeStatus = function ($status) {
@@ -83,9 +84,9 @@
     @endphp
 
     <div class="container">
-        @if (session('success'))
+        {{-- @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        @endif --}}
 
         @if ($posts->count())
             @foreach ($posts as $post)
@@ -128,7 +129,8 @@
                         <div class="row g-3">
                             {{-- ซ้าย: ข้อมูลผู้จอง + สลิป --}}
                             <div class="col-md-7">
-                                <div class="section-title"><i
+                                <div class="section-title">
+                                    <i
                                         class="bi bi-person-circle me-1"></i>{{ __('messages.section_customer') ?? 'ข้อมูลผู้จอง' }}
                                 </div>
                                 <div class="row">
@@ -143,7 +145,8 @@
                                 </div>
 
                                 <div class="divider"></div>
-                                {{-- สลิปการชำระเงิน (กดปุ่มเพื่อดู) --}}
+
+                                {{-- สลิปการชำระเงิน --}}
                                 <div class="mb-1">
                                     <strong>{{ __('messages.payment_slip_label') ?? 'สลิปการชำระเงิน' }}:</strong></div>
                                 @if ($hasSlip)
@@ -152,8 +155,7 @@
                                             data-bs-target="#slip-{{ $post->id }}">
                                             {{ __('messages.view_slip') ?? 'ดูสลิป' }}
                                         </button>
-
-                                        {{-- Modal แสดงสลิป (รูปภาพ) --}}
+                                        {{-- Modal --}}
                                         <div class="modal fade" id="slip-{{ $post->id }}" tabindex="-1"
                                             aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -179,7 +181,6 @@
                                             </div>
                                         </div>
                                     @else
-                                        {{-- PDF: เปิดแท็บใหม่ --}}
                                         <a href="{{ $url }}" target="_blank" rel="noopener"
                                             class="btn btn-outline-primary btn-sm">
                                             {{ __('messages.open_slip_pdf') ?? 'เปิดสลิป (PDF)' }}
@@ -188,7 +189,6 @@
                                 @else
                                     <span class="badge bg-secondary">{{ __('messages.no_slip') ?? 'ไม่มีสลิป' }}</span>
                                 @endif
-
                             </div>
 
                             {{-- ขวา: สรุปราคา --}}
@@ -200,8 +200,6 @@
                                 <div class="kv"><span>{{ __('messages.people_qty') }}:</span><span
                                         class="fw-semibold">{{ $qty }}</span></div>
                                 <div class="divider"></div>
-
-                                {{-- THB --}}
                                 <div class="kv">
                                     <span>{{ __('messages.price_per_person') ?? 'ราคา/คน (บาท)' }}:</span><span>{{ number_format($unit, 2) }}
                                         {{ __('messages.baht') }}</span></div>
@@ -209,8 +207,6 @@
                                     <span>{{ __('messages.total_price_thb') ?? 'ราคารวม (บาท)' }}:</span><span
                                         class="price-strong">{{ number_format($total, 2) }}
                                         {{ __('messages.baht') }}</span></div>
-
-                                {{-- MYR --}}
                                 <div class="divider"></div>
                                 <div class="kv">
                                     <span>{{ __('messages.price_per_person_myr') ?? 'ราคา/คน (MYR)' }}:</span><span>{{ number_format($unitMyr, 2) }}
@@ -218,24 +214,34 @@
                                 <div class="kv">
                                     <span>{{ __('messages.total_price_myr') ?? 'ราคารวม (MYR)' }}:</span><span
                                         class="price-strong">{{ number_format($totalMyr, 2) }} MYR</span></div>
-                                <div class="text-muted small mt-1"><i
+                                <div class="text-muted small mt-1">
+                                    <i
                                         class="bi bi-info-circle me-1"></i>{{ __('messages.summary_exchange_note') ?? 'คำนวณจากอัตราแลกเปลี่ยนล่าสุดที่กำหนดในระบบ' }}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card-footer d-flex justify-content-between align-items-center">
-                        <div class="text-muted"><i class="bi bi-calendar3 me-1"></i>{{ __('messages.booking_date') }}:
-                            {{ $post->booking_date }}</div>
+                    <div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="text-muted">
+                            <i class="bi bi-calendar3 me-1"></i>{{ __('messages.booking_date') }}:
+                            {{ \Carbon\Carbon::parse($post->booking_date)->format('Y-m-d') }}
+                        </div>
+                        <div class="text-muted">
+                            <i class="bi bi-clock-history me-1"></i>{{ __('messages.booking_created_at') }}:
+                            {{ optional($post->created_at)->format('Y-m-d H:i') }}
+                        </div>
 
-                        {{-- ปุ่มยกเลิก เฉพาะสถานะ pending --}}
+                        {{-- ✅ ใช้ SweetAlert2 ยืนยัน ไม่ใช้ confirm() --}}
                         @if ($statusKey === 'pending')
                             <form action="{{ route('member.course.booking.cancel', $post->id) }}" method="POST"
-                                onsubmit="return confirm('{{ __('messages.cancel_confirm') }}');">
-                                @csrf @method('DELETE')
-                                <button type="submit"
-                                    class="btn btn-outline-danger btn-sm">{{ __('messages.cancel_booking') }}</button>
+                                class="d-inline cancel-booking-form" data-course-name="{{ $post->course_name }}"
+                                data-booking-id="{{ $post->id }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="btn btn-outline-danger btn-sm cancel-booking-btn">
+                                    {{ __('messages.cancel_booking') }}
+                                </button>
                             </form>
                         @endif
                     </div>
@@ -249,4 +255,33 @@
             <i class="bi bi-arrow-left"></i> {{ __('messages.back') }}
         </a>
     </div>
+
+    {{-- ========= SCRIPTS ========= --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // ยืนยันยกเลิกการจองคอร์สด้วย SweetAlert2
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('.cancel-booking-btn');
+            if (!btn) return;
+
+            e.preventDefault();
+            const form = btn.closest('form.cancel-booking-form');
+            const name = form?.dataset?.courseName || '';
+            const id = form?.dataset?.bookingId || '';
+
+            Swal.fire({
+                icon: 'warning',
+                title: @json(__('messages.cancel_booking_confirm_title')),
+                html: (name ? '<b>' + name + '</b><br>' : '') + @json(__('messages.cancel_booking_confirm')) + (id ?
+                    '<br><small>#' + id + '</small>' : ''),
+                showCancelButton: true,
+                confirmButtonText: @json(__('messages.cancel_booking')),
+                cancelButtonText: @json(__('messages.back')),
+                confirmButtonColor: '#d33',
+                reverseButtons: true
+            }).then(res => {
+                if (res.isConfirmed) form.submit();
+            });
+        });
+    </script>
 @endsection

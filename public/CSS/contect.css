@@ -1,66 +1,163 @@
+/* ===== Siro-Secret | Contact Page (Premium + Centered) ===== */
+:root{
+  --brand:#2e7d32;          /* เขียวแบรนด์ */
+  --brand-2:#1b5e20;        /* เขียวเข้ม */
+  --ink:#1f2937;            /* สีตัวอักษรหลัก */
+  --muted:#6b7280;          /* ข้อความรอง */
+  --paper:#ffffff;          /* การ์ด */
+  --bg:#f6fbf7;             /* พื้นหลังอ่อนโทนเขียว */
+  --ring:rgba(46,125,50,.28);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
 body{
   background:linear-gradient(180deg,var(--bg) 0%, #fff 55%);
   color:var(--ink);
-  font-family: "Prompt", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Thai", Arial, sans-serif;
+  font-family:"Prompt", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Thai", Arial, sans-serif;
 }
 
-        /* เนื้อหา */
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-        h3 {
-            margin-top: 0;
-        }
-        .contact-info p {
-            margin: 5px 0;
-        }
+/* ===== Layout: กำหนดความกว้างและจัดกึ่งกลาง ===== */
+.container.my-4{
+  max-width:1120px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:16px;
+  padding-right:16px;
+}
 
-        /* Social media */
-        .social-box {
-           text-decoration: none;
-           font-size: 1.1em;
-           display: flex;
-           align-items: center;
-           gap: 10px;
-           padding: 8px;
-           border-radius: 5px;
-           transition: background-color 0.3s, transform 0.2s;
-           color: #000;
-    }
-        .social-box a {
-            text-decoration: none;
-            font-size: 1.1em;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 8px;
-            margin-left: 50px;
-        }
-        .social-box a:hover {
-            background-color: #f2f2f2;
-            transform: translateX(3px);
-        }
-        .facebook i { color: #1877F2; font-size: 1.4em; }
-        .email i    { color: #D93025; font-size: 1.4em; }
-        .line i     { color: #00B900; font-size: 1.4em; }
+/* บล็อกหลักแต่ละส่วนจัดให้อยู่กึ่งกลาง และอ่านง่าย */
+.contact-info,
+.social-box,
+.support-section,
+.card{
+  max-width:980px;
+  margin-left:auto;
+  margin-right:auto;
+}
 
-        /* โลโก้สนับสนุน */
-        .support-section {
-            margin-top: 20px;
-        }
-        .support-logos {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .support-logos img {
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-        }
+/* ===== Heading ===== */
+h3{
+  display:block;
+  text-align:center;
+  margin:12px auto 18px;
+  font-size:clamp(1.4rem, 1.2rem + 1.2vw, 2rem);
+  font-weight:800; letter-spacing:.2px;
+  color:var(--brand-2);
+}
+h3::after{
+  content:"";
+  display:block;
+  width:min(420px,80%);
+  height:3px; border-radius:999px;
+  margin:10px auto 0;
+  background:linear-gradient(90deg,transparent,var(--ring),transparent);
+}
+
+/* ===== Contact info card ===== */
+.contact-info{
+  background:var(--paper);
+  border:1px solid rgba(46,125,50,.12);
+  border-radius:16px;
+  box-shadow:0 16px 42px rgba(0,0,0,.08);
+  padding:16px 18px;
+  line-height:1.7;
+  color:#374151;
+}
+.contact-info p{margin:.2rem 0}
+.contact-info b{color:#111827}
+
+/* ===== Social links ===== */
+.social-box{
+  display:flex; flex-wrap:wrap; gap:10px;
+  justify-content:center;                /* จัดกึ่งกลาง */
+}
+.social-box a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 14px; border-radius:999px; text-decoration:none;
+  font-weight:600; font-size:.95rem; transition:.2s ease;
+  border:1px solid #e6f2e8; background:#fff; color:#1f2937;
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
+}
+.social-box a:hover{transform:translateY(-1px); box-shadow:0 12px 26px rgba(0,0,0,.10)}
+.social-box a.facebook{color:#14532d}
+.social-box a.line{color:#14532d}
+.social-box a .fa-facebook{color:#1877F2}
+.social-box a .fa-line{color:#06C755}
+.social-box a.email .fa-envelope{color:#ef4444}
+
+/* ===== Support logos ===== */
+.support-section{
+  margin-top:16px;
+  text-align:center;                      /* หัวข้ออยู่กึ่งกลาง */
+}
+.support-section strong{
+  display:inline-block;
+  margin-bottom:8px;
+  color:#374151;
+}
+.support-logos{
+  display:grid; gap:12px; margin-top:10px;
+  max-width:980px;                        /* เดินตามคอนเทนต์หลัก */
+  margin-left:auto; margin-right:auto;
+  grid-template-columns:repeat(auto-fit, minmax(120px,1fr));
+  justify-items:center;                   /* การ์ดโลโก้อยู่กลางคอลัมน์ */
+}
+.support-logos img{
+  width:100%; aspect-ratio:4/3; object-fit:contain;
+  background:#fff; border-radius:12px; border:1px solid #eef2f0;
+  filter:grayscale(.2) contrast(1.05);
+  box-shadow:0 10px 24px rgba(0,0,0,.06);
+  transition:transform .25s ease, filter .25s ease, box-shadow .25s ease;
+  padding:10px;
+}
+.support-logos img:hover{
+  transform:translateY(-2px);
+  filter:grayscale(0) saturate(1.05);
+  box-shadow:0 16px 34px rgba(0,0,0,.12);
+}
+
+/* ===== Map card ===== */
+.card{
+  border-radius:16px; border:1px solid rgba(46,125,50,.12);
+  box-shadow:0 16px 42px rgba(0,0,0,.08);
+  overflow:hidden; background:#fff;
+}
+.card .card-body{padding:16px}
+.card h5{
+  margin:0 0 10px; font-weight:800; color:#334155;
+  display:flex; align-items:center; gap:8px;
+  text-align:left;                        /* ตัวหนังสือซ้ายในบัตร */
+}
+.card h5 i{color:#ef4444}
+.card iframe{width:100%; height:380px; border:0; display:block}
+
+/* ===== Buttons (Bootstrap overrides โทนแบรนด์ #2e7d32) ===== */
+.btn-primary{
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-bg: #256c2a;
+  --bs-btn-hover-border-color: #256c2a;
+  --bs-btn-focus-shadow-rgb: 46,125,50;
+  --bs-btn-active-bg: #1f5f24;
+  --bs-btn-active-border-color: #1f5f24;
+  border-radius:12px; font-weight:800; letter-spacing:.2px;
+  box-shadow:0 10px 24px rgba(46,125,50,.18);
+}
+.btn-outline-primary{
+  --bs-btn-color: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-bg: var(--brand);
+  --bs-btn-hover-border-color: var(--brand);
+  --bs-btn-active-bg: var(--brand-2);
+  border-radius:12px; font-weight:700; letter-spacing:.2px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px){
+  .contact-info, .card, .support-logos{ max-width:100%; }
+  .card iframe{ height:320px; }
+}
+@media (min-width: 1400px){
+  .container.my-4{ max-width:1200px; }
+}

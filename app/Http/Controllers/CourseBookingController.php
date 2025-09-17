@@ -25,8 +25,11 @@ class CourseBookingController extends Controller
     }
     public function courseBookingList()
     {
-        // ดึงเฉพาะการจองของ user ที่ล็อกอินอยู่
-        $posts = CourseBooking::where('user_id', Auth::id())->get();
+        // ดึงเฉพาะการจองของ user ที่ล็อกอินอยู่ เรียงล่าสุดก่อน
+        $posts = CourseBooking::where('user_id', Auth::id())
+            ->latest('created_at')   // = orderBy('created_at','desc')
+            ->get();
+
         return view('member.history', compact('posts'));
     }
 
@@ -165,7 +168,14 @@ class CourseBookingController extends Controller
         }
 
 
-        return redirect()->route('member.courses')->with('success', __('messages.booking_saved'));
+        return redirect()
+            ->route('member.course.booking.list')
+            ->with([
+                'success'        => __('messages.booking_saved'),
+                'flash_context'  => 'booking',                       // 👈 บอกว่าเป็นบริบทคอร์ส
+                'continue_label' => __('messages.continue_booking'), // (อยาก override ชัดๆ)
+                'continue_url'   => route('member.courses'),         // ปุ่มรองให้ไปหน้า “คอร์สเรียน”
+            ]);
     }
 
     public function cancel($id)
@@ -176,11 +186,22 @@ class CourseBookingController extends Controller
 
         if ($booking->status === 'รอดำเนินการ') {
             $booking->delete(); // หรือจะ update เป็น "ยกเลิก" ก็ได้
-            return redirect()->route('member.course.booking.list')->with('success', __('messages.booking_cancelled'));
+
+            return redirect()
+                ->route('member.course.booking.list')
+                ->with([
+                    'success'        => __('messages.booking_cancelled'),
+                    'flash_context'  => 'booking',                        // 👈 ทำให้ปุ่มรองเป็น "เลือกจองคอร์สต่อ"
+                    'continue_label' => __('messages.continue_booking'),  // (จะ override label ปุ่มรอง)
+                    'continue_url'   => url('/member/course'),            // ปรับเป็น path/route หน้า "คอร์สเรียน" ของคุณ
+                ]);
         }
 
-        return redirect()->route('member.course.booking.list')->with('error', __('messages.booking_cancel_denied'));
+        return redirect()
+            ->route('member.course.booking.list')
+            ->with('error', __('messages.booking_cancel_denied'));
     }
+
     // แสดงรายการการจองทั้งหมด (ฝั่ง Admin)
     public function adminIndex()
     {
@@ -191,25 +212,25 @@ class CourseBookingController extends Controller
     // อนุมัติการจอง
     public function approve($id)
     {
-         $booking = CourseBooking::findOrFail($id);
+        $booking = CourseBooking::findOrFail($id);
 
-    if ($booking->status === 'รอดำเนินการ') {
-        $booking->status = 'อนุมัติ';
-        $booking->save();
+        if ($booking->status === 'รอดำเนินการ') {
+            $booking->status = 'อนุมัติ';
+            $booking->save();
 
-        // ส่งแจ้งผู้จอง
-        $notify = (new BookingStatusUpdatedNotification($booking))->delay(now()->addSeconds(1));
-        $user   = $booking->user;
+            // ส่งแจ้งผู้จอง
+            $notify = (new BookingStatusUpdatedNotification($booking))->delay(now()->addSeconds(1));
+            $user   = $booking->user;
 
-        if ($user && !empty($user->email)) {
-            $user->notify($notify);
-        } elseif (!empty($booking->email)) {
-            Notification::route('mail', $booking->email)->notify($notify);
+            if ($user && !empty($user->email)) {
+                $user->notify($notify);
+            } elseif (!empty($booking->email)) {
+                Notification::route('mail', $booking->email)->notify($notify);
+            }
         }
-    }
 
-    return redirect()->route('admin.course.booking.index')
-        ->with('success', __('messages.admin_booking_approved'));
+        return redirect()->route('admin.course.booking.index')
+            ->with('success', __('messages.admin_booking_approved'));
     }
 
     // ไม่อนุมัติการจอง
@@ -217,23 +238,23 @@ class CourseBookingController extends Controller
     {
         $booking = CourseBooking::findOrFail($id);
 
-    if ($booking->status === 'รอดำเนินการ') {
-        $booking->status = 'ไม่อนุมัติ';
-        $booking->save();
+        if ($booking->status === 'รอดำเนินการ') {
+            $booking->status = 'ไม่อนุมัติ';
+            $booking->save();
 
-        // ส่งแจ้งผู้จอง
-        $notify = (new BookingStatusUpdatedNotification($booking))->delay(now()->addSeconds(1));
-        $user   = $booking->user;
+            // ส่งแจ้งผู้จอง
+            $notify = (new BookingStatusUpdatedNotification($booking))->delay(now()->addSeconds(1));
+            $user   = $booking->user;
 
-        if ($user && !empty($user->email)) {
-            $user->notify($notify);
-        } elseif (!empty($booking->email)) {
-            Notification::route('mail', $booking->email)->notify($notify);
+            if ($user && !empty($user->email)) {
+                $user->notify($notify);
+            } elseif (!empty($booking->email)) {
+                Notification::route('mail', $booking->email)->notify($notify);
+            }
         }
-    }
 
-    return redirect()->route('admin.course.booking.index')
-        ->with('success', __('messages.admin_booking_rejected'));
+        return redirect()->route('admin.course.booking.index')
+            ->with('success', __('messages.admin_booking_rejected'));
     }
 
 

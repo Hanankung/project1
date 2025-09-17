@@ -108,7 +108,7 @@ return [
 
     'Shipping address' => 'Alamat penghantaran',
 
-    'Items in Cart' => 'Item dalam Troli',
+    'Items in Cart' => 'Senarai produk',
 
     'courses_title' => 'Kursus cetakan eko',
 
@@ -447,4 +447,64 @@ return [
         'quality' => 'Kualiti Terjamin',
         'quality_desc' => 'Produk berkualiti',
     ],
+
+    'scan_to_pay'   => 'Imbas untuk bayar',
+
+    'checkout_notice' => 'Sila buat bayaran terlebih dahulu dan muat naik slip pembayaran. Pihak admin akan membuat semakan. Jika anda membatalkan pesanan, tiada pemulangan wang dalam apa-apa keadaan.',
+
+    'scan_to_pay'             => 'Imbas untuk bayar',
+
+    'scan_caption_course'     => 'Imbas menggunakan aplikasi perbankan mudah alih untuk membuat bayaran kursus.',
+
+    'course_pay_notice_strict' => 'Pelanggan perlu membuat pembayaran terlebih dahulu dan memuat naik slip pembayaran. Pentadbir akan menyemaknya. Jika pelanggan membatalkan tempahan kursus, pihak kedai tidak akan membuat bayaran balik dalam apa jua keadaan.',
+
+    'booking_created_at' => 'Dihantar pada',
+
+    'keep_shopping' => 'Belum ada item — teruskan memilih.',
+
+    'go_shopping' => 'Lihat produk',
+
+    'added_to_cart_title' => 'Ditambah ke troli!',
+
+    'go_to_cart' => 'Pergi ke troli',
+
+    'continue_shopping' => 'Terus membeli',
+
+    'confirm_delete_title' => 'Sahkan pemadaman',
+
+    'confirm_delete' => 'Anda mahu buang item ini daripada troli?',
+
+    'cancel' => 'Batal',
+
+    'success' => 'Berjaya',
+
+    'removed_from_cart' => 'Item telah dibuang daripada troli.',
+
+    'ok' => 'OK',
+
+    'added_to_cart_message' => 'Item telah ditambah ke troli anda.',
+
+    'cancel_confirm_title' => 'Sahkan pembatalan',
+
+    'cancel_confirm' => 'Anda mahu batalkan pesanan ini?',
+
+    'cancel_order' => 'Batal pesanan',
+
+    'cancel_unavailable' => 'Tidak boleh batal',
+
+    'order_cancelled' => 'Pesanan telah dibatalkan.',
+
+    'cancel_booking' => 'Batal tempahan',
+
+    'cancel_booking_confirm_title' => 'Sahkan pembatalan tempahan',
+
+    'cancel_booking_confirm' => 'Anda mahu batalkan tempahan ini?',
+
+    'continue_booking' => 'Terus menempah kursus',
+
+    'booking_cancelled' => 'Tempahan telah dibatalkan.',
+
+    'in_stock' => 'Stok tersedia',
+    
+    'add_to_cart_login_first' => 'Sila log masuk untuk menambah ke troli',
 ];

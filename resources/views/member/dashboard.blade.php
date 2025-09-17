@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <style>
-   /* ความสูงของแถบเมนู */
+    /* ความสูงของแถบเมนู */
     .nav-bar {
         height: 52px;
         /* ปรับได้ */
@@ -48,7 +48,7 @@
 
     /* hover (ถ้าต้องการ) */
     .nav-bar a:hover {
-        background:#d9d9d9;
+        background: #d9d9d9;
     }
 
     /* ปุ่มภาษา */
@@ -216,6 +216,8 @@
             <p>{{ __('messages.title 2') }}</p>
         </div>
     </div>
+    @include('partials.flash-popup')
+    @stack('scripts')
 
 </body>
 

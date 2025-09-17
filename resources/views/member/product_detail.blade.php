@@ -333,14 +333,40 @@
         $materialField = $locale === 'en' ? 'material_ENG' : ($locale === 'ms' ? 'material_MS' : 'material');
     @endphp
 
-    @if (session('success'))
+    {{-- @if (session('success'))
         <div class="container mt-3">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </div>
+    @endif --}}
+    {{-- SweetAlert2 CDN --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: 'success',
+                    title: @json(__('messages.added_to_cart_title', [], app()->getLocale())),
+                    text: @json(session('success')),
+                    showCancelButton: true,
+                    confirmButtonText: @json(__('messages.go_to_cart', [], app()->getLocale())),
+                    cancelButtonText: @json(__('messages.continue_shopping', [], app()->getLocale())),
+                    confirmButtonColor: '#2e7d32',
+                    showCloseButton: true,
+                    timer: 3000,
+                    timerProgressBar: true
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        window.location.href = @json(route('member.cart'));
+                    }
+                });
+            });
+        </script>
     @endif
+
 
     <div class="page-wrap">
         <div class="container">
@@ -572,4 +598,5 @@
             }
         });
     </script>
+    
 @endsection

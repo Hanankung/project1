@@ -165,6 +165,55 @@
             .card-header.bg-secondary.text-white {
                 color: #222 !important;
             }
+
+            /* === Quantity stepper === */
+            .qty-stepper {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                padding: 2px;
+                background: #fff;
+            }
+
+            .qty-stepper .btn-qty {
+                width: 32px;
+                height: 32px;
+                border: none;
+                border-radius: 8px;
+                background: #f3f4f6;
+                color: #111827;
+                display: grid;
+                place-items: center;
+                font-weight: 800;
+                line-height: 1;
+                cursor: pointer;
+            }
+
+            .qty-stepper .btn-qty:hover {
+                background: #e5e7eb;
+            }
+
+            .qty-stepper input.qty-input {
+                width: 48px;
+                height: 32px;
+                border: none;
+                text-align: center;
+                font-weight: 700;
+                color: #111827;
+                background: transparent;
+            }
+
+            .qty-stepper .btn-qty:disabled {
+                opacity: .4;
+                cursor: not-allowed;
+            }
+
+            /* ให้คอลัมน์จำนวนดูไม่อึดอัด */
+            td.cell-qty {
+                min-width: 130px
+            }
         </style>
     </head>
 
@@ -239,41 +288,6 @@
                                 </select>
                                 <small class="text-muted">{{ __('messages.International') }}</small>
                             </div>
-
-                            {{-- Note --}}
-                            <div class="alert alert-warning mt-3">
-                                <strong>{{ __('messages.note') }}:</strong>
-                                {{ __('messages.note_slip') }}
-                                <u>{{ __('messages.note_slip_approve') }}</u>
-                            </div>
-
-                            {{-- Payment slip (custom UI) --}}
-                            <div class="mb-3">
-                                <label class="form-label">{{ __('messages.Attach payment slip') }}</label>
-
-                                <div class="input-group">
-                                    <input type="file" name="payment_slip" id="payment_slip" class="d-none"
-                                        accept=".jpg,.jpeg,.png,.pdf" required>
-
-                                    <button type="button" id="btn-choose-slip" class="btn btn-outline-secondary">
-                                        {{ __('messages.choose_file') }}
-                                    </button>
-
-                                    <input type="text" id="slip-filename" class="form-control"
-                                        value="{{ __('messages.no_file_selected') }}" readonly>
-                                </div>
-
-                                <small class="text-muted">
-                                    {{ __('messages.Support') }} .jpg .jpeg .png {{ __('messages.or') }} .pdf
-                                    {{ __('messages.Size not exceeding') }} 4MB
-                                </small>
-
-                                @error('payment_slip')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- ไม่มีปุ่ม submit ที่ฝั่งซ้ายแล้ว --}}
                         </form>
                     </div>
                 </div>
@@ -309,14 +323,48 @@
                                                 }
                                             @endphp
                                         </td>
-                                        <td class="text-center">{{ $item->quantity }}</td>
-                                        <td class="text-end">
-                                            {{ number_format($item->product->price * $item->quantity, 2) }} ฿
+                                        @php
+                                            // เลือก id สำหรับ DOM/hidden
+                                            $rowId = isset($item->id)
+                                                ? $item->id
+                                                : $item->product_id ?? optional($item->product)->id;
+                                            $maxStock = (int) ($item->product->quantity ?? 1);
+                                            $priceEach = (float) ($item->product->price ?? 0);
+
+                                            // มีเฉพาะตอนมาจาก Cart model เท่านั้น
+                                            $updateUrl =
+                                                isset($item->id) &&
+                                                \Illuminate\Support\Facades\Route::has('member.cart.update')
+                                                    ? route('member.cart.update', $item->id)
+                                                    : '';
+                                        @endphp
+
+                                        <td class="text-center cell-qty">
+                                            <div class="qty-stepper" data-item-id="{{ $rowId }}"
+                                                data-stock="{{ $maxStock }}" data-price="{{ $priceEach }}"
+                                                data-update-url="{{ $updateUrl }}">
+                                                <button type="button" class="btn-qty minus"
+                                                    aria-label="decrease">−</button>
+                                                <input type="number" class="qty-input" value="{{ (int) $item->quantity }}"
+                                                    min="1" max="{{ $maxStock }}">
+                                                <button type="button" class="btn-qty plus" aria-label="increase">+</button>
+                                            </div>
+
+                                            {{-- fallback เวลาส่งฟอร์ม --}}
+                                            <input type="hidden" name="quantities[{{ $rowId }}]"
+                                                id="qty-hidden-{{ $rowId }}" value="{{ (int) $item->quantity }}"
+                                                form="checkout-form">
                                         </td>
+
+                                        <td class="text-end line-total">
+                                            {{ number_format($priceEach * $item->quantity, 2) }} ฿
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
+
                                 <tr>
                                     <th colspan="2" class="text-end">{{ __('messages.Total price') }}</th>
                                     <th id="subtotal" class="text-end">{{ number_format($subtotal, 2) }} ฿</th>
@@ -355,6 +403,68 @@
                             </tfoot>
                         </table>
                     </div>
+                    {{-- ===== Payment Section (QR + Slip + Note) ===== --}}
+                    @php
+                        // ตั้งไฟล์ QR code ตามประเทศ (เปลี่ยน path ให้ตรงกับของคุณ)
+                        $qrMap = [
+                            'TH' => asset('image/qr_thb.jpg'),
+                            'MY' => asset('image/qr_myr.jpg'),
+                        ];
+                        $qrSrc = $qrMap[$country ?? 'TH'] ?? $qrMap['TH'];
+                    @endphp
+
+                    <hr class="my-0">
+                    <div class="p-3 pt-4">
+
+                        <h6 class="fw-bold mb-2">
+                            {{ __('messages.scan_to_pay') ?? 'สแกนเพื่อชำระเงิน' }}
+                        </h6>
+
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                            <img src="{{ asset('image/qr_code.jpg') }}" alt="QR"
+                                class="img-fluid rounded-3 shadow-sm mx-auto d-block" style="max-width:240px">
+                            <div class="small text-muted">
+                                {{-- <div>{{ __('messages.Total') ?? 'ยอดชำระ' }}: <strong
+                                        id="grand-txt">{{ number_format($grandTotal, 2) }} ฿</strong></div> --}}
+                                @if (($country ?? 'TH') === 'MY' && !empty($grandMyr))
+                                    <div>≈ <strong>{{ number_format($grandMyr, 2) }} RM</strong></div>
+                                    <div class="text-muted">({{ __('messages.exchange rate') ?? 'อัตราแปลง' }}
+                                        {{ number_format($rateMyr ?? 0.13, 4) }} MYR)</div>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- แนบสลิปการชำระเงิน (อยู่คอลัมน์ขวา แต่ส่งไปกับฟอร์มซ้าย) --}}
+                        <div class="mt-3">
+                            <label
+                                class="form-label">{{ __('messages.Attach payment slip') ?? 'แนบสลิปการชำระเงิน' }}</label>
+                            <div class="input-group">
+                                <input type="file" name="payment_slip" id="payment_slip" class="d-none"
+                                    accept=".jpg,.jpeg,.png,.pdf" form="checkout-form" required>
+                                <button type="button" id="btn-choose-slip-right" class="btn btn-outline-secondary">
+                                    {{ __('messages.choose_file') ?? 'เลือกไฟล์' }}
+                                </button>
+                                <input type="text" id="slip-filename-right" class="form-control"
+                                    value="{{ __('messages.no_file_selected') ?? 'ยังไม่ได้เลือกไฟล์' }}" readonly>
+                            </div>
+                            <small class="text-muted">
+                                {{ __('messages.Support') ?? 'รองรับ' }} .jpg .jpeg .png {{ __('messages.or') ?? 'หรือ' }}
+                                .pdf
+                                {{ __('messages.Size not exceeding') ?? 'ขนาดไม่เกิน' }} 4MB
+                            </small>
+                            @error('payment_slip')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- หมายเหตุ / เงื่อนไข --}}
+                        <div class="alert alert-warning mt-3">
+                            <strong>{{ __('messages.note') ?? 'หมายเหตุ' }}:</strong>
+                            {{ __('messages.checkout_notice') ?? 'ลูกค้าจำเป็นต้องชำระเงินก่อน แล้วแนบสลิปการชำระเงิน จากนั้นผู้ดูแลระบบจะตรวจสอบ และหากลูกค้าต้องการยกเลิกคำสั่งซื้อ ทางร้านจะไม่มีการคืนเงินทุกกรณี' }}
+                            {{-- <u>{{ __('messages.note_slip_approve') ?? 'อนุมัติคำสั่งซื้อ' }}</u> --}}
+                        </div>
+                    </div>
+
 
                     {{-- Submit button on the right --}}
                     <div class="card-footer bg-transparent border-0">
@@ -423,23 +533,115 @@
             }
 
             /* 3) Custom file input (ต้นฉบับ) */
+            // ===== Custom file input (RIGHT column) =====
             const slipInput = document.getElementById('payment_slip');
-            const chooseBtn = document.getElementById('btn-choose-slip');
-            const slipNameEl = document.getElementById('slip-filename');
+            const chooseBtn = document.getElementById('btn-choose-slip-right');
+            const slipNameEl = document.getElementById('slip-filename-right');
 
             if (slipInput && chooseBtn && slipNameEl) {
-                const showNoFile = "{{ __('messages.no_file_selected') }}";
+                const showNoFile = "{{ __('messages.no_file_selected') ?? 'ยังไม่ได้เลือกไฟล์' }}";
                 const openPicker = () => slipInput.click();
-
                 chooseBtn.addEventListener('click', openPicker);
                 slipNameEl.addEventListener('click', openPicker);
-
                 slipInput.addEventListener('change', () => {
                     const name = slipInput.files && slipInput.files.length ? slipInput.files[0].name :
                         showNoFile;
                     slipNameEl.value = name;
                 });
             }
+            // ====== Quantity stepper ======
+            const CSRF = '{{ csrf_token() }}';
+
+            const money = (n) => Number(n || 0).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            const parseCell = (id) => parseFloat(String(document.getElementById(id)?.innerText || '0').replace(
+                /[^\d.]/g, '') || 0);
+
+            function recalcTotals() {
+                // รวมราคาทุกแถวจาก .line-total
+                let sub = 0;
+                document.querySelectorAll('td.line-total').forEach(td => {
+                    sub += parseFloat(String(td.innerText).replace(/[^\d.]/g, '') || 0);
+                });
+                const ship = parseCell('shipping');
+                const box = parseCell('box');
+                const hndl = parseCell('handling');
+
+                const subEl = document.getElementById('subtotal');
+                const grandEl = document.getElementById('grand');
+                if (subEl) subEl.innerText = money(sub) + ' ฿';
+                if (grandEl) grandEl.innerText = money(sub + ship + box + hndl) + ' ฿';
+            }
+
+            async function pushQty(updateUrl, itemId, qty) {
+                if (!updateUrl) return; // fallback ถ้าไม่มี route อัปเดต
+                try {
+                    await fetch(updateUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                            'X-CSRF-TOKEN': CSRF,
+                            'Accept': 'application/json'
+                        },
+                        body: new URLSearchParams({
+                            _method: 'PATCH',
+                            quantity: String(qty)
+                        })
+                    });
+                    // ให้ server คำนวณค่าส่งใหม่ (ถ้า endpoint quote อิงตามตะกร้า)
+                    const country = (document.getElementById('country')?.value) || 'TH';
+                    if (typeof updateQuote === 'function') {
+                        updateQuote(country);
+                    }
+                } catch (e) {
+                    console.warn('Update cart failed', e);
+                    // เก็บเงียบไว้ ใช้ค่าหน้าจอเป็นหลัก
+                }
+            }
+
+            function bindStepper(step) {
+                const minusBtn = step.querySelector('.minus');
+                const plusBtn = step.querySelector('.plus');
+                const input = step.querySelector('.qty-input');
+                const maxStock = parseInt(step.dataset.stock || '1', 10);
+                const price = parseFloat(step.dataset.price || '0');
+                const itemId = step.dataset.itemId;
+                const updateUrl = step.dataset.updateUrl;
+                const hidden = document.getElementById('qty-hidden-' + itemId);
+                const lineCell = step.closest('tr').querySelector('td.line-total');
+
+                function setQty(q) {
+                    let newQ = Math.max(1, Math.min(maxStock, parseInt(q || '1', 10)));
+                    input.value = newQ;
+                    if (hidden) hidden.value = newQ;
+                    if (lineCell) {
+                        lineCell.innerText = money(price * newQ) + ' ฿';
+                    }
+                    minusBtn.disabled = (newQ <= 1);
+                    plusBtn.disabled = (newQ >= maxStock);
+                    recalcTotals();
+                }
+
+                minusBtn.addEventListener('click', () => {
+                    setQty(parseInt(input.value, 10) - 1);
+                    pushQty(updateUrl, itemId, parseInt(input.value, 10));
+                });
+                plusBtn.addEventListener('click', () => {
+                    setQty(parseInt(input.value, 10) + 1);
+                    pushQty(updateUrl, itemId, parseInt(input.value, 10));
+                });
+                input.addEventListener('change', () => {
+                    setQty(input.value);
+                    pushQty(updateUrl, itemId, parseInt(input.value, 10));
+                });
+
+                // init state
+                setQty(input.value);
+            }
+
+            document.querySelectorAll('.qty-stepper').forEach(bindStepper);
         });
     </script>
 

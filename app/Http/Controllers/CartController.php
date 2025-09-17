@@ -44,7 +44,10 @@ class CartController extends Controller
 
         // หมดสต็อกหรือขอมากกว่าสต็อก
         if ($product->quantity <= 0) {
-            return back()->with('error', __('messages.out_of_stock'));
+            return back()->with([
+                'error' => __('messages.out_of_stock'),
+                // 'flash_title' => __('messages.error'),
+            ]);   
         }
         if ($incomingQty > $product->quantity) {
             $incomingQty = $product->quantity; // จำกัดไม่ให้เกินสต็อก
@@ -57,7 +60,9 @@ class CartController extends Controller
         if ($cart) {
             $newQty = min($cart->quantity + $incomingQty, $product->quantity);
             if ($newQty === $cart->quantity) {
-                return back()->with('error', __('messages.cart_reached_stock_limit'));
+                return back()->with([
+                    'info' => __('messages.cart_reached_stock_limit'),
+                ]);
             }
             $cart->update(['quantity' => $newQty]);
         } else {
@@ -68,7 +73,11 @@ class CartController extends Controller
             ]);
         }
 
-        return back()->with('success', __('messages.added_to_cart'));
+        return back()->with([
+            'success'     => __('messages.added_to_cart_message'), // เนื้อความ
+            'flash_title' => __('messages.added_to_cart_title'),   // หัวข้อ (ไม่ใส่ก็ได้)
+            'go_cart'     => true,                                 // ให้แสดงปุ่มไปตะกร้า
+        ]);
     }
 
     /**
@@ -105,17 +114,23 @@ class CartController extends Controller
     if ($product->quantity <= 0) {
         // ลบออกเพราะสินค้าหมดแล้ว
         $cart->delete();
-        return back()->with('error', __('messages.removed_from_cart_stock_zero'));
+        return back()->with([
+                'info' => __('messages.removed_from_cart_stock_zero'),
+            ]);
     }
 
     $newQty = min((int)$data['quantity'], (int)$product->quantity);
     $cart->update(['quantity' => $newQty]);
 
     if ($newQty < (int)$data['quantity']) {
-        return back()->with('success', __('messages.updated_quantity_limited'));
+        return back()->with([
+                'info' => __('messages.updated_quantity_limited'),
+            ]);
     }
 
-    return back()->with('success', __('messages.updated_quantity'));
+    return back()->with([
+            'success' => __('messages.updated_quantity'),
+        ]);
 }
 
 
@@ -130,6 +145,8 @@ class CartController extends Controller
 
         $cart->delete();
 
-        return redirect()->back()->with('success', __('messages.updated_quantity'));
+        return back()->with([
+            'success' => __('messages.removed_from_cart'),
+        ]);
     }
 }

@@ -130,14 +130,35 @@
             .legend-dot.full {
                 background: #d32f2f
             }
+
+            .btn-brand {
+                background: #2e7d32 !important;
+                border-color: #2e7d32 !important;
+                color: #fff !important;
+                font-weight: 700;
+                border-radius: 12px;
+            }
+
+            .btn-brand:hover {
+                filter: brightness(.92);
+                color: #fff !important;
+            }
+
+            /* จัดกลางรูป QR */
+            .qr-wrap img {
+                max-width: 240px;
+                /* ปรับได้ */
+                border-radius: 12px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+            }
         </style>
     </head>
-    @if (session('success'))
+    {{-- @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif
+    @endif --}}
 
     {{-- Hero --}}
     <div class="booking-hero">
@@ -303,12 +324,23 @@
                                 </div>
                             </div>
 
-                            {{-- หมายเหตุเรื่องสลิป --}}
+                            {{-- ===== Payment: QR + slip + note + submit ===== --}}
+                            <div class="col-12 mt-2">
+                                <div class="divider"></div>
+                            </div>
+
+                            {{-- QR Code (จัดกลาง) --}}
                             <div class="col-12">
-                                <div class="alert alert-info d-flex align-items-center" role="alert">
-                                    <i class="bi bi-info-circle me-2"></i>
-                                    <div>
-                                        {{ __('messages.payment_note_approval') ?? 'กรุณาแนบสลิปการชำระเงินเพื่อให้แอดมินตรวจสอบและอนุมัติคำขอ' }}
+                                <label class="form-label section-title">
+                                    <i
+                                        class="bi bi-qr-code me-1"></i>{{ __('messages.scan_to_pay') ?? 'สแกนเพื่อชำระเงิน' }}
+                                </label>
+                                <div class="qr-wrap text-center my-2">
+                                    {{-- เปลี่ยน path รูปตามที่คุณเก็บ --}}
+                                    <img src="{{ asset('image/qr_code.jpg') }}" alt="QR Code"
+                                        class="img-fluid mx-auto d-block">
+                                    <div class="small text-muted mt-2">
+                                        {{ __('messages.scan_caption_course') ?? 'สแกนด้วย Mobile Banking เพื่อชำระค่าคอร์ส' }}
                                     </div>
                                 </div>
                             </div>
@@ -319,7 +351,7 @@
                                     class="form-label">{{ __('messages.payment_slip_label') ?? 'แนบสลิปการชำระเงิน' }}</label>
                                 <div class="input-group">
                                     <input type="file" name="payment_slip" id="payment_slip" class="d-none"
-                                        accept=".jpg,.jpeg,.png,.webp,.pdf">
+                                        accept=".jpg,.jpeg,.png,.webp,.pdf" required>
                                     <button type="button" id="btnChooseSlip" class="btn btn-outline-secondary">
                                         <i class="bi bi-paperclip me-1"></i>{{ __('messages.choose_file') }}
                                     </button>
@@ -328,8 +360,11 @@
                                         data-placeholder="{{ __('messages.no_file_chosen') }}" readonly>
                                 </div>
                                 <div class="form-text">
-                                    {{ __('messages.payment_slip_hint') ?? (__('messages.allowed_file_types') ?? 'รองรับ JPG, PNG, WEBP, PDF ขนาดไม่เกิน 4MB') }}
+                                    {{ __('messages.payment_slip_hint') ?? 'รองรับ JPG, PNG, WEBP, PDF ขนาดไม่เกิน 4MB' }}
                                 </div>
+                                @error('payment_slip')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             {{-- พรีวิวสลิป --}}
@@ -339,15 +374,26 @@
                                 <div id="slipName" class="small text-muted mt-1"></div>
                             </div>
 
-                            {{-- ปุ่มบันทึก/ย้อนกลับ --}}
+                            {{-- หมายเหตุใหม่ --}}
                             <div class="col-12">
-                                <button id="submitBtn" type="submit" class="btn btn-primary btn-lg px-4">
-                                    <i class="bi bi-check2-circle me-1"></i>{{ __('messages.save_booking') }}
+                                <div class="alert alert-warning mt-3 small">
+                                    <strong>{{ __('messages.note') ?? 'หมายเหตุ' }}:</strong>
+                                    {{ __('messages.course_pay_notice_strict') ?? 'ลูกค้าจำเป็นต้องชำระเงินก่อน แล้วแนบสลิปการชำระเงิน จากนั้นผู้ดูแลระบบจะตรวจสอบ และหากลูกค้าต้องการยกเลิกคำสั่งซื้อ ทางร้านจะไม่มีการคืนเงินทุกกรณี' }}
+                                </div>
+                            </div>
+
+                            {{-- ปุ่มบันทึก (เขียว) / ย้อนกลับ --}}
+                            <div class="col-12">
+                                <button id="submitBtn" type="submit" class="btn btn-brand btn-lg px-4">
+                                    <i
+                                        class="bi bi-check2-circle me-1"></i>{{ __('messages.save_booking') ?? 'บันทึกการจอง' }}
                                 </button>
                                 <a href="{{ route('member.courses') }}" class="btn btn-outline-secondary btn-lg ms-2">
-                                    <i class="bi bi-arrow-left me-1"></i>{{ __('messages.back') }}
+                                    <i class="bi bi-arrow-left me-1"></i>{{ __('messages.back') ?? 'ย้อนกลับ' }}
                                 </a>
                             </div>
+                            {{-- ===== /Payment ===== --}}
+
 
                         </form>
 
@@ -600,7 +646,7 @@
                 if (!okTypes.includes(f.type)) {
                     alert(
                         '{{ __('messages.file_type_invalid') ?? 'ไฟล์ไม่ถูกชนิด (อนุญาต JPG, PNG, WEBP หรือ PDF)' }}'
-                        );
+                    );
                     input.value = '';
                     fileText.value = noFileTxt;
                     wrap?.classList.add('d-none');
