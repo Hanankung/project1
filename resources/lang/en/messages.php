@@ -507,4 +507,67 @@ return [
     'in_stock' => 'In stock',
     
     'add_to_cart_login_first' => 'Please sign in to add to cart',
+
+    'brand' => [
+
+        'title' => 'Siro-Secret',
+
+        'subtitle' => 'Eco Print Natural Fabric',
+    ],
+
+    'auth' => [
+
+        'email' => 'Email',
+
+        'password' => 'Password',
+
+        'remember' => 'Remember me',
+
+        'forgot' => 'Forgot your password?',
+
+        'login' => 'Log in',
+
+        'register_cta' => "Don't have an account?",
+
+        'register_here' => 'Register here',
+    ],
+
+    'profile' => [
+
+        'title' => 'Profile',
+
+        'subtitle' => 'Manage your account settings',
+
+        'dashboard' => 'Member Dashboard',
+
+        'info_title' => 'Profile Information',
+
+        'info_desc' => "Update your account's profile information and email address.",
+
+        'name' => 'Name',
+
+        'email' => 'Email',
+
+        'save' => 'Save',
+
+        'saved' => 'Saved.',
+
+        'update_password' => 'Update Password',
+
+        'current_password' => 'Current Password',
+
+        'new_password' => 'New Password',
+
+        'confirm_password' => 'Confirm Password',
+
+        'delete_title' => 'Delete Account',
+
+        'delete_desc' => 'Once deleted, all of your data will be permanently removed.',
+
+        'are_you_sure' => 'Are you sure you want to delete your account?',
+
+        'cancel' => 'Cancel',
+        
+        'delete' => 'Delete Account',
+    ],
 ];

@@ -507,4 +507,67 @@ return [
     'in_stock' => 'Stok tersedia',
     
     'add_to_cart_login_first' => 'Sila log masuk untuk menambah ke troli',
+
+    'brand' => [
+
+        'title' => 'Siro-Secret',
+
+        'subtitle' => 'Kain Cetakan Semula Jadi (Eco Print)',
+    ],
+
+    'auth' => [
+
+        'email' => 'Emel',
+
+        'password' => 'Kata laluan',
+
+        'remember' => 'Ingat saya',
+
+        'forgot' => 'Terlupa kata laluan?',
+
+        'login' => 'Log masuk',
+
+        'register_cta' => 'Belum ada akaun?',
+
+        'register_here' => 'Daftar di sini',
+    ],
+
+    'profile' => [
+
+        'title' => 'Profil',
+
+        'subtitle' => 'Urus tetapan akaun anda',
+
+        'dashboard' => 'Papan Pemuka Ahli',
+
+        'info_title' => 'Maklumat Profil',
+
+        'info_desc' => 'Kemas kini maklumat profil dan emel anda.',
+
+        'name' => 'Nama',
+
+        'email' => 'Emel',
+
+        'save' => 'Simpan',
+
+        'saved' => 'Disimpan.',
+
+        'update_password' => 'Kemas Kini Kata Laluan',
+
+        'current_password' => 'Kata laluan semasa',
+
+        'new_password' => 'Kata laluan baharu',
+
+        'confirm_password' => 'Sahkan kata laluan',
+
+        'delete_title' => 'Padam Akaun',
+
+        'delete_desc' => 'Selepas dipadam, semua data anda akan dipadam secara kekal.',
+
+        'are_you_sure' => 'Adakah anda pasti mahu memadam akaun?',
+
+        'cancel' => 'Batal',
+        
+        'delete' => 'Padam Akaun',
+    ],
 ];

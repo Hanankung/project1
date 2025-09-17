@@ -72,7 +72,7 @@ class CourseBookedNotification extends Notification implements ShouldQueue
         $url = route('member.course.booking.list');
         $mail->action('เปิดดูรายการจอง', $url);
 
-        return $mail->line('ขอบคุณที่ใช้บริการ ' . config('app.name') . '!');
+        return $mail->line('ขอบคุณที่ใช้บริการ ');
     }
 
     /**
