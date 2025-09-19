@@ -147,10 +147,20 @@
                                 {{ __('messages.learn_more') }}
                             </a>
 
-                            {{-- ผู้ใช้ทั่วไป: พาไปหน้าเข้าสู่ระบบเพื่อจอง --}}
-                            <a href="{{ route('login') }}" class="btn btn-primary btn-sm mt-2 w-100">
-                                + {{ __('messages.book_course') }}
-                            </a>
+                            {{-- ปุ่มจอง: แสดงเพียงอันเดียว --}}
+                            @auth
+                                <a href="{{ route('member.course.booking', $course->id) }}"
+                                    class="btn btn-primary btn-sm mt-2 w-100">
+                                    + {{ __('messages.book_course') }}
+                                </a>
+                            @else
+                                <button type="button" class="btn btn-primary btn-sm mt-2 w-100" data-auth="required"
+                                    data-auth-title="{{ __('messages.auth_required_title_booking') }}"
+                                    data-auth-message="{{ __('messages.auth_required_msg_booking') }}">
+                                    + {{ __('messages.book_course') }}
+                                </button>
+
+                            @endauth
                         </div>
                     </div>
                 </div>

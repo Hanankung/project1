@@ -221,14 +221,42 @@
                                         <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
                                     </button>
                                 @else
-                                    {{-- ผู้ใช้ทั่วไป: ให้ไปล็อกอินก่อน แต่รูปลักษณ์เหมือนสมาชิก --}}
-                                    <a href="{{ route('login') }}" class="btn btn-cart"
-                                        title="{{ __('messages.add_to_cart_login_first') ?? 'กรุณาเข้าสู่ระบบก่อนเพิ่มลงตะกร้า' }}">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </a>
-                                    <a href="{{ route('login') }}" class="btn btn-buy w-100">
-                                        <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
-                                    </a>
+                                    @auth
+                                        {{-- ล็อกอินแล้ว: ทำงานจริง --}}
+                                        <form action="{{ route('cart.store') }}" method="POST" class="m-0 p-0">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit" class="btn btn-cart"
+                                                title="{{ __('messages.add_to_cart') }}">
+                                                <i class="bi bi-cart-plus"></i>
+                                            </button>
+                                        </form>
+                                        <form action="{{ route('checkout.buy_now') }}" method="POST" class="flex-1 m-0 p-0">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="btn btn-buy w-100">
+                                                <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                                            </button>
+                                        </form>
+                                    @else
+                                        {{-- ยังไม่ล็อกอิน: ให้เด้งโมดอล --}}
+                                        {{-- <button type="button" class="btn btn-cart" data-auth="required"
+                                            title="{{ __('messages.add_to_cart_login_first') ?? 'กรุณาเข้าสู่ระบบก่อนเพิ่มลงตะกร้า' }}">
+                                            <i class="bi bi-cart-plus"></i>
+                                        </button> --}}
+                                        <button type="button" class="btn btn-cart" data-auth="required"
+                                            data-auth-title="{{ __('messages.auth_required_title_checkout') }}"
+                                            data-auth-message="{{ __('messages.auth_required_msg_checkout') }}">
+                                            <i class="bi bi-cart-plus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-buy w-100" data-auth="required"
+                                            data-auth-title="{{ __('messages.auth_required_title_checkout') }}"
+                                            data-auth-message="{{ __('messages.auth_required_msg_checkout') }}">
+                                            <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                                        </button>
+
+                                    @endauth
                                 @endif
                             </div>
 

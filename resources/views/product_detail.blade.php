@@ -2,7 +2,7 @@
 
 @section('content')
 
-    
+
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -511,22 +511,41 @@
                                 <button class="btn btn-secondary w-50 btn-disabled"><i class="bi bi-bag-check"></i>
                                     {{ __('messages.buy_now') }}</button>
                             @else
-                                <form action="{{ route('cart.store') }}" method="POST" class="flex-fill m-0 p-0">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <button type="submit" class="btn btn-cart w-100"><i
-                                            class="bi bi-cart-plus me-1"></i>{{ __('messages.add_to_cart') }}</button>
-                                </form>
+                                @auth
+                                    <form action="{{ route('cart.store') }}" method="POST" class="flex-fill m-0 p-0">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <button type="submit" class="btn btn-cart w-100">
+                                            <i class="bi bi-cart-plus me-1"></i>{{ __('messages.add_to_cart') }}
+                                        </button>
+                                    </form>
 
-                                <form action="{{ route('checkout.buy_now') }}" method="POST" class="flex-fill">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="btn btn-buy w-100"><i
-                                            class="bi bi-bag-check me-1"></i>{{ __('messages.buy_now') }}</button>
-                                </form>
+                                    <form action="{{ route('checkout.buy_now') }}" method="POST" class="flex-fill">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-buy w-100">
+                                            <i class="bi bi-bag-check me-1"></i>{{ __('messages.buy_now') }}
+                                        </button>
+                                    </form>
+                                @else
+                                    {{-- ⬇️ เติมข้อความเฉพาะบริบทให้ปุ่มเดสก์ท็อปด้วย --}}
+                                    <button type="button" class="btn btn-cart w-50" data-auth="required"
+                                        data-auth-title="{{ __('messages.auth_required_title_checkout') }}"
+                                        data-auth-message="{{ __('messages.auth_required_msg_checkout') }}">
+                                        <i class="bi bi-cart-plus me-1"></i>{{ __('messages.add_to_cart') }}
+                                    </button>
+
+                                    <button type="button" class="btn btn-buy w-50" data-auth="required"
+                                        data-auth-title="{{ __('messages.auth_required_title_checkout') }}"
+                                        data-auth-message="{{ __('messages.auth_required_msg_checkout') }}">
+                                        <i class="bi bi-bag-check me-1"></i>{{ __('messages.buy_now') }}
+                                    </button>
+                                @endauth
                             @endif
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -541,22 +560,41 @@
                     <button class="btn btn-secondary w-50 btn-disabled"><i class="bi bi-bag-check"></i>
                         {{ __('messages.buy_now') }}</button>
                 @else
-                    <form action="{{ route('cart.store') }}" method="POST" class="flex-fill m-0 p-0">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <button class="btn btn-cart w-100"><i class="bi bi-cart-plus"></i>
-                            {{ __('messages.add_to_cart') }}</button>
-                    </form>
-                    <form action="{{ route('checkout.buy_now') }}" method="POST" class="flex-fill m-0 p-0">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <input type="hidden" name="quantity" value="1">
-                        <button class="btn btn-buy w-100"><i class="bi bi-bag-check"></i>
-                            {{ __('messages.buy_now') }}</button>
-                    </form>
+                    @auth
+                        <form action="{{ route('cart.store') }}" method="POST" class="flex-fill m-0 p-0">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <button class="btn btn-cart w-50"><i class="bi bi-cart-plus"></i>
+                                {{ __('messages.add_to_cart') }}</button>
+                        </form>
+                        <form action="{{ route('checkout.buy_now') }}" method="POST" class="flex-fill m-0 p-0">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button class="btn btn-buy w-50"><i class="bi bi-bag-check"></i>
+                                {{ __('messages.buy_now') }}</button>
+                        </form>
+                    @else
+                        {{-- <button type="button" class="btn btn-cart w-50" data-auth="required">
+                            <i class="bi bi-cart-plus"></i> {{ __('messages.add_to_cart') }}
+                        </button> --}}
+                        <button type="button" class="btn btn-buy w-50" data-auth="required"
+                            data-auth-title="{{ __('messages.auth_required_title_checkout') }}"
+                            data-auth-message="{{ __('messages.auth_required_msg_checkout') }}">
+                            <i class="bi bi-cart-plus"></i> {{ __('messages.add_to_cart') }}
+                        </button>
+
+                        <button type="button" class="btn btn-buy w-100" data-auth="required"
+                            data-auth-title="{{ __('messages.auth_required_title_checkout') }}"
+                            data-auth-message="{{ __('messages.auth_required_msg_checkout') }}">
+                            <i class="bi bi-bag-check"></i> {{ __('messages.buy_now') }}
+                        </button>
+
+                    @endauth
                 @endif
             </div>
         </div>
+
     </div>
 
     {{-- JS เล็ก ๆ สำหรับคัดลอกลิงก์ --}}

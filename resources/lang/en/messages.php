@@ -570,4 +570,18 @@ return [
         
         'delete' => 'Delete Account',
     ],
+
+    'auth_required_title_default' => 'Please sign in to continue',
+
+    'auth_required_msg_default'   => 'To proceed, please sign in or create an account first.',
+
+    'auth_required_title_checkout' => 'Please sign in to continue',
+
+    'auth_required_msg_checkout'   => 'To purchase or add items to your cart, please sign in or create an account first.',
+
+    'auth_required_title_booking'  => 'Please sign in before booking',
+
+    'auth_required_msg_booking'    => 'To book a course, please sign in or create an account first.',
+
+    'register' => 'Register',
 ];

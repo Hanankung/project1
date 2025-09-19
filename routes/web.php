@@ -84,7 +84,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/member/checkout', [CheckoutController::class, 'index'])->name('member.checkout');
     Route::get('/checkout/quote', [CheckoutController::class, 'quote'])->name('checkout.quote');
-
 });
 
 // ==== BUY NOW (สั่งซื้อทันที ไม่ผ่านตะกร้า) ====
@@ -106,19 +105,19 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // แสดงรายละเอียดออเดอร์ของสมาชิก
-Route::get('/member/orders/{id}', [OrderController::class, 'show'])->name('member.orders.show');
+Route::get('/member/orders/{id}', [OrderController::class, 'show'])->name('member.orders.show')->middleware('auth');
 
 // แสดงคอร์สสำหรับ member
-Route::get('/member/courses', [CourseController::class, 'showForMember'])->name('member.courses');
+Route::get('/member/courses', [CourseController::class, 'showForMember'])->name('member.courses')->middleware('auth');
 // แสดงรายละเอียดคอร์ส (สำหรับ member)
-Route::get('/member/course/{id}', [CourseController::class, 'showDetail'])->name('member.course.detail');
+Route::get('/member/course/{id}', [CourseController::class, 'showDetail'])->name('member.course.detail')->middleware('auth');
 // จองคอร์สเรียน
 // Route::get('/member/courseBooking', [CourseBookingController::class, 'create'])->name('member.course.booking');
 Route::get('/member/courseBooking/{course?}', [CourseBookingController::class, 'create'])
-    ->name('member.course.booking');
-Route::post('/member/course/booking/store', [CourseBookingController::class, 'store'])->name('member.course.booking.store');
+    ->name('member.course.booking')->middleware('auth');
+Route::post('/member/course/booking/store', [CourseBookingController::class, 'store'])->name('member.course.booking.store')->middleware('auth');
 // แสดงรายการจองคอร์สเรียน
-Route::get('/member/courseBookingList', [CourseBookingController::class, 'courseBookingList'])->name('member.course.booking.list');
+Route::get('/member/courseBookingList', [CourseBookingController::class, 'courseBookingList'])->name('member.course.booking.list')->middleware('auth');
 // ยกเลิกการจองคอร์สเรียน
 Route::delete('/member/courseBooking/cancel/{id}', [CourseBookingController::class, 'cancel'])
     ->name('member.course.booking.cancel')
@@ -199,4 +198,4 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

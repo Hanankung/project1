@@ -570,4 +570,19 @@ return [
         
         'delete' => 'Padam Akaun',
     ],
+
+    'auth_required_title_default' => 'Sila log masuk untuk meneruskan',
+
+    'auth_required_msg_default'   => 'Untuk meneruskan, sila log masuk atau daftar akaun terlebih dahulu.',
+
+    'auth_required_title_checkout' => 'Sila log masuk untuk meneruskan',
+
+    'auth_required_msg_checkout'   => 'Untuk membuat pembelian atau menambah produk ke troli, sila log masuk atau daftar akaun terlebih dahulu.',
+
+    'auth_required_title_booking'  => 'Sila log masuk sebelum membuat tempahan',
+
+    'auth_required_msg_booking'    => 'Untuk menempah kursus, sila log masuk atau daftar akaun terlebih dahulu.',
+
+    'register' => 'Daftar',
+
 ];

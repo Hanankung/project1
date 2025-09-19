@@ -229,13 +229,25 @@
                 </div>
 
                 <div class="d-flex flex-wrap gap-2 mb-3">
-                    <a href="{{ route('login') }}" class="btn btn-success btn-lg">
-                        <i class="bi bi-calendar2-check me-1"></i>{{ __('messages.book_course') }}
-                    </a>
+                    @auth
+                        <a href="{{ route('member.course.booking', $course->id) }}" class="btn btn-success btn-lg">
+                            <i class="bi bi-calendar2-check me-1"></i>{{ __('messages.book_course') }}
+                        </a>
+                    @else
+                        <button type="button" class="btn btn-success btn-lg" data-auth="required"
+                            data-auth-title="{{ __('messages.auth_required_title_booking') }}"
+                            data-auth-message="{{ __('messages.auth_required_msg_booking') }}">
+                            <i class="bi bi-calendar2-check me-1"></i>{{ __('messages.book_course') }}
+                        </button>
+
+
+                    @endauth
+
                     <a href="{{ route('guest.courses') }}" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> {{ __('messages.back') }}
                     </a>
                 </div>
+
 
                 {{-- ⬇️ Chips ข้อความตามที่ผู้ใช้ระบุ --}}
                 <div class="mb-2">
