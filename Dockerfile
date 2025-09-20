@@ -39,10 +39,10 @@ COPY . .
 # Prepare the environment for the build process.
 # This .env file is used ONLY during the build.
 RUN cp .env.example .env \
-    && php artisan key:generate --ansi \
-    && php artisan config:clear \
     && touch database/database.sqlite \
-    && composer dump-autoload --optimize --no-dev
+    && php artisan key:generate --ansi \
+    && composer dump-autoload --optimize --no-dev \
+    && php artisan config:clear
 
 # กำหนด Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
