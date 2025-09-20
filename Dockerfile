@@ -31,10 +31,13 @@ WORKDIR /var/www/html
 
 # Copy composer files and install dependencies to leverage Docker cache
 COPY composer.json composer.lock ./
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --optimize-autoloader --no-dev --no-scripts
 
 # Copy the rest of the application's source code
 COPY . .
+
+# Generate optimized autoload files and run post-autoload-dump scripts
+RUN composer dump-autoload --optimize --no-dev
 
 # กำหนด Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
