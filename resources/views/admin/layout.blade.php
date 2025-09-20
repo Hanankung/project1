@@ -30,18 +30,18 @@
                 <div class="dropdown position-relative">
                     <a href="#" class="fas fa-user icon" id="userIcon"></a>
                     <div class="dropdown-content" id="dropdownMenu">
-                        <a href="{{ route('logout') }}"
+                            <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Logout
-                        </a>
+                    </a>
                     </div>
                 </div>
             </div>
 
             {{-- ฟอร์ม logout --}}
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
-            </form>
+                </form>
 
             <script>
                 const userIcon = document.getElementById('userIcon');
@@ -127,33 +127,33 @@
             }
 
             // ====== ใช้ค่าจาก session ======
-            @if (session('success'))
-                showCenter('success', 'สำเร็จ', @json(session('success')));
+                @if (session('success'))
+                    showCenter('success', 'สำเร็จ', @json(session('success')));
             @endif
 
-            @if (session('error'))
-                showCenter('error', 'ไม่สำเร็จ', @json(session('error')));
+                @if (session('error'))
+                    showCenter('error', 'ไม่สำเร็จ', @json(session('error')));
             @endif
 
-            @if (session('warning'))
-                showCenter('warning', 'แจ้งเตือน', @json(session('warning')));
+                @if (session('warning'))
+                    showCenter('warning', 'แจ้งเตือน', @json(session('warning')));
             @endif
 
             // Validation error กรณีมี
-            @if ($errors->any())
-                showCenter('error', 'ข้อมูลไม่ถูกต้อง', @json($errors->first()));
+                @if ($errors->any())
+                    showCenter('error', 'ข้อมูลไม่ถูกต้อง', @json($errors->first()));
             @endif
         })();
     </script>
 
     {{-- ยืนยันการลบ แบบ SweetAlert2 (แทน confirm()) --}}
-    <script>
+        <script>
         document.addEventListener('click', function(e) {
             const btn = e.target.closest('[data-confirm-delete]');
             if (!btn) return;
 
             e.preventDefault();
-            const form = btn.closest('form');
+                const form = btn.closest('form');
             Swal.fire({
                 icon: 'question',
                 title: 'ลบสินค้านี้หรือไม่?',
@@ -168,6 +168,6 @@
         });
     </script>
 
-</body>
+    </body>
 
 </html>
