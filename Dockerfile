@@ -36,8 +36,13 @@ RUN composer install --optimize-autoloader --no-dev --no-scripts
 # Copy the rest of the application's source code
 COPY . .
 
-# Generate optimized autoload files and run post-autoload-dump scripts
-RUN composer dump-autoload --optimize --no-dev
+# Prepare the environment for the build process.
+# This .env file is used ONLY during the build.
+RUN cp .env.example .env \
+    && php artisan key:generate --ansi \
+    && php artisan config:clear \
+    && touch database/database.sqlite \
+    && composer dump-autoload --optimize --no-dev
 
 # กำหนด Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
