@@ -36,27 +36,22 @@ class BookingStatusUpdatedNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-         $b = $this->booking;
-        $approved = in_array($b->status, ['อนุมัติ', 'approved'], true);
+        $b = $this->booking;
+    $approved = in_array($b->status, ['อนุมัติ','approved'], true);
 
-        $subject = $approved
-            ? 'คำขอจองคอร์สได้รับการอนุมัติ #' . $b->id
-            : 'คำขอจองคอร์สไม่ได้รับการอนุมัติ #' . $b->id;
+    $subject = $approved
+        ? 'คำขอจองคอร์สได้รับการอนุมัติ #' . $b->id
+        : 'คำขอจองคอร์สไม่ได้รับการอนุมัติ #' . $b->id;
 
-        $mail = (new MailMessage)
-            ->subject($subject)
-            ->greeting('สวัสดีค่ะ/ครับ')
-            ->line($approved
-                ? 'คำขอจองคอร์สของคุณได้รับการอนุมัติแล้ว ✅'
-                : 'ขออภัย คำขอจองคอร์สของคุณไม่ได้รับการอนุมัติ ❌');
+    $detailUrl = route('member.course.booking.list');
 
-        if (!empty($b->course_name))   $mail->line('คอร์ส: ' . $b->course_name);
-        if (!empty($b->booking_date))  $mail->line('วันที่เรียน: ' . Carbon::parse($b->booking_date)->timezone('Asia/Bangkok')->format('d/m/Y'));
-        if (!empty($b->quantity))      $mail->line('จำนวนผู้เรียน: ' . $b->quantity);
-        if (!empty($b->total_price))   $mail->line('ยอดรวม: ' . number_format($b->total_price, 2) . ' บาท');
-
-        return $mail->action('ดูสถานะการจอง', route('member.course.booking.list'))
-                    ->line('ขอบคุณที่ใช้บริการ ' . config('app.name') . '!');
+    return (new MailMessage)
+        ->subject($subject)
+        ->view('emails.booking_status_trilang', [
+            'booking'   => $b,
+            'approved'  => $approved,
+            'detailUrl' => $detailUrl,
+        ]);
     }
 
     /**

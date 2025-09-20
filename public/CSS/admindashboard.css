@@ -31,35 +31,46 @@
       cursor: pointer;
     }
 
-    .nav-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #5a2d0c;
-    padding: 10px 40px;
-    font-family: 'Prompt', sans-serif;
+ /* ===== NAV BAR: แบบแถบเทาเต็มความสูง (เหมือนรูปที่สอง) ===== */
+.nav-bar{
+  background:#5a2d0c;
+  height:56px;               /* ความสูงบาร์ */
+  padding:0 40px;            /* เอา padding แนวตั้งออก เหลือแค่ซ้ายขวา */
+  display:flex; justify-content:center;
+  font-family:'Prompt',sans-serif;
 }
 
-.nav-center {
-    display: flex;
-    gap: 70px; /*กำหนดระยะห่างของช่องว่าง*/
-    margin: 0 auto;
+.nav-center{
+  display:flex;
+  gap:70px;                  /* ระยะห่างเมนู */
+  align-items:stretch;       /* ลูกยืดสูงเท่าบาร์ */
+  height:100%;
 }
 
-.nav-right {
-    display: flex;
+/* ลิงก์เมนูปกติ */
+.nav-center a{
+  display:flex; align-items:center; justify-content:center;
+  padding:0 28px;
+  height:100%;               /* สูงเท่าบาร์ */
+  color:#fff; font-weight:600; font-size:16px;
+  text-decoration:none; line-height:1;
 }
 
-.nav-bar a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 16px;
+/* โฮเวอร์ (เฉพาะที่ไม่ใช่แอคทีฟ) */
+.nav-center a:not(.active):hover{
+  background:rgba(0,0,0,.12);
 }
 
-.nav-bar a:hover {
-    text-decoration: underline;
-} 
+/* แอคทีฟ: เทาอ่อน เต็มขอบบาร์ ไม่มีมุมโค้ง */
+.nav-center a.active{
+  background:#d9dcdf;
+  color:#222;
+  border-radius:0;           /* ไม่มีโค้ง */
+  box-shadow:none;
+  margin:0;                  /* ไม่ให้มีช่องว่างใดๆ */
+}
+
+
 .ecoimg {
     width: 100%;
     height: auto;
