@@ -26,6 +26,9 @@ RUN composer install --optimize-autoloader --no-dev
 # สร้าง Cache Directory
 RUN mkdir -p bootstrap/cache
 
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+
 # กำหนด Permissions
 RUN chown -R www-data:www-data \
     /var/www/html \
