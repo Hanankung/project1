@@ -1,15 +1,27 @@
 FROM php:8.1-fpm-alpine
 
-# ติดตั้ง Dependencies ที่จำเป็น
+# Install system dependencies and PHP extensions
 RUN apk update && apk add --no-cache \
+    # Runtime dependencies
     git \
     zip \
     unzip \
+    freetype \
+    libpng \
+    libjpeg-turbo \
+    libzip \
+    # Build dependencies (will be removed)
+    && apk add --no-cache --virtual .build-deps \
+    $PHPIZE_DEPS \
+    pcre-dev \
     libzip-dev \
-    pcre-dev
-
-# ติดตั้ง PHP Extensions ที่จำเป็น
-RUN docker-php-ext-install pdo_mysql zip pcntl gd
+    freetype-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    # Configure and install extensions, then clean up
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) pdo_mysql zip pcntl gd \
+    && apk del .build-deps
 
 # ติดตั้ง Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -23,17 +35,8 @@ COPY . .
 # ติดตั้ง Dependencies (Laravel)
 RUN composer install --optimize-autoloader --no-dev
 
-# สร้าง Cache Directory
-RUN mkdir -p bootstrap/cache
-
-RUN chown -R www-data:www-data storage bootstrap/cache
-
-
 # กำหนด Permissions
-RUN chown -R www-data:www-data \
-    /var/www/html \
-    /var/www/html/storage \
-    /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Expose Port
 EXPOSE 9000
