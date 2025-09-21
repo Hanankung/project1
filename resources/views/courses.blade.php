@@ -4,7 +4,7 @@
 
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('css/product1.css') }}">
+        <link rel="stylesheet" href="{{ asset('CSS/product1.css') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
         <style>
             /* ===== Styling เหมือนฝั่งสมาชิก (สcope แค่หน้านี้) ===== */

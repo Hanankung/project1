@@ -4,7 +4,7 @@
 @section('content')
   {{-- ไอคอน + สไตล์ของหน้าติดต่อ --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="{{ asset('css/contect.css') }}">
+  <link rel="stylesheet" href="{{ asset('CSS/contect.css') }}">
 
   @php
     // ✅ ลิงก์โลเคชั่นที่ให้มา
