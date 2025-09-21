@@ -14,6 +14,7 @@ use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     return view('welcome');
@@ -195,6 +196,21 @@ Route::get('lang/{locale}', function ($locale) {
 })->name('lang.switch');
 // ค้นหาสินค้า
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+/**
+ * ===================================================================
+ *  ROUTE ชั่วคราวสำหรับสร้าง Storage Link (เมื่อไม่มีสิทธิ์ SSH)
+ *  หลังจากใช้งานเสร็จแล้ว ให้ลบ Route นี้ทิ้งทันทีเพื่อความปลอดภัย
+ * ===================================================================
+ */
+Route::get('/create-storage-link-6789', function () {
+    try {
+        Artisan::call('storage:link');
+        return 'SUCCESS: The [public/storage] link has been connected.<br><strong>Please remove this route from web.php now!</strong>';
+    } catch (\Exception $e) {
+        return 'ERROR: Could not create storage link. <br>' . $e->getMessage();
+    }
+});
 
 
 
