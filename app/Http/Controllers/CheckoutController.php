@@ -273,12 +273,14 @@ class CheckoutController extends Controller
         // อัปโหลดสลิปก่อนเข้า transaction
         $slipPath = null;
         if ($request->hasFile('payment_slip')) {
-            $slipPath = $request->file('payment_slip')->store('slips', 'public');
+            // ✅ แนะนำ: เปลี่ยนเป็น 'payment_slips' ให้สอดคล้องกับ CourseBookingController
+            $slipPath = $request->file('payment_slip')->store('payment_slips', 'public');
         }
 
         // ทำงานแบบ transaction + lock row เพื่อตัดสต็อก (ครั้งเดียวเท่านั้น)
         $lowStockProducts = [];
         $orderId = null;
+        $defaultStatus = 'pending'; // ✅ ใช้คีย์ภาษาอังกฤษ
 
         try {
             DB::transaction(function () use (
@@ -289,7 +291,8 @@ class CheckoutController extends Controller
                 $grandTotal,
                 $slipPath,
                 &$lowStockProducts,
-                &$orderId
+                &$orderId,
+                $defaultStatus
             ) {
                 $order = Order::create([
                     'user_id'      => Auth::id(),
@@ -303,7 +306,8 @@ class CheckoutController extends Controller
                     'handling_fee' => $quote['handling'],
                     'currency'     => 'THB',
                     'total_price'  => $grandTotal,
-                    'status'       => 'รอดำเนินการ',
+                    // ✅ ใช้คีย์ภาษาอังกฤษที่กำหนดไว้
+                    'status'       => $defaultStatus,
                     'payment_slip_path' => $slipPath,
                     'payment_status'    => $slipPath ? 'submitted' : 'unpaid',
                 ]);

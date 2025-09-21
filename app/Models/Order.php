@@ -31,7 +31,7 @@ class Order extends Model
     public function getStatusI18nKeyAttribute(): string
 {
     $raw = trim((string) $this->status);
-
+    
     // ถ้าเก็บเป็นคีย์อยู่แล้ว
     $directKeys = [
         'pending','approved','rejected',
