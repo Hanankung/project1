@@ -189,7 +189,7 @@
                     <div class="course-card">
                         {{-- Image --}}
                         @if ($post->course_image)
-                            <img class="cc-img" src="{{ asset('storage/' . $post->course_image) }}" alt="{{ $post->course_name }}"
+                            <img class="cc-img" src="{{ asset($post->course_image) }}" alt="{{ $post->course_name }}"
                                 loading="lazy">
                         @else
                             <div class="cc-img d-flex align-items-center justify-content-center">

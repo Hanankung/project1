@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -72,9 +71,14 @@ public function guestShow($id)
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            // ใช้ store() เพื่อเก็บไฟล์ใน storage/app/public/images
-            // และจะสร้างชื่อไฟล์ที่ไม่ซ้ำกันให้โดยอัตโนมัติ
-            $imagePath = $request->file('image')->store('images', 'public');
+            // ตั้งชื่อไฟล์แบบสุ่ม + นามสกุลเดิม
+            $file = $request->file('image');
+            $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+            // เก็บไฟล์ไว้ที่ public/images
+            $file->move(public_path('images'), $filename);
+
+            $imagePath = '/images/' . $filename;
         }
 
         // สร้างสินค้าใหม่
@@ -143,15 +147,20 @@ public function guestShow($id)
             'low_stock_threshold' => 'nullable|integer|min:0',
         ]);
 
-        // ใช้ path เดิมเป็นค่าเริ่มต้น
         $imagePath = $post->product_image;
         if ($request->hasFile('image')) {
-            // ถ้ามีรูปเก่า ให้ลบออกจาก storage ก่อน
+            // ถ้ามีรูปเก่า ให้ลบออกจาก public/images ก่อน
             if ($post->product_image) {
-                Storage::disk('public')->delete($post->product_image);
+                $oldImagePath = public_path($post->product_image);
+                if (file_exists($oldImagePath)) {
+                    @unlink($oldImagePath);
+                }
             }
-            // อัปโหลดรูปใหม่ไปที่ storage/app/public/images
-            $imagePath = $request->file('image')->store('images', 'public');
+            // อัปโหลดรูปใหม่
+            $file = $request->file('image');
+            $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $imagePath = '/images/' . $filename;
         }
 
         $post->update([
@@ -181,7 +190,10 @@ public function guestShow($id)
     {
         // ลบไฟล์รูปภาพที่เกี่ยวข้อง (ถ้ามี)
         if ($post->product_image) {
-            Storage::disk('public')->delete($post->product_image);
+            $imagePath = public_path($post->product_image);
+            if (file_exists($imagePath)) {
+                @unlink($imagePath);
+            }
         }
 
         $post->delete();

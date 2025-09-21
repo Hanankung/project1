@@ -128,7 +128,7 @@
                 {{-- Left: Image --}}
                 <div class="col-12 col-lg-5 box-left">
                     @if ($post->course_image)
-                        <img class="main-img" src="{{ asset('storage/' . $post->course_image) }}" alt="{{ $post->course_name }}">
+                        <img class="main-img" src="{{ asset($post->course_image) }}" alt="{{ $post->course_name }}">
                     @else
                         <div class="main-img d-flex align-items-center justify-content-center">
                             <small class="text-muted">No image</small>

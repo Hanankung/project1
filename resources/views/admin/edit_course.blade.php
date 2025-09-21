@@ -212,7 +212,7 @@
                         <div class="mb-2">
                             <label class="form-label">รูปปัจจุบัน</label>
                             <img class="thumb"
-                                src="{{ $post->course_image ? asset('storage/' . $post->course_image) : 'data:image/gif;base64,R0lGODlhAQABAAAAACw=' }}"
+                                src="{{ $post->course_image ? asset($post->course_image) : 'data:image/gif;base64,R0lGODlhAQABAAAAACw=' }}"
                                 alt="{{ $post->course_name }}">
                             @unless ($post->course_image)
                                 <div class="help">ยังไม่มีรูปภาพ</div>

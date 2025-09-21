@@ -270,7 +270,7 @@
                             <div class="col-12">
                                 <label class="form-label">รูปปัจจุบัน</label>
                                 <img class="thumb"
-                                    src="{{ $post->product_image ? asset('storage/' . $post->product_image) : 'data:image/gif;base64,R0lGODlhAQABAAAAACw=' }}"
+                                    src="{{ $post->product_image ? asset($post->product_image) : 'data:image/gif;base64,R0lGODlhAQABAAAAACw=' }}"
                                     alt="{{ $post->product_name }}">
                                 @if (!$post->product_image)
                                     <div class="help">ยังไม่มีรูปภาพ</div>

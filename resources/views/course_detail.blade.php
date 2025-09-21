@@ -212,7 +212,7 @@
             <div class="col-lg-5">
                 <div class="img-frame">
                     @if ($course->course_image)
-                        <img src="{{ asset('storage/' . $course->course_image) }}" alt="{{ $course->course_name }}" class="w-100"
+                        <img src="{{ asset($course->course_image) }}" alt="{{ $course->course_name }}" class="w-100"
                             style="object-fit:cover; aspect-ratio: 4/3;">
                     @else
                         <img src="https://via.placeholder.com/800x600?text=No+Image" class="w-100"

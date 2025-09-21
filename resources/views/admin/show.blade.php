@@ -174,7 +174,7 @@
                         <div class="ribbon">ใกล้หมด</div>
                     @endif
                     @if ($post->product_image)
-                        <img class="main-img rounded" src="{{ asset('storage/' . $post->product_image) }}"
+                        <img class="main-img rounded" src="{{ asset($post->product_image) }}"
                             alt="{{ $post->product_name }}">
                     @else
                         <div class="main-img d-flex align-items-center justify-content-center rounded">

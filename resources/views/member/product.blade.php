@@ -247,7 +247,7 @@
                 <div class="card h-100 shadow-sm">
                     <a href="{{ route('member.product.show', $product->id) }}" class="d-block">
                         @if ($product->product_image)
-                            <img src="{{ asset('storage/' . $product->product_image) }}" class="card-img-top"
+                            <img src="{{ asset($product->product_image) }}" class="card-img-top"
                                 alt="{{ $product->$nameField ?? $product->product_name }}">
                         @else
                             <img src="{{ asset('images/default.png') }}" class="card-img-top" alt="ไม่มีรูปภาพ">
