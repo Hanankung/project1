@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -81,17 +82,10 @@ public function guestShow($id)
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // เตรียม path รูปภาพ
         $imagePath = null;
         if ($request->hasFile('course_image')) {
-            // ตั้งชื่อไฟล์แบบสุ่ม + นามสกุลเดิม
-            $file = $request->file('course_image');
-            $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-
-            // เก็บไฟล์ไว้ที่ public/images
-            $file->move(public_path('images'), $filename);
-
-            $imagePath = '/images/' . $filename;
+            // ใช้ store() เพื่อเก็บไฟล์ใน storage/app/public/courses
+            $imagePath = $request->file('course_image')->store('courses', 'public');
         }
 
         // สร้างคอร์สใหม่ ในฐานข้อมูล Model course
@@ -145,20 +139,17 @@ public function guestShow($id)
             'course_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // เตรียม path รูปภาพ
-        $imagePath = null;
+        // ใช้ path เดิมเป็นค่าเริ่มต้น
+        $imagePath = $course->course_image;
         if ($request->hasFile('course_image')) {
-            // ตั้งชื่อไฟล์แบบสุ่ม + นามสกุลเดิม
-            $file = $request->file('course_image');
-            $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-
-            // เก็บไฟล์ไว้ที่ public/images
-            $file->move(public_path('images'), $filename);
-
-            $imagePath = '/images/' . $filename;
+            // ถ้ามีรูปเก่า ให้ลบออกจาก storage ก่อน
+            if ($course->course_image) {
+                Storage::disk('public')->delete($course->course_image);
+            }
+            // อัปโหลดรูปใหม่ไปที่ storage/app/public/courses
+            $imagePath = $request->file('course_image')->store('courses', 'public');
         }
 
-        // สร้างคอร์สใหม่ ในฐานข้อมูล Model course
         $course->update([
             'course_name' => $validatedData['course_name'],
             'course_detail' => $validatedData['course_detail'],
@@ -179,6 +170,11 @@ public function guestShow($id)
      */
     public function destroy(Course $course)
     {
+        // ลบไฟล์รูปภาพที่เกี่ยวข้อง (ถ้ามี)
+        if ($course->course_image) {
+            Storage::disk('public')->delete($course->course_image);
+        }
+
          $course->delete();
         // redirect ไปที่หน้า index พร้อม flash message
         return redirect()->route('admin.course')->with('success', __('messages.course_deleted'));

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -69,17 +70,11 @@ public function guestShow($id)
             'low_stock_threshold' => 'nullable|integer|min:0',
         ]);
 
-        // เตรียม path รูปภาพ
         $imagePath = null;
         if ($request->hasFile('image')) {
-            // ตั้งชื่อไฟล์แบบสุ่ม + นามสกุลเดิม
-            $file = $request->file('image');
-            $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-
-            // เก็บไฟล์ไว้ที่ public/images
-            $file->move(public_path('images'), $filename);
-
-            $imagePath = '/images/' . $filename;
+            // ใช้ store() เพื่อเก็บไฟล์ใน storage/app/public/images
+            // และจะสร้างชื่อไฟล์ที่ไม่ซ้ำกันให้โดยอัตโนมัติ
+            $imagePath = $request->file('image')->store('images', 'public');
         }
 
         // สร้างสินค้าใหม่
@@ -148,20 +143,17 @@ public function guestShow($id)
             'low_stock_threshold' => 'nullable|integer|min:0',
         ]);
 
-        // เตรียม path รูปภาพ
-        $imagePath = null;
+        // ใช้ path เดิมเป็นค่าเริ่มต้น
+        $imagePath = $post->product_image;
         if ($request->hasFile('image')) {
-            // ตั้งชื่อไฟล์แบบสุ่ม + นามสกุลเดิม
-            $file = $request->file('image');
-            $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-
-            // เก็บไฟล์ไว้ที่ public/images
-            $file->move(public_path('images'), $filename);
-
-            $imagePath = '/images/' . $filename;
+            // ถ้ามีรูปเก่า ให้ลบออกจาก storage ก่อน
+            if ($post->product_image) {
+                Storage::disk('public')->delete($post->product_image);
+            }
+            // อัปโหลดรูปใหม่ไปที่ storage/app/public/images
+            $imagePath = $request->file('image')->store('images', 'public');
         }
 
-        // อัปเดตข้อมูลสินค้า
         $post->update([
             'product_name' => $validatedData['product_name'],
             'product_name_ENG' => $validatedData['product_name_ENG'] ?? null,
@@ -187,6 +179,11 @@ public function guestShow($id)
      */
     public function destroy(Post $post)
     {
+        // ลบไฟล์รูปภาพที่เกี่ยวข้อง (ถ้ามี)
+        if ($post->product_image) {
+            Storage::disk('public')->delete($post->product_image);
+        }
+
         $post->delete();
         // redirect ไปที่หน้า index พร้อม flash message
         return redirect()->route('admin.product')->with('success', __('messages.product_deleted'));

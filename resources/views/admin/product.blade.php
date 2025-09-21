@@ -277,7 +277,7 @@
 
                         {{-- Image --}}
                         @if ($post->product_image)
-                            <img class="pc-image" src="{{ asset($post->product_image) }}" alt="{{ $post->product_name }}">
+                            <img class="pc-image" src="{{ asset('storage/' . $post->product_image) }}" alt="{{ $post->product_name }}">
                         @else
                             <div class="pc-image d-flex align-items-center justify-content-center">
                                 <small class="text-muted">No image</small>

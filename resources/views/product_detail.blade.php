@@ -370,7 +370,7 @@
                             @endif
 
                             @if ($product->product_image)
-                                <img src="{{ asset($product->product_image) }}" class="main-img"
+                                <img src="{{ asset('storage/' . $product->product_image) }}" class="main-img"
                                     alt="{{ $product->product_name }}">
                             @else
                                 <img src="{{ asset('images/default.png') }}" class="main-img" alt="No Image">

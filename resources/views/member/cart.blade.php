@@ -77,7 +77,7 @@
                                                 $maxStock = (int) ($item->product->quantity ?? 99);
                                             @endphp
                                             <tr data-row-id="{{ $rowId }}">
-                                                <td><img class="thumb" src="{{ asset($item->product->product_image) }}" alt=""></td>
+                                                <td><img class="thumb" src="{{ asset('storage/' . $item->product->product_image) }}" alt=""></td>
                                                 <td>
                                                     @php
                                                         $locale = app()->getLocale();
