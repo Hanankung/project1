@@ -62,8 +62,8 @@
     <!-- Navigation Bar -->
     <div class="nav-bar">
         <div class="nav-center">
-            <a href="/admin/product">สินค้า</a>
-            <a href="/admin/course">คอร์สเรียน</a>
+            <a href="{{ route('admin.product') }}">สินค้า</a>
+            <a href="{{ route('admin.course') }}">คอร์สเรียน</a>
             <a href="{{ route('admin.orders.index') }}"> คำสั่งซื้อ</a>
         </div>
 
