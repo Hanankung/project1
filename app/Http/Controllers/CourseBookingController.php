@@ -162,7 +162,9 @@ class CourseBookingController extends Controller
         }
 
         // แอดมิน
-        if ($adminEmail = env('ADMIN_EMAIL')) {
+        // ✅ ใช้ config() แทน env() เพื่อให้ทำงานได้เมื่อมีการ cache config ใน production
+        // คุณต้องไปเพิ่ม 'admin_email' => env('ADMIN_EMAIL') ในไฟล์ config/app.php ด้วย
+        if ($adminEmail = config('app.admin_email')) {
             Notification::route('mail', $adminEmail)
                 ->notify((new CourseBookedNotification($booking, 'admin'))->delay(now()->addSeconds(6)));
         }
