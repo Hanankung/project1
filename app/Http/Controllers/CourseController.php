@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
+use App\Models\course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -20,7 +20,7 @@ class CourseController extends Controller
     public function courseList()
 {
     $posts = course::all();
-    return view('admin.courses', compact('posts'));
+    return view('admin.course', compact('posts'));
 }
 
 // สำหรับผู้ใช้ทัสมัครสมาชิก
