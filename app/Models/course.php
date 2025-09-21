@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class course extends Model
+class Course extends Model
 {
     protected $table = 'courses'; // บอกให้ Model ใช้ตาราง course
 

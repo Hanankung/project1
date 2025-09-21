@@ -109,7 +109,7 @@ class CourseBookingController extends Controller
 
         $unit = null;
         if (!empty($validated['course_id'])) {
-            $course = \App\Models\course::find($validated['course_id']);
+            $course = Course::find($validated['course_id']);
             if ($course) {
                 $locale = app()->getLocale();
                 $nameField = $locale === 'en' ? 'course_name_ENG' : ($locale === 'ms' ? 'course_name_MS' : 'course_name');

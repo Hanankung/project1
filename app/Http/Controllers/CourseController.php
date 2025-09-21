@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\course;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -19,7 +19,7 @@ class CourseController extends Controller
 
     public function courseList()
 {
-    $posts = course::all();
+    $posts = Course::all();
     return view('admin.course', compact('posts'));
 }
 
@@ -27,7 +27,7 @@ class CourseController extends Controller
 public function showForMember()
 {
     // ดึงข้อมูลคอร์สทั้งหมดจาก DB
-    $courses = \App\Models\course::all();
+    $courses = Course::all();
 
     // ส่งไปยัง view ของ member
     return view('member.courses', compact('courses'));
@@ -35,7 +35,7 @@ public function showForMember()
 public function showDetail($id)
 {
     // หา course ตาม id
-    $course = \App\Models\course::findOrFail($id);
+    $course = Course::findOrFail($id);
 
     // ส่งไปยัง view
     return view('member.course_detail', compact('course'));
@@ -95,7 +95,7 @@ public function guestShow($id)
         }
 
         // สร้างคอร์สใหม่ ในฐานข้อมูล Model course
-        course::create([
+        Course::create([
             'course_name' => $validatedData['course_name'],
             'course_detail' => $validatedData['course_detail'],
             'course_name_ENG' => $validatedData['course_name_ENG'],
@@ -114,7 +114,7 @@ public function guestShow($id)
     /**
      * Display the specified resource.
      */
-    public function show(course $course)
+    public function show(Course $course)
 {
     return view('admin.showcourse', ['post' => $course]);
 }
@@ -122,7 +122,7 @@ public function guestShow($id)
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(course $course)
+    public function edit(Course $course)
     {
         //ไปยังหน้าแก้ไขตอร์สเรียน
         return view('admin.edit_course', ['post' => $course]);
@@ -131,7 +131,7 @@ public function guestShow($id)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, course $course)
+    public function update(Request $request, Course $course)
     {
         // ตรวจสอบข้อมูลที่รับมา
         $validatedData = $request->validate([
@@ -177,11 +177,10 @@ public function guestShow($id)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(course $course)
+    public function destroy(Course $course)
     {
          $course->delete();
         // redirect ไปที่หน้า index พร้อม flash message
         return redirect()->route('admin.course')->with('success', __('messages.course_deleted'));
     }
 }
-
