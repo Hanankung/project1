@@ -27,7 +27,7 @@ class CourseController extends Controller
 public function showForMember()
 {
     // ดึงข้อมูลคอร์สทั้งหมดจาก DB
-    $courses = \App\Models\Course::all();
+    $courses = \App\Models\course::all();
 
     // ส่งไปยัง view ของ member
     return view('member.courses', compact('courses'));
@@ -35,7 +35,7 @@ public function showForMember()
 public function showDetail($id)
 {
     // หา course ตาม id
-    $course = \App\Models\Course::findOrFail($id);
+    $course = \App\Models\course::findOrFail($id);
 
     // ส่งไปยัง view
     return view('member.course_detail', compact('course'));
