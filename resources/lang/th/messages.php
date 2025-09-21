@@ -210,9 +210,11 @@ return [
 
         'rejected' => 'ไม่อนุมัติ',
 
-        'status_shipped'   => 'กำลังจัดส่งแล้ว',
+        'status_shipped'   => 'จัดส่งแล้ว',
 
         'status_delivered' => 'จัดส่งสำเร็จ',
+
+        'status_shippeds'   => 'กำลังจัดส่ง',
 
         'status_cancelled' => 'ยกเลิก',
     ],

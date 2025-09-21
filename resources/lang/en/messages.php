@@ -214,6 +214,8 @@ return [
 
         'status_shipped'   => 'Shipping',
 
+        'status_shippeds'   => 'In delivery',
+
         'status_delivered' => 'Delivered',
 
         'status_cancelled' => 'Cancelled',

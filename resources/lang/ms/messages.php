@@ -213,6 +213,8 @@ return [
         'rejected' => 'Ditolak',
 
         'status_shipped'   => 'Dihantar',
+        
+        'status_shippeds'   => 'Diantar',
 
         'status_delivered' => 'Diterima',
 
