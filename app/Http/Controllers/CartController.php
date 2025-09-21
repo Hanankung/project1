@@ -35,7 +35,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'product_id' => 'required|exists:products,id',
+            'product_id' => 'required|exists:products,id', // ✅ แก้ไขให้ตรงกับตารางสินค้า
             'quantity'   => 'nullable|integer|min:1',
         ]);
 
