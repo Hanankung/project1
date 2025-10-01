@@ -159,7 +159,7 @@
                     @endif
                 </a>
 
-                <a href="/member/courseBookingList" class="fas fa-calendar icon"></a>
+                <a href="{{ route('member.course.booking.list') }}" class="fas fa-calendar icon"></a>
                 <a href="/profile" class="fas fa-user icon"></a>
             </div>
         </div>

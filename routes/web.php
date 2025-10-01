@@ -70,16 +70,29 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('cart', CartController::class);
 });
 // แสดงตะกร้าสินค้า
-Route::get('/member/cart', [CartController::class, 'index'])->name('member.cart');
-// เพิ่มสินค้าลงตะกร้า
-Route::post('/member/cart/store', [CartController::class, 'store'])->name('member.cart.store');
-// อัพเดตจำนวนสินค้าในตะกร้า
-Route::put('/member/cart/update/{id}', [CartController::class, 'update'])->name('member.cart.update');
-// ลบสินค้าออกจากตะกร้า
-Route::delete('/member/cart/delete/{id}', [CartController::class, 'destroy'])
-    ->name('member.cart.delete')
-    ->middleware('auth');
+// Route::get('/member/cart', [CartController::class, 'index'])->name('member.cart');
+// // เพิ่มสินค้าลงตะกร้า
+// Route::post('/member/cart/store', [CartController::class, 'store'])->name('member.cart.store');
+// // อัพเดตจำนวนสินค้าในตะกร้า
+// Route::put('/member/cart/update/{id}', [CartController::class, 'update'])->name('member.cart.update');
+// // ลบสินค้าออกจากตะกร้า
+// Route::delete('/member/cart/delete/{id}', [CartController::class, 'destroy'])
+//     ->name('member.cart.delete')
+//     ->middleware('auth');
 
+Route::middleware(['auth'])->group(function () {
+    // แสดงตะกร้าสินค้า
+    Route::get('/member/cart', [CartController::class, 'index'])->name('member.cart');
+
+    // เพิ่มสินค้าลงตะกร้า
+    Route::post('/member/cart/store', [CartController::class, 'store'])->name('member.cart.store');
+
+    // อัปเดตจำนวนสินค้าในตะกร้า
+    Route::put('/member/cart/update/{id}', [CartController::class, 'update'])->name('member.cart.update');
+
+    // ลบสินค้าออกจากตะกร้า
+    Route::delete('/member/cart/delete/{id}', [CartController::class, 'destroy'])->name('member.cart.delete');
+});
 // cheakout
 Route::middleware(['auth'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
@@ -196,22 +209,6 @@ Route::get('lang/{locale}', function ($locale) {
 })->name('lang.switch');
 // ค้นหาสินค้า
 Route::get('/search', [SearchController::class, 'search'])->name('search');
-
-/**
- * ===================================================================
- *  ROUTE ชั่วคราวสำหรับสร้าง Storage Link (เมื่อไม่มีสิทธิ์ SSH)
- *  หลังจากใช้งานเสร็จแล้ว ให้ลบ Route นี้ทิ้งทันทีเพื่อความปลอดภัย
- * ===================================================================
- */
-Route::get('/create-storage-link-6789', function () {
-    try {
-        Artisan::call('storage:link');
-        return 'SUCCESS: The [public/storage] link has been connected.<br><strong>Please remove this route from web.php now!</strong>';
-    } catch (\Exception $e) {
-        return 'ERROR: Could not create storage link. <br>' . $e->getMessage();
-    }
-});
-
 
 
 require __DIR__ . '/auth.php';

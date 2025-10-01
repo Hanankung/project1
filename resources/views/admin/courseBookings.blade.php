@@ -157,8 +157,11 @@
                                         ? (float) $booking->total_price
                                         : $unit * $qty;
                                 $hasSlip = !empty($booking->payment_slip);
+                                // $url = $hasSlip
+                                //     ? \Illuminate\Support\Facades\Storage::url($booking->payment_slip)
+                                //     : null;
                                 $url = $hasSlip
-                                    ? \Illuminate\Support\Facades\Storage::url($booking->payment_slip)
+                                    ? asset('storage/' . $booking->payment_slip)
                                     : null;
                                 $ext = $hasSlip
                                     ? strtolower(pathinfo(parse_url($url ?? '', PHP_URL_PATH), PATHINFO_EXTENSION))

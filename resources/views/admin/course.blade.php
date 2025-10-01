@@ -223,7 +223,8 @@
                                 <form action="{{ route('admin.delete_course', $post) }}" method="POST" class="ms-auto">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm-delete>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm-delete
+                                        data-entity="คอร์สเรียน"> {{-- ไทยล้วน --}}
                                         <i class="bi bi-trash3"></i> Delete
                                     </button>
                                 </form>
