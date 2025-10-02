@@ -587,4 +587,7 @@ return [
 
     'register' => 'Daftar',
 
+    'product_archived' => 'Produk telah diarkibkan.',
+    
+    'product_restored' => 'Produk telah dipaparkan semula.',
 ];

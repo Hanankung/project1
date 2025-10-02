@@ -200,6 +200,29 @@
             overflow: hidden;
             min-height: calc(1.25rem * 3 + 6px);
         }
+
+        /* ให้ลูกทุกตัวของ .pc-actions (ทั้ง <a> และ <form>) กว้างเท่ากัน */
+        .pc-actions {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .pc-actions>* {
+            flex: 1;
+            /* ทุก child (a, form) กว้างเท่ากัน */
+        }
+
+        .pc-actions .btn {
+            width: 100%;
+            /* ปุ่มข้างในเต็มช่อง */
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 0;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
     </style>
 
     {{-- Flash: สินค้าใกล้หมด --}}
@@ -245,6 +268,10 @@
                     <i class="bi bi-exclamation-triangle-fill"></i>
                     <span>ใกล้หมด <span class="num">{{ $lowCount }}</span></span>
                 </div>
+                {{-- 🔽 ปุ่มคลังสินค้า --}}
+                <a href="{{ route('admin.product.archived') }}" class="btn btn-outline-secondary">
+                    คลังสินค้า
+                </a>
                 <a href="{{ route('create') }}" class="btn btn-create">
                     <i class="bi bi-plus-lg"></i> + เพิ่มสินค้า
                 </a>
@@ -323,22 +350,27 @@
                             @endif
 
                             {{-- Actions (ชิดก้นการ์ดด้วย mt-auto) --}}
-                            <div class="pc-actions d-flex gap-2 mt-auto">
+                            <div class="pc-actions mt-auto">
                                 <a href="{{ route('admin.show', $post) }}" class="btn btn-outline-primary">
-                                    <i class="bi bi-eye"></i> View
+                                    <i class="bi bi-eye"></i> ดูสินค้า
                                 </a>
                                 <a href="{{ route('admin.edit', $post) }}" class="btn btn-outline-warning">
-                                    <i class="bi bi-pencil-square"></i> Edit
+                                    <i class="bi bi-pencil-square"></i> แก้ไข
                                 </a>
-                                <form action="{{ route('admin.delete', $post) }}" method="POST" class="ms-auto">
+                                <form action="{{ route('admin.delete', $post) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger" data-confirm-delete>
-                                        <i class="bi bi-trash3"></i> Delete
+                                    <button type="submit" class="btn btn-outline-danger" data-confirm-delete
+                                        data-entity="สินค้า">
+                                        <i class="bi bi-archive"></i> จัดเก็บ
                                     </button>
                                 </form>
-
                             </div>
+
+
+
+
+
                         </div>
                     </div>
                 </div>

@@ -224,9 +224,10 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm-delete
-                                        data-entity="คอร์สเรียน"> {{-- ไทยล้วน --}}
+                                        data-entity="คอร์สเรียน">
                                         <i class="bi bi-trash3"></i> Delete
                                     </button>
+
                                 </form>
                             </div>
                         </div>

@@ -586,4 +586,8 @@ return [
     'auth_required_msg_booking'    => 'To book a course, please sign in or create an account first.',
 
     'register' => 'Register',
+
+    'product_archived' => 'Product archived.',
+    
+    'product_restored' => 'Product restored.',
 ];

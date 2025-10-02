@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Post extends Model
 {
@@ -22,12 +24,23 @@ class Post extends Model
         'material_ENG',
         'material_MS',
         'size',
-        'product_image'
+        'product_image',
+        'status'
     ];
     protected $casts = [
         'quantity' => 'integer',
         'low_stock_threshold' => 'integer',
     ];
+    /* ===== Scopes (เอาไว้กรองสถานะ) ===== */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeArchived(Builder $query): Builder
+    {
+        return $query->where('status', 'archived');
+    }
 
     public function hasStock(int $qty): bool
     {

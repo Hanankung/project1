@@ -19,19 +19,26 @@ class PostController extends Controller
 
     public function productList()
 {
-    $posts = Post::all();
+    // $posts = Post::all();
+    $posts = Post::active()->get();
     return view('admin.product', compact('posts'));
 }
+public function archivedList()
+{
+    $posts = Post::archived()->get();
+    return view('admin.product_archived', compact('posts'));
+}
+
 // สำหรับผู้ใช้ทั่วไป
 public function guestIndex()
 {
-    $products = \App\Models\Post::all(); // ดึงสินค้าทั้งหมด
+    $products = Post::active()->get(); // เดิม all()
     return view('products', compact('products'));
 }
 
 public function guestShow($id)
 {
-    $product = \App\Models\Post::findOrFail($id);
+    $product = Post::where('id',$id)->where('status','active')->firstOrFail();
     return view('product_detail', compact('product'));
 }
 
@@ -186,18 +193,35 @@ public function guestShow($id)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
-    {
-        // ลบไฟล์รูปภาพที่เกี่ยวข้อง (ถ้ามี)
-        if ($post->product_image) {
-            $imagePath = public_path($post->product_image);
-            if (file_exists($imagePath)) {
-                @unlink($imagePath);
-            }
-        }
+    // public function destroy(Post $post)
+    // {
+    //     // ลบไฟล์รูปภาพที่เกี่ยวข้อง (ถ้ามี)
+    //     if ($post->product_image) {
+    //         $imagePath = public_path($post->product_image);
+    //         if (file_exists($imagePath)) {
+    //             @unlink($imagePath);
+    //         }
+    //     }
 
-        $post->delete();
-        // redirect ไปที่หน้า index พร้อม flash message
-        return redirect()->route('admin.product')->with('success', __('messages.product_deleted'));
-    }
+    //     $post->delete();
+    //     // redirect ไปที่หน้า index พร้อม flash message
+    //     return redirect()->route('admin.product')->with('success', __('messages.product_deleted'));
+    // }
+    public function destroy(Post $post)
+{
+    // ไม่ลบไฟล์ ไม่ลบ record
+    $post->update(['status' => 'archived']);
+
+    return redirect()->route('admin.product')
+        ->with('success', __('messages.product_archived'));
+}
+public function restore($id)
+{
+    $post = Post::findOrFail($id);
+    $post->update(['status' => 'active']);
+
+    return redirect()->route('admin.product.archived')
+        ->with('success', __('messages.product_restored'));
+}
+
 }

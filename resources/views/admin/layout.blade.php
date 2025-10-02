@@ -154,21 +154,42 @@
 
             e.preventDefault();
             const form = btn.closest('form');
-            const entity = btn.getAttribute('data-entity') || 'รายการ'; // ค่าไทยสำรอง
+            const entity = btn.getAttribute('data-entity') || 'รายการ';
+
+            // กำหนดข้อความตาม entity
+            let title = '';
+            let text = '';
+            let confirmBtn = '';
+
+            if (entity === 'สินค้า') {
+                title = 'ต้องการจัดเก็บสินค้านี้หรือไม่?';
+                text = 'จัดเก็บสินค้านี้ไว้ในคลัง สามารถนำกลับมาแสดงได้ภายหลัง';
+                confirmBtn = 'จัดเก็บสินค้า';
+            } else if (entity === 'คอร์สเรียน') {
+                title = 'ต้องการลบคอร์สเรียนนี้หรือไม่?';
+                text = 'การลบไม่สามารถย้อนกลับได้';
+                confirmBtn = 'ลบคอร์สเรียน';
+            } else {
+                // fallback เผื่อมี entity อื่น
+                title = `ต้องการลบ${entity}นี้หรือไม่?`;
+                text = 'การลบไม่สามารถย้อนกลับได้';
+                confirmBtn = 'ลบเลย';
+            }
 
             Swal.fire({
                 icon: 'question',
-                title: `ลบ${entity}นี้หรือไม่?`,
-                text: 'การลบไม่สามารถย้อนกลับได้',
+                title: title,
+                text: text,
                 showCancelButton: true,
-                confirmButtonText: 'ลบเลย',
+                confirmButtonText: confirmBtn,
                 cancelButtonText: 'ยกเลิก',
-                confirmButtonColor: '#e03131'
+                confirmButtonColor: (entity === 'สินค้า') ? '#2e7d32' : '#e03131' // สีต่างกันได้
             }).then((res) => {
                 if (res.isConfirmed) form.submit();
             });
         });
     </script>
+
 
 </body>
 

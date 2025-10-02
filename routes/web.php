@@ -170,6 +170,9 @@ Route::put('/admin/update/{post}', [PostController::class, 'update'])->name('adm
 
 // Delete Product
 Route::delete('/admin/delete/{post}', [PostController::class, 'destroy'])->name('admin.delete');
+Route::get('/admin/product/archived', [PostController::class, 'archivedList'])->name('admin.product.archived');
+Route::patch('/admin/restore/{id}', [PostController::class, 'restore'])->name('admin.restore');
+
 
 // Course Admin
 Route::get('/admin/course', function () {
