@@ -42,7 +42,7 @@
                 <input id="remember_me" type="checkbox"
                        class="rounded border-gray-300 text-emerald-600 shadow-sm focus:ring-emerald-500"
                        name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                <span class="ms-2 text-sm text-gray-600">{{ __('จดจำการเข้าสู่ระบบ') }}</span>
             </label>
         </div>
 
@@ -52,7 +52,7 @@
                 <a class="text-sm text-emerald-700 hover:text-emerald-800 rounded-md
                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                    href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                    {{ __('ลืมรหัสผ่านใช่หรือไม่?') }}
                 </a>
             @endif>
 
@@ -64,9 +64,9 @@
 
         @if (Route::has('register'))
             <div class="mt-4 text-center">
-                <span class="text-gray-600 text-sm">Don't have an account?</span>
+                <span class="text-gray-600 text-sm">ยังไม่มีบัญชีใช่ไหม?</span>
                 <a href="{{ route('register') }}" class="text-emerald-700 hover:text-emerald-800 font-semibold">
-                    {{ __('Register here') }}
+                    {{ __('สมัครสมาชิก') }}
                 </a>
             </div>
         @endif
