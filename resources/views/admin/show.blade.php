@@ -161,7 +161,7 @@
                     <form action="{{ route('admin.delete', $post) }}" method="POST">
                         @csrf @method('DELETE')
                         <button type="submit" class="btn btn-outline-danger" data-confirm-delete>
-                            <i class="bi bi-trash3"></i> ลบ
+                            <i class="bi bi-trash3"></i> จัดเก็บ
                         </button>
                     </form>
                 </div>

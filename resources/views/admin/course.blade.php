@@ -215,17 +215,17 @@
                             {{-- Actions (ชิดก้นการ์ดด้วย mt-auto) --}}
                             <div class="cc-actions d-flex gap-2 mt-auto">
                                 <a href="{{ route('admin.showcourse', $post) }}" class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-eye"></i> View
+                                    <i class="bi bi-eye"></i> ดูคอร์สเรียน
                                 </a>
                                 <a href="{{ route('admin.edit_course', $post) }}" class="btn btn-outline-warning btn-sm">
-                                    <i class="bi bi-pencil-square"></i> Edit
+                                    <i class="bi bi-pencil-square"></i> แก้ไข
                                 </a>
                                 <form action="{{ route('admin.delete_course', $post) }}" method="POST" class="ms-auto">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm-delete
                                         data-entity="คอร์สเรียน">
-                                        <i class="bi bi-trash3"></i> Delete
+                                        <i class="bi bi-trash3"></i> ลบ
                                     </button>
 
                                 </form>
